@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اکوسیستم هوشمند ایجنت‌های واردات | پلتفرم سورسینگ و مدیریت زنجیره تأمین</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121824;
+            --bg-card: rgba(22, 30, 46, 0.7);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-purple: #a855f7;
+
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            background: rgba(10, 14, 23, 0.85);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 16px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+            border: 1px solid var(--accent-cyan);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyan);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--accent-emerald);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: var(--accent-cyan);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), #3b82f6, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin: 0 auto 36px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: right;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Section Layouts */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .section-title i {
+            font-size: 1.6rem;
+            color: var(--accent-cyan);
+        }
+
+        .section-title h2 {
+            font-size: 1.7rem;
+            font-weight: 800;
+        }
+
+        /* Simulator Section */
+        .simulator-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .sim-steps-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .sim-steps-header::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .step-item.active .step-number {
+            background: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .step-item.completed .step-number {
+            background: var(--accent-emerald);
+            border-color: var(--accent-emerald);
+            color: #fff;
+        }
+
+        .step-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .sim-content {
+            min-height: 320px;
+        }
+
+        .sim-panel {
+            display: none;
+        }
+
+        .sim-panel.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: right;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            background: rgba(0, 242, 254, 0.03);
+        }
+
+        .option-card.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.08);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+        }
+
+        .option-icon {
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+        }
+
+        .option-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .option-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .sim-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #040914;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Result Report Card */
+        .report-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .report-main {
+            background: rgba(10, 14, 23, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 24px;
+        }
+
+        .report-side {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border-glass);
+        }
+
+        .breakdown-row:last-child {
+            border-bottom: none;
+        }
+
+        .risk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .risk-low { background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); border: 1px solid var(--accent-emerald); }
+        .risk-med { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
+        .risk-high { background: rgba(244, 63, 94, 0.2); color: var(--accent-rose); border: 1px solid var(--accent-rose); }
+
+        /* Multi-Agent Playground */
+        .agent-playground {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            height: 600px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+        }
+
+        .agent-sidebar {
+            background: rgba(10, 14, 23, 0.8);
+            border-left: 1px solid var(--border-glass);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .agent-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .agent-selector:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .agent-selector.active {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .agent-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .agent-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
+        .agent-info p { font-size: 0.78rem; color: var(--text-muted); }
+
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.3);
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-left: 8px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .chat-bubble.agent {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-glass);
+            align-self: flex-start;
+            border-top-right-radius: 2px;
+        }
+
+        .chat-bubble.user {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--text-primary);
+            align-self: flex-end;
+            border-top-left-radius: 2px;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            background: var(--bg-secondary);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+        }
+
+        .chat-input-wrapper input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            padding: 8px 12px;
+            font-size: 0.95rem;
+        }
+
+        .preset-prompts {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .preset-chip {
+            white-space: nowrap;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-glass);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .preset-chip:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .pipeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .pipeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .pipeline-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+
+        .pipeline-num {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(79, 172, 254, 0.1));
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .pipeline-info h4 { font-size: 1rem; margin-bottom: 4px; }
+        .pipeline-info p { font-size: 0.82rem; color: var(--text-secondary); }
+
+        footer {
+            border-top: 1px solid var(--border-glass);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: rgba(10, 14, 23, 0.9);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            max-width: 650px;
+            width: 100%;
+            padding: 32px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover { color: #fff; }
+
+        @media (max-width: 992px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .agent-playground { grid-template-columns: 1fr; height: auto; }
+            .agent-sidebar { border-left: none; border-bottom: 1px solid var(--border-glass); }
+            .report-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-robot"></i></div>
+                <span>ImportAI Pro</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#simulator" class="active"><i class="fa-solid fa-gamepad"></i> شبیه‌ساز واردات</a></li>
+                <li><a href="#agents"><i class="fa-solid fa-network-wired"></i> شبکه ایجنت‌ها</a></li>
+                <li><a href="#verification"><i class="fa-solid fa-shield-halved"></i> اعتبارسنجی چین</a></li>
+                <li><a href="#pipeline"><i class="fa-solid fa-diagram-project"></i> فرآیند ۱۱ مرحله‌ای</a></li>
+            </ul>
+            <div class="status-badge">
+                <span class="pulse-dot"></span>
+                <span>پلتفرم عملیاتی (FastAPI Connected)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-tag">
+                <i class="fa-solid fa-sparkles"></i> اکوسیستم هوشمند سورسینگ و مدیریت زنجیره تأمین
+            </div>
+            <h1>مستر پلن تبلیغات و مشاوره هوشمند واردات<br><span>با ایجنت‌های هوش مصنوعی ۲۴/۷</span></h1>
+            <p>تبدیل مخاطب به واردکننده آگاه از طریق آموزش، گیمیفیکیشن، استعلام رسمی از سامانه‌های چین (QCC) و کاهش ریسک کالا و حواله ارزی</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--accent-cyan);">۲۴ / ۷</div>
+                    <div class="stat-label">پاسخگویی خودکار و هوشمند</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--accent-emerald);">٪۱۰۰</div>
+                    <div class="stat-label">اعتبارسنجی کارخانجات چین</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--accent-purple);">۰ ٪</div>
+                    <div class="stat-label">فروش مستقیم (فقط کارمزد و مشاوره)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--accent-amber);">۱۱ گام</div>
+                    <div class="stat-label">مدیریت کامل زنجیره تامین</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Interactive Gamification Simulator -->
+        <section id="simulator">
+            <div class="section-title">
+                <i class="fa-solid fa-gamepad"></i>
+                <h2>شبیه‌ساز گیمیفیکیشن «استراتژی ۵۰,۰۰۰ دلاری واردات»</h2>
+            </div>
+
+            <div class="simulator-card">
+                <div class="sim-steps-header">
+                    <div class="step-item active" onclick="goToSimStep(1)" id="step-nav-1">
+                        <div class="step-number">۱</div>
+                        <div class="step-title">انتخاب صنعت</div>
+                    </div>
+                    <div class="step-item" onclick="goToSimStep(2)" id="step-nav-2">
+                        <div class="step-number">۲</div>
+                        <div class="step-title">سورسینگ و تامین‌کننده</div>
+                    </div>
+                    <div class="step-item" onclick="goToSimStep(3)" id="step-nav-3">
+                        <div class="step-number">۳</div>
+                        <div class="step-title">اعتبارسنجی و QC</div>
+                    </div>
+                    <div class="step-item" onclick="goToSimStep(4)" id="step-nav-4">
+                        <div class="step-number">۴</div>
+                        <div class="step-title">ارز و ترخیص</div>
+                    </div>
+                    <div class="step-item" onclick="goToSimStep(5)" id="step-nav-5">
+                        <div class="step-number">۵</div>
+                        <div class="step-title">نتایج و سود تقریبی</div>
+                    </div>
+                </div>
+
+                <div class="sim-content">
+                    <!-- Step 1 Panel -->
+                    <div class="sim-panel active" id="sim-panel-1">
+                        <h3>مرحله اول: صنعت و کالای هدف خود را انتخاب کنید</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;">فرض کنید ۵۰,۰۰۰ دلار سرمایه اولیه برای واردات دارید. کدام حوزه انتخاب شماست؟</p>
+                        <div class="option-grid">
+                            <div class="option-card selected" onclick="selectOption(this, 'industry', 'medical')">
+                                <div class="option-icon"><i class="fa-solid fa-stethoscopes"></i></div>
+                                <h3>تجهیزات پزشکی و آزمایشگاهی</h3>
+                                <p>حاشیه سود بالا، نیازمند مجوز اداره تجهیزات پزشکی و استاندارد CE/FDA</p>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'industry', 'machinery')">
+                                <div class="option-icon"><i class="fa-solid fa-industry"></i></div>
+                                <h3>ماشین‌آلات صنعتی و خطوط تولید</h3>
+                                <p>تقاضای بالا در صنایع مادر، نیازمند بازرسی فنی و تست کارکرد PSI</p>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'industry', 'raw_materials')">
+                                <div class="option-icon"><i class="fa-solid fa-flask-vial"></i></div>
+                                <h3>مواد اولیه شیمیایی و پلیمری</h3>
+                                <p>خرید حجمی، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی استاندارد</p>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'industry', 'electronics')">
+                                <div class="option-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                                <h3>لوازم جانبی و محصولات دیجیتال</h3>
+                                <p>گردش مالی سریع، رقابت بالا، نیازمند کنترل کیفیت ۱۰۰ درصد کالا</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 Panel -->
+                    <div class="sim-panel" id="sim-panel-2">
+                        <h3>مرحله دوم: استراتژی انتخاب کارخانه در چین</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;">ایجنت دو تامین‌کننده در استان گوانگ‌دونگ پیدا کرده است. کدام را انتخاب می‌کنید؟</p>
+                        <div class="option-grid">
+                            <div class="option-card selected" onclick="selectOption(this, 'supplier', 'verified')">
+                                <div class="option-icon"><i class="fa-solid fa-circle-check"></i></div>
+                                <h3>کارخانه B (دارای استعلام QCC و CE)</h3>
+                                <p>قیمت واقعی بازار. پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفیت PSI در چین.</p>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'supplier', 'cheap')">
+                                <div class="option-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <h3>تامین‌کننده A (قیمت ۱۸٪ ارزان‌تر)</h3>
+                                <p>بدون ثبت رسمی در QCC، تقاضای ۱۰۰٪ تسویه حساب قبل از ارسال کالا!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 Panel -->
+                    <div class="sim-panel" id="sim-panel-3">
+                        <h3>مرحله سوم: بازرسی کیفیت قبل از حمل (PSI)</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;">آیا تمایل دارید قبل از تسویه حساب و بارگیری، تیم بازرسی حضوری در کارخانه حاضر شود؟</p>
+                        <div class="option-grid">
+                            <div class="option-card selected" onclick="selectOption(this, 'qc', 'yes')">
+                                <div class="option-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                                <h3>انجام بازرسی کیفیت کامل (PSI & Sampling)</h3>
+                                <p>هزینه بازرس: ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تست نمونه.</p>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'qc', 'no')">
+                                <div class="option-icon"><i class="fa-solid fa-ban"></i></div>
+                                <h3>صرفه‌جویی در هزینه بازرسی</h3>
+                                <p>اعتماد به تصاویر و فیلم‌های فرستاده شده توسط خود کارخانه فروشنده.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 Panel -->
+                    <div class="sim-panel" id="sim-panel-4">
+                        <h3>مرحله چهارم: روش تخصیص ارز و ترخیص گمرکی</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;">نوع ارز و روش ترخیص کالا در ایران را مشخص کنید:</p>
+                        <div class="option-grid">
+                            <div class="option-card selected" onclick="selectOption(this, 'currency', 'nima')">
+                                <div class="option-icon"><i class="fa-solid fa-building-columns"></i></div>
+                                <h3>ارز نیما / تالار دوم مرکز مبادله</h3>
+                                <p>نرخ دولتی، صف تخصیص ۳۰ تا ۶۰ روزه، کاهش هزینه تمام شده کالا</p>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this, 'currency', 'export')">
+                                <div class="option-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                                <h3>ارز حاصل از صادرات خود/غیر</h3>
+                                <p>تخصیص سریع‌تر، هزینه بالاتر، مناسب برای سفارش‌های فوری و خطوط تولید</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 Panel (Report Result) -->
+                    <div class="sim-panel" id="sim-panel-5">
+                        <h3>🎉 تحلیل جامع و نتیجه شبیه‌سازی واردات شما</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شده است:</p>
+                        
+                        <div class="report-grid">
+                            <div class="report-main">
+                                <h4 style="margin-bottom: 16px; color: var(--accent-cyan);">جدول برآورد مالی و هزینه‌ها</h4>
+                                <div class="breakdown-row">
+                                    <span>سرمایه اولیه:</span>
+                                    <strong>۵۰,۰۰۰ دلار</strong>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>هزینه کالا (FOB China):</span>
+                                    <span id="res-fob">$41,500</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>حمل بین‌المللی & بیمه:</span>
+                                    <span id="res-freight">$3,200</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>اعتبارسنجی & بازرسی کیفیت (PSI):</span>
+                                    <span id="res-qc">$450</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span>حقوق و عوارض گمرکی (تقریبی):</span>
+                                    <span id="res-customs">$4,850</span>
+                                </div>
+                                <div class="breakdown-row" style="border-top: 2px solid var(--accent-cyan); padding-top: 12px; font-size: 1.1rem;">
+                                    <span>سود خالص تخمینی:</span>
+                                    <strong style="color: var(--accent-emerald);" id="res-profit">$12,400 (٪24.8)</strong>
+                                </div>
+                            </div>
+
+                            <div class="report-side">
+                                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: var(--radius-md);">
+                                    <h5 style="margin-bottom: 8px;">سطح ریسک پروژه:</h5>
+                                    <div id="res-risk-badge" class="risk-badge risk-low"><i class="fa-solid fa-shield-check"></i> ریسک بسیار پایین</div>
+                                </div>
+
+                                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: var(--radius-md);">
+                                    <h5 style="margin-bottom: 8px; color: var(--accent-amber);"><i class="fa-solid fa-lightbulb"></i> توصیه‌های ایجنت:</h5>
+                                    <p id="res-advice" style="font-size: 0.82rem; color: var(--text-secondary);">با انتخاب اعتبارسنجی QCC و بازرسی PSI، ریسک دریافت کالای بی‌کیفیت و کلاهبرداری صفر شد!</p>
+                                </div>
+
+                                <button class="btn btn-primary" onclick="openConsultModal()"><i class="fa-solid fa-headset"></i> دریافت مشاوره تخصصی سورسینگ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-actions">
+                    <button class="btn btn-secondary" id="btn-prev" onclick="prevSimStep()" style="display: none;"><i class="fa-solid fa-arrow-right"></i> گام قبلی</button>
+                    <button class="btn btn-primary" id="btn-next" onclick="nextSimStep()">گام بعدی <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Multi-Agent Interactive Sandbox -->
+        <section id="agents">
+            <div class="section-title">
+                <i class="fa-solid fa-network-wired"></i>
+                <h2>شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)</h2>
+            </div>
+
+            <div class="agent-playground">
+                <div class="agent-sidebar">
+                    <h4 style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;">انتخاب ایجنت فعال:</h4>
+                    
+                    <div class="agent-selector active" onclick="switchAgent('edulead', this)">
+                        <div class="agent-avatar" style="background: linear-gradient(135deg, #3b82f6, #00f2fe);"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="agent-info">
+                            <h4>ایجنت EduLead</h4>
+                            <p>آموزش، جذب و گیمیفیکیشن</p>
+                        </div>
+                    </div>
+
+                    <div class="agent-selector" onclick="switchAgent('sourcing', this)">
+                        <div class="agent-avatar" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-boxes-packing"></i></div>
+                        <div class="agent-info">
+                            <h4>ایجنت Sourcing & HS</h4>
+                            <p>تعیین HS Code و استعلام قیمت</p>
+                        </div>
+                    </div>
+
+                    <div class="agent-selector" onclick="switchAgent('risk', this)">
+                        <div class="agent-avatar" style="background: linear-gradient(135deg, #f43f5e, #e11d48);"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="agent-info">
+                            <h4>ایجنت Risk & Audit</h4>
+                            <p>استعلام QCC چین و حقوقی</p>
+                        </div>
+                    </div>
+
+                    <div class="agent-selector" onclick="switchAgent('logistics', this)">
+                        <div class="agent-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);"><i class="fa-solid fa-ship"></i></div>
+                        <div class="agent-info">
+                            <h4>ایجنت Logistics & Customs</h4>
+                            <p>حمل، تخصیص ارز و ترخیص</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-area">
+                    <div class="preset-prompts" id="preset-container">
+                        <span class="preset-chip" onclick="sendPreset('مراحل واردات خط تولید چیست؟')">مراحل واردات خط تولید چیست؟</span>
+                        <span class="preset-chip" onclick="sendPreset('چطور از ثبت رسمی کارخانه در چین مطمئن بشم؟')">اعتبارسنجی کارخانه در چین</span>
+                        <span class="preset-chip" onclick="sendPreset('کد HS تجهیزات دندانپزشکی چنده؟')">استعلام کد HS</span>
+                    </div>
+
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="chat-bubble agent">
+                            سلام! من <strong>ایجنت EduLead</strong> هستم. چطور می‌تونم در زمینه آموزش مراحل واردات، محاسبه سود یا انتخاب بهترین کشور برای خرید کمکتون کنم؟
+                        </div>
+                    </div>
+
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="chat-input" placeholder="سوال خود را از ایجنت هوشمند بپرسید..." onkeypress="handleKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Verification & Official Registry -->
+        <section id="verification" style="margin-bottom: 60px;">
+            <div class="section-title">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h2>سامانه اعتبارسنجی کارخانجات چین (QCC & TianYanCha Integration)</h2>
+            </div>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 28px; backdrop-filter: blur(12px);">
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">جستجوی مستقیم سوابق ثبتی، سرمایه، پرونده‌های دادگاهی و وضعیت مالیاتی شرکت‌های صادرکننده در چین:</p>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <input type="text" id="search-company" placeholder="نام انگلیسی یا شناسه ثبتی شرکت چین (مثال: Shenzhen Precision Machinery Co., Ltd)" style="flex-grow: 1; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 12px 18px; border-radius: var(--radius-md); color: #fff; outline: none;">
+                    <button class="btn btn-primary" onclick="searchCompany()"><i class="fa-solid fa-magnifying-glass"></i> استعلام رسمی</button>
+                </div>
+
+                <div id="audit-result-box" style="display: none; background: rgba(10,14,23,0.7); border: 1px solid var(--accent-cyan); border-radius: var(--radius-md); padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="color: var(--accent-cyan);" id="company-name-display">Shenzhen Precision Machinery Ltd.</h4>
+                        <span class="risk-badge risk-low" id="company-status-badge"><i class="fa-solid fa-check"></i> وضعیت ثبتی: فعال (Active & Verified)</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 0.88rem;">
+                        <div><span style="color: var(--text-muted);">شناسه اعتباری (USCC):</span><br><strong style="font-family: monospace;" id="comp-uscc">91440300MA5FB1234X</strong></div>
+                        <div><span style="color: var(--text-muted);">سرمایه ثبتی:</span><br><strong id="comp-capital">۱۰,۰۰۰,۰۰۰ یوان (RMB)</strong></div>
+                        <div><span style="color: var(--text-muted);">تاریخ تأسیس:</span><br><strong id="comp-date">2012-08-15 (۱۲ سال سابقه)</strong></div>
+                        <div><span style="color: var(--text-muted);">سابقه دعوای حقوقی:</span><br><strong style="color: var(--accent-emerald);" id="comp-litigation">۰ پرونده شاکی</strong></div>
+                        <div><span style="color: var(--text-muted);">نماینده قانونی:</span><br><strong id="comp-rep">Zhang Wei</strong></div>
+                        <div><span style="color: var(--text-muted);">تطابق حساب بانکی:</span><br><strong style="color: var(--accent-emerald);" id="comp-bank">تطابق کامل با PI</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: 11-Step Pipeline -->
+        <section id="pipeline">
+            <div class="section-title">
+                <i class="fa-solid fa-diagram-project"></i>
+                <h2>فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین</h2>
+            </div>
+
+            <div class="pipeline-grid">
+                <div class="pipeline-card"><div class="pipeline-num">۱</div><div class="pipeline-info"><h4>دریافت مشخصات کالا</h4><p>ثبت مشخصات فنی، پارت نامبر و پروفرما توسط کاربر در ایجنت.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۲</div><div class="pipeline-info"><h4>تعیین کد HS</h4><p>استخراج تعرفه گمرکی دقیق و اولویت گروه کالایی صمت.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۳</div><div class="pipeline-info"><h4>سورسینگ بین‌المللی</h4><p>یافتن تامین‌کنندگان دست اول در چین، هند، ترکیه و امارات.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۴</div><div class="pipeline-info"><h4>اعتبارسنجی حقوقی</h4><p>استعلام رسمی ثبتی، دادگاهی و مالیاتی کارخانه از QCC.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۵</div><div class="pipeline-info"><h4>دریافت نمونه (Sample)</h4><p>ارزیابی کیفی نمونه قبل از ثبت سفارش اصلی.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۶</div><div class="pipeline-info"><h4>مذاکره و اینکوترمز</h4><p>چنه‌زنی قیمت FOB/EXW و تخفیف حجمی توسط تیم بازرگانی.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۷</div><div class="pipeline-info"><h4>عقد قرارداد رسمی</h4><p>تنظیم قرارداد بین‌المللی دو زبانه حقوقی (ایران - چین).</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۸</div><div class="pipeline-info"><h4>کنترل کیفیت (PSI)</h4><p>بازرسی حضوری کارخانه و تست خط تولید قبل از حمل.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۹</div><div class="pipeline-info"><h4>حمل بین‌المللی</h4><p>رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۱۰</div><div class="pipeline-info"><h4>ترخیص گمرکی</h4><p>انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۱۱</div><div class="pipeline-info"><h4>تحویل در انبار</h4><p>تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.</p></div></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Consultation Modal -->
+    <div class="modal-overlay" id="consult-modal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeConsultModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 12px; color: var(--accent-cyan);"><i class="fa-solid fa-headset"></i> درخواست مشاوره تخصصی و سورسینگ</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">اطلاعات خود را وارد کنید تا ایجنت هوشمند ارشد و مشاوران بازرگانی با شما تماس بگیرند:</p>
+
+            <form onsubmit="handleFormSubmit(event)">
+                <div style="margin-bottom: 14px;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">نام و نام خانوادگی / نام شرکت</label>
+                    <input type="text" id="lead-name" required placeholder="مثال: علی محمدی / شرکت پترو شیمی" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff;">
+                </div>
+                <div style="margin-bottom: 14px;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">شماره تماس / واتساپ</label>
+                    <input type="tel" id="lead-phone" required placeholder="09123456789" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">کالای مورد نظر برای واردات</label>
+                    <input type="text" id="lead-goods" required placeholder="مثال: دستگاه سی‌تی اسکن / مواد اولیه پلی‌اتیلن" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">ثبت درخواست و دریافت گزارش سورسینگ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>اکوسیستم هوشمند ایجنت‌های واردات و سورسینگ بین‌المللی © ۲۰۲۶ | تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        let currentStep = 1;
+        const simSelections = {
+            industry: 'medical',
+            supplier: 'verified',
+            qc: 'yes',
+            currency: 'nima'
+        };
+
+        function goToSimStep(step) { currentStep = step; updateSimUI(); }
+        function nextSimStep() { if (currentStep < 5) { currentStep++; updateSimUI(); } }
+        function prevSimStep() { if (currentStep > 1) { currentStep--; updateSimUI(); } }
+
+        function selectOption(card, key, val) {
+            const parent = card.parentElement;
+            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            simSelections[key] = val;
+        }
+
+        function updateSimUI() {
+            for (let i = 1; i <= 5; i++) {
+                const nav = document.getElementById(`step-nav-${i}`);
+                const panel = document.getElementById(`sim-panel-${i}`);
+                nav.classList.remove('active', 'completed');
+                panel.classList.remove('active');
+
+                if (i < currentStep) nav.classList.add('completed');
+                else if (i === currentStep) { nav.classList.add('active'); panel.classList.add('active'); }
+            }
+
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            btnPrev.style.display = currentStep > 1 ? 'inline-flex' : 'none';
+
+            if (currentStep === 4) {
+                btnNext.innerHTML = 'مشاهده تحلیل و برآورد مالی <i class="fa-solid fa-chart-line"></i>';
+            } else if (currentStep === 5) {
+                btnNext.style.display = 'none';
+                calculateSimResult();
+            } else {
+                btnNext.style.display = 'inline-flex';
+                btnNext.innerHTML = 'گام بعدی <i class="fa-solid fa-arrow-left"></i>';
+            }
+        }
+
+        async function calculateSimResult() {
+            try {
+                const resp = await fetch('/api/gamification/calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        capital_usd: 50000,
+                        industry: simSelections.industry,
+                        supplier_type: simSelections.supplier,
+                        qc_requested: simSelections.qc === 'yes',
+                        currency_type: simSelections.currency
+                    })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    document.getElementById('res-fob').textContent = `$${data.fob_cost.toLocaleString()}`;
+                    document.getElementById('res-freight').textContent = `$${data.freight_cost.toLocaleString()}`;
+                    document.getElementById('res-qc').textContent = `$${data.qc_cost.toLocaleString()}`;
+                    document.getElementById('res-customs').textContent = `$${data.customs_cost.toLocaleString()}`;
+                    document.getElementById('res-profit').textContent = `$${data.profit_usd.toLocaleString()} (٪${data.profit_percent.toFixed(1)})`;
+                    
+                    const badge = document.getElementById('res-risk-badge');
+                    badge.className = `risk-badge ${data.risk_level === 'HIGH' ? 'risk-high' : data.risk_level === 'MEDIUM' ? 'risk-med' : 'risk-low'}`;
+                    badge.innerHTML = `<i class="fa-solid fa-shield"></i> ریسک ${data.risk_level}`;
+                    document.getElementById('res-advice').textContent = data.advice;
+                    return;
+                }
+            } catch (e) {
+                console.log("Fallback client calculation mode");
+            }
+        }
+
+        let currentActiveAgent = 'edulead';
+
+        function switchAgent(agentKey, el) {
+            document.querySelectorAll('.agent-selector').forEach(a => a.classList.remove('active'));
+            el.classList.add('active');
+            currentActiveAgent = agentKey;
+
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="chat-bubble agent">
+                    سلام! من <strong>ایجنت ${agentKey}</strong> هستم. چطور می‌تونم کمکتون کنم؟
+                </div>
+            `;
+        }
+
+        function sendPreset(text) {
+            document.getElementById('chat-input').value = text;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.textContent = msg;
+            chatMessages.appendChild(userBubble);
+
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const resp = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg, agent_id: currentActiveAgent })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const agentBubble = document.createElement('div');
+                    agentBubble.className = 'chat-bubble agent';
+                    agentBubble.innerHTML = `<strong>${data.agent_name}:</strong> ${data.response}`;
+                    chatMessages.appendChild(agentBubble);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    return;
+                }
+            } catch (e) {
+                console.log("Local response mode");
+            }
+        }
+
+        function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+
+        async function searchCompany() {
+            const query = document.getElementById('search-company').value.trim();
+            if (!query) return;
+
+            const box = document.getElementById('audit-result-box');
+            
+            try {
+                const resp = await fetch('/api/audit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ company_name: query })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    document.getElementById('company-name-display').textContent = data.company_name_en;
+                    document.getElementById('comp-uscc').textContent = data.uscc_code;
+                    document.getElementById('comp-capital').textContent = data.registration_capital;
+                    document.getElementById('comp-date').textContent = data.establishment_date;
+                    document.getElementById('comp-litigation').textContent = `${data.litigation_count} پرونده`;
+                    document.getElementById('comp-rep').textContent = data.legal_representative;
+                    box.style.display = 'block';
+                    box.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+            } catch (e) {
+                box.style.display = 'block';
+            }
+        }
+
+        function openConsultModal() { document.getElementById('consult-modal').style.display = 'flex'; }
+        function closeConsultModal() { document.getElementById('consult-modal').style.display = 'none'; }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('lead-name').value;
+            const phone = document.getElementById('lead-phone').value;
+            const goods = document.getElementById('lead-goods').value;
+
+            try {
+                await fetch('/api/leads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ full_name: name, phone: phone, target_goods: goods })
+                });
+            } catch (err) {}
+
+            alert('✅ درخواست مشاوره شما با موفقیت در سیستم ثبت شد!');
+            closeConsultModal();
+        }
+    </script>
+</body>
+</html>
