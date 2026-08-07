@@ -876,163 +876,163 @@
                 <div class="sim-steps-header">
                     <div class="step-item active" onclick="goToSimStep(1)" id="step-nav-1">
                         <div class="step-number">۱</div>
-                        <div class="step-title">انتخاب صنعت</div>
+                        <div class="step-title" data-i18n="step1_title">انتخاب صنعت</div>
                     </div>
                     <div class="step-item" onclick="goToSimStep(2)" id="step-nav-2">
                         <div class="step-number">۲</div>
-                        <div class="step-title">سورسینگ و تامین‌کننده</div>
+                        <div class="step-title" data-i18n="step2_title">سورسینگ و تامین‌کننده</div>
                     </div>
                     <div class="step-item" onclick="goToSimStep(3)" id="step-nav-3">
                         <div class="step-number">۳</div>
-                        <div class="step-title">اعتبارسنجی و QC</div>
+                        <div class="step-title" data-i18n="step3_title">اعتبارسنجی و QC</div>
                     </div>
                     <div class="step-item" onclick="goToSimStep(4)" id="step-nav-4">
                         <div class="step-number">۴</div>
-                        <div class="step-title">ارز و ترخیص</div>
+                        <div class="step-title" data-i18n="step4_title">ارز و ترخیص</div>
                     </div>
                     <div class="step-item" onclick="goToSimStep(5)" id="step-nav-5">
                         <div class="step-number">۵</div>
-                        <div class="step-title">نتایج و سود تقریبی</div>
+                        <div class="step-title" data-i18n="step5_title">نتایج و سود تقریبی</div>
                     </div>
                 </div>
 
                 <div class="sim-content">
                     <!-- Step 1 Panel -->
                     <div class="sim-panel active" id="sim-panel-1">
-                        <h3>مرحله اول: صنعت و کالای هدف خود را انتخاب کنید</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;">فرض کنید ۵۰,۰۰۰ دلار سرمایه اولیه برای واردات دارید. کدام حوزه انتخاب شماست؟</p>
+                        <h3 data-i18n="p1_title">مرحله اول: صنعت و کالای هدف خود را انتخاب کنید</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p1_desc">فرض کنید ۵۰,۰۰۰ دلار سرمایه اولیه برای واردات دارید. کدام حوزه انتخاب شماست؟</p>
                         <div class="option-grid">
                             <div class="option-card selected" onclick="selectOption(this, 'industry', 'medical')">
                                 <div class="option-icon"><i class="fa-solid fa-stethoscopes"></i></div>
-                                <h3>تجهیزات پزشکی و آزمایشگاهی</h3>
-                                <p>حاشیه سود بالا، نیازمند مجوز اداره تجهیزات پزشکی و استاندارد CE/FDA</p>
+                                <h3 data-i18n="opt_med_t">تجهیزات پزشکی و آزمایشگاهی</h3>
+                                <p data-i18n="opt_med_d">حاشیه سود بالا، نیازمند مجوز اداره تجهیزات پزشکی و استاندارد CE/FDA</p>
                             </div>
                             <div class="option-card" onclick="selectOption(this, 'industry', 'machinery')">
                                 <div class="option-icon"><i class="fa-solid fa-industry"></i></div>
-                                <h3>ماشین‌آلات صنعتی و خطوط تولید</h3>
-                                <p>تقاضای بالا در صنایع مادر، نیازمند بازرسی فنی و تست کارکرد PSI</p>
+                                <h3 data-i18n="opt_mac_t">ماشین‌آلات صنعتی و خطوط تولید</h3>
+                                <p data-i18n="opt_mac_d">تقاضای بالا در صنایع مادر، نیازمند بازرسی فنی و تست کارکرد PSI</p>
                             </div>
                             <div class="option-card" onclick="selectOption(this, 'industry', 'raw_materials')">
                                 <div class="option-icon"><i class="fa-solid fa-flask-vial"></i></div>
-                                <h3>مواد اولیه شیمیایی و پلیمری</h3>
-                                <p>خرید حجمی، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی استاندارد</p>
+                                <h3 data-i18n="opt_raw_t">مواد اولیه شیمیایی و پلیمری</h3>
+                                <p data-i18n="opt_raw_d">خرید حجمی، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی استاندارد</p>
                             </div>
                             <div class="option-card" onclick="selectOption(this, 'industry', 'electronics')">
                                 <div class="option-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                                <h3>لوازم جانبی و محصولات دیجیتال</h3>
-                                <p>گردش مالی سریع، رقابت بالا، نیازمند کنترل کیفیت ۱۰۰ درصد کالا</p>
+                                <h3 data-i18n="opt_elec_t">لوازم جانبی و محصولات دیجیتال</h3>
+                                <p data-i18n="opt_elec_d">گردش مالی سریع، رقابت بالا، نیازمند کنترل کیفیت ۱۰۰ درصد کالا</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 2 Panel -->
                     <div class="sim-panel" id="sim-panel-2">
-                        <h3>مرحله دوم: استراتژی انتخاب کارخانه در چین</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;">ایجنت دو تامین‌کننده در استان گوانگ‌دونگ پیدا کرده است. کدام را انتخاب می‌کنید؟</p>
+                        <h3 data-i18n="p2_title">مرحله دوم: استراتژی انتخاب کارخانه در چین</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p2_desc">ایجنت دو تامین‌کننده در استان گوانگ‌دونگ پیدا کرده است. کدام را انتخاب می‌کنید؟</p>
                         <div class="option-grid">
                             <div class="option-card selected" onclick="selectOption(this, 'supplier', 'verified')">
                                 <div class="option-icon"><i class="fa-solid fa-circle-check"></i></div>
-                                <h3>کارخانه B (دارای استعلام QCC و CE)</h3>
-                                <p>قیمت واقعی بازار. پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفیت PSI در چین.</p>
+                                <h3 data-i18n="opt_supp_b_t">کارخانه B (دارای استعلام QCC و CE)</h3>
+                                <p data-i18n="opt_supp_b_d">قیمت واقعی بازار. پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفیت PSI در چین.</p>
                             </div>
                             <div class="option-card" onclick="selectOption(this, 'supplier', 'cheap')">
                                 <div class="option-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                                <h3>تامین‌کننده A (قیمت ۱۸٪ ارزان‌تر)</h3>
-                                <p>بدون ثبت رسمی در QCC، تقاضای ۱۰۰٪ تسویه حساب قبل از ارسال کالا!</p>
+                                <h3 data-i18n="opt_supp_a_t">تامین‌کننده A (قیمت ۱۸٪ ارزان‌تر)</h3>
+                                <p data-i18n="opt_supp_a_d">بدون ثبت رسمی در QCC، تقاضای ۱۰۰٪ تسویه حساب قبل از ارسال کالا!</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 3 Panel -->
                     <div class="sim-panel" id="sim-panel-3">
-                        <h3>مرحله سوم: بازرسی کیفیت قبل از حمل (PSI)</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;">آیا تمایل دارید قبل از تسویه حساب و بارگیری، تیم بازرسی حضوری در کارخانه حاضر شود؟</p>
+                        <h3 data-i18n="p3_title">مرحله سوم: بازرسی کیفیت قبل از حمل (PSI)</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p3_desc">آیا تمایل دارید قبل از تسویه حساب و بارگیری، تیم بازرسی حضوری در کارخانه حاضر شود؟</p>
                         <div class="option-grid">
                             <div class="option-card selected" onclick="selectOption(this, 'qc', 'yes')">
                                 <div class="option-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                                <h3>انجام بازرسی کیفیت کامل (PSI & Sampling)</h3>
-                                <p>هزینه بازرس: ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تست نمونه.</p>
+                                <h3 data-i18n="opt_qc_yes_t">انجام بازرسی کیفیت کامل (PSI & Sampling)</h3>
+                                <p data-i18n="opt_qc_yes_d">هزینه بازرس: ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تست نمونه.</p>
                             </div>
                             <div class="option-card" onclick="selectOption(this, 'qc', 'no')">
                                 <div class="option-icon"><i class="fa-solid fa-ban"></i></div>
-                                <h3>صرفه‌جویی در هزینه بازرسی</h3>
-                                <p>اعتماد به تصاویر و فیلم‌های فرستاده شده توسط خود کارخانه فروشنده.</p>
+                                <h3 data-i18n="opt_qc_no_t">صرفه‌جویی در هزینه بازرسی</h3>
+                                <p data-i18n="opt_qc_no_d">اعتماد به تصاویر و فیلم‌های فرستاده شده توسط خود کارخانه فروشنده.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 4 Panel -->
                     <div class="sim-panel" id="sim-panel-4">
-                        <h3>مرحله چهارم: روش تخصیص ارز و ترخیص گمرکی</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;">نوع ارز و روش ترخیص کالا در ایران را مشخص کنید:</p>
+                        <h3 data-i18n="p4_title">مرحله چهارم: روش تخصیص ارز و ترخیص گمرکی</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p4_desc">نوع ارز و روش ترخیص کالا در ایران را مشخص کنید:</p>
                         <div class="option-grid">
                             <div class="option-card selected" onclick="selectOption(this, 'currency', 'nima')">
                                 <div class="option-icon"><i class="fa-solid fa-building-columns"></i></div>
-                                <h3>ارز نیما / تالار دوم مرکز مبادله</h3>
-                                <p>نرخ دولتی، صف تخصیص ۳۰ تا ۶۰ روزه، کاهش هزینه تمام شده کالا</p>
+                                <h3 data-i18n="opt_curr_nima_t">ارز نیما / تالار دوم مرکز مبادله</h3>
+                                <p data-i18n="opt_curr_nima_d">نرخ دولتی، صف تخصیص ۳۰ تا ۶۰ روزه، کاهش هزینه تمام شده کالا</p>
                             </div>
                             <div class="option-card" onclick="selectOption(this, 'currency', 'export')">
                                 <div class="option-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
-                                <h3>ارز حاصل از صادرات خود/غیر</h3>
-                                <p>تخصیص سریع‌تر، هزینه بالاتر، مناسب برای سفارش‌های فوری و خطوط تولید</p>
+                                <h3 data-i18n="opt_curr_exp_t">ارز حاصل از صادرات خود/غیر</h3>
+                                <p data-i18n="opt_curr_exp_d">تخصیص سریع‌تر، هزینه بالاتر، مناسب برای سفارش‌های فوری و خطوط تولید</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 5 Panel (Report Result) -->
                     <div class="sim-panel" id="sim-panel-5">
-                        <h3>🎉 تحلیل جامع و نتیجه شبیه‌سازی واردات شما</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 20px;">این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شده است:</p>
+                        <h3 data-i18n="p5_title">🎉 تحلیل جامع و نتیجه شبیه‌سازی واردات شما</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="p5_desc">این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شده است:</p>
                         
                         <div class="report-grid">
                             <div class="report-main">
-                                <h4 style="margin-bottom: 16px; color: var(--accent-cyan);">جدول برآورد مالی و هزینه‌ها</h4>
+                                <h4 style="margin-bottom: 16px; color: var(--accent-cyan);" data-i18n="rep_header">جدول برآورد مالی و هزینه‌ها</h4>
                                 <div class="breakdown-row">
-                                    <span>سرمایه اولیه:</span>
+                                    <span data-i18n="lbl_capital">سرمایه اولیه:</span>
                                     <strong>۵۰,۰۰۰ دلار</strong>
                                 </div>
                                 <div class="breakdown-row">
-                                    <span>هزینه کالا (FOB China):</span>
+                                    <span data-i18n="lbl_fob">هزینه کالا (FOB China):</span>
                                     <span id="res-fob">$41,500</span>
                                 </div>
                                 <div class="breakdown-row">
-                                    <span>حمل بین‌المللی & بیمه:</span>
+                                    <span data-i18n="lbl_freight">حمل بین‌المللی & بیمه:</span>
                                     <span id="res-freight">$3,200</span>
                                 </div>
                                 <div class="breakdown-row">
-                                    <span>اعتبارسنجی & بازرسی کیفیت (PSI):</span>
+                                    <span data-i18n="lbl_qc">اعتبارسنجی & بازرسی کیفیت (PSI):</span>
                                     <span id="res-qc">$450</span>
                                 </div>
                                 <div class="breakdown-row">
-                                    <span>حقوق و عوارض گمرکی (تقریبی):</span>
+                                    <span data-i18n="lbl_customs">حقوق و عوارض گمرکی (تقریبی):</span>
                                     <span id="res-customs">$4,850</span>
                                 </div>
                                 <div class="breakdown-row" style="border-top: 2px solid var(--accent-cyan); padding-top: 12px; font-size: 1.1rem;">
-                                    <span>سود خالص تخمینی:</span>
+                                    <span data-i18n="lbl_profit">سود خالص تخمینی:</span>
                                     <strong style="color: var(--accent-emerald);" id="res-profit">$12,400 (٪24.8)</strong>
                                 </div>
                             </div>
 
                             <div class="report-side">
                                 <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: var(--radius-md);">
-                                    <h5 style="margin-bottom: 8px;">سطح ریسک پروژه:</h5>
+                                    <h5 style="margin-bottom: 8px;" data-i18n="lbl_risk_level">سطح ریسک پروژه:</h5>
                                     <div id="res-risk-badge" class="risk-badge risk-low"><i class="fa-solid fa-shield-check"></i> ریسک بسیار پایین</div>
                                 </div>
 
                                 <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: var(--radius-md);">
-                                    <h5 style="margin-bottom: 8px; color: var(--accent-amber);"><i class="fa-solid fa-lightbulb"></i> توصیه‌های ایجنت:</h5>
+                                    <h5 style="margin-bottom: 8px; color: var(--accent-amber);"><i class="fa-solid fa-lightbulb"></i> <span data-i18n="lbl_advice">توصیه‌های ایجنت:</span></h5>
                                     <p id="res-advice" style="font-size: 0.82rem; color: var(--text-secondary);">با انتخاب اعتبارسنجی QCC و بازرسی PSI، ریسک دریافت کالای بی‌کیفیت و کلاهبرداری صفر شد!</p>
                                 </div>
 
-                                <button class="btn btn-primary" onclick="openConsultModal()"><i class="fa-solid fa-headset"></i> دریافت مشاوره تخصصی سورسینگ</button>
+                                <button class="btn btn-primary" onclick="openConsultModal()"><i class="fa-solid fa-headset"></i> <span data-i18n="btn_consult">دریافت مشاوره تخصصی سورسینگ</span></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="sim-actions">
-                    <button class="btn btn-secondary" id="btn-prev" onclick="prevSimStep()" style="display: none;"><i class="fa-solid fa-arrow-right"></i> گام قبلی</button>
-                    <button class="btn btn-primary" id="btn-next" onclick="nextSimStep()">گام بعدی <i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="btn btn-secondary" id="btn-prev" onclick="prevSimStep()" style="display: none;"><i class="fa-solid fa-arrow-right"></i> <span data-i18n="btn_prev">گام قبلی</span></button>
+                    <button class="btn btn-primary" id="btn-next" onclick="nextSimStep()"><span data-i18n="btn_next">گام بعدی</span> <i class="fa-solid fa-arrow-left"></i></button>
                 </div>
             </div>
         </section>
@@ -1041,61 +1041,61 @@
         <section id="agents">
             <div class="section-title">
                 <i class="fa-solid fa-network-wired"></i>
-                <h2>شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)</h2>
+                <h2 data-i18n="agents_heading">شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)</h2>
             </div>
 
             <div class="agent-playground">
                 <div class="agent-sidebar">
-                    <h4 style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;">انتخاب ایجنت فعال:</h4>
+                    <h4 style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;" data-i18n="active_agent_lbl">انتخاب ایجنت فعال:</h4>
                     
                     <div class="agent-selector active" onclick="switchAgent('edulead', this)">
                         <div class="agent-avatar" style="background: linear-gradient(135deg, #3b82f6, #00f2fe);"><i class="fa-solid fa-graduation-cap"></i></div>
                         <div class="agent-info">
-                            <h4>ایجنت EduLead</h4>
-                            <p>آموزش، جذب و گیمیفیکیشن</p>
+                            <h4>EduLead Agent</h4>
+                            <p data-i18n="edulead_sub">آموزش، جذب و گیمیفیکیشن</p>
                         </div>
                     </div>
 
                     <div class="agent-selector" onclick="switchAgent('sourcing', this)">
                         <div class="agent-avatar" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-boxes-packing"></i></div>
                         <div class="agent-info">
-                            <h4>ایجنت Sourcing & HS</h4>
-                            <p>تعیین HS Code و استعلام قیمت</p>
+                            <h4>Sourcing & HS Agent</h4>
+                            <p data-i18n="sourcing_sub">تعیین HS Code و استعلام قیمت</p>
                         </div>
                     </div>
 
                     <div class="agent-selector" onclick="switchAgent('risk', this)">
                         <div class="agent-avatar" style="background: linear-gradient(135deg, #f43f5e, #e11d48);"><i class="fa-solid fa-shield-halved"></i></div>
                         <div class="agent-info">
-                            <h4>ایجنت Risk & Audit</h4>
-                            <p>استعلام QCC چین و حقوقی</p>
+                            <h4>Risk & Audit Agent</h4>
+                            <p data-i18n="risk_sub">استعلام QCC چین و حقوقی</p>
                         </div>
                     </div>
 
                     <div class="agent-selector" onclick="switchAgent('logistics', this)">
                         <div class="agent-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);"><i class="fa-solid fa-ship"></i></div>
                         <div class="agent-info">
-                            <h4>ایجنت Logistics & Customs</h4>
-                            <p>حمل، تخصیص ارز و ترخیص</p>
+                            <h4>Logistics & Customs Agent</h4>
+                            <p data-i18n="logistics_sub">حمل، تخصیص ارز و ترخیص</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="chat-area">
                     <div class="preset-prompts" id="preset-container">
-                        <span class="preset-chip" onclick="sendPreset('مراحل واردات خط تولید چیست؟')">مراحل واردات خط تولید چیست؟</span>
-                        <span class="preset-chip" onclick="sendPreset('چطور از ثبت رسمی کارخانه در چین مطمئن بشم؟')">اعتبارسنجی کارخانه در چین</span>
-                        <span class="preset-chip" onclick="sendPreset('کد HS تجهیزات دندانپزشکی چنده؟')">استعلام کد HS</span>
+                        <span class="preset-chip" onclick="sendPreset('مراحل واردات خط تولید چیست؟')" data-i18n="chip1">مراحل واردات خط تولید چیست؟</span>
+                        <span class="preset-chip" onclick="sendPreset('چطور از ثبت رسمی کارخانه در چین مطمئن بشم؟')" data-i18n="chip2">اعتبارسنجی کارخانه در چین</span>
+                        <span class="preset-chip" onclick="sendPreset('کد HS تجهیزات دندانپزشکی چنده؟')" data-i18n="chip3">استعلام کد HS</span>
                     </div>
 
                     <div class="chat-messages" id="chat-messages">
-                        <div class="chat-bubble agent">
+                        <div class="chat-bubble agent" id="initial-agent-msg">
                             سلام! من <strong>ایجنت EduLead</strong> هستم. چطور می‌تونم در زمینه آموزش مراحل واردات، محاسبه سود یا انتخاب بهترین کشور برای خرید کمکتون کنم؟
                         </div>
                     </div>
 
                     <div class="chat-input-wrapper">
-                        <input type="text" id="chat-input" placeholder="سوال خود را از ایجنت هوشمند بپرسید..." onkeypress="handleKeyPress(event)">
+                        <input type="text" id="chat-input" placeholder="سوال خود را از ایجنت هوشمند بپرسید..." data-i18n-ph="input_placeholder" onkeypress="handleKeyPress(event)">
                         <button class="btn btn-primary" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
@@ -1106,15 +1106,15 @@
         <section id="verification" style="margin-bottom: 60px;">
             <div class="section-title">
                 <i class="fa-solid fa-shield-halved"></i>
-                <h2>سامانه اعتبارسنجی کارخانجات چین (QCC & TianYanCha Integration)</h2>
+                <h2 data-i18n="audit_heading">سامانه اعتبارسنجی کارخانجات چین (QCC & TianYanCha Integration)</h2>
             </div>
 
             <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 28px; backdrop-filter: blur(12px);">
-                <p style="color: var(--text-secondary); margin-bottom: 20px;">جستجوی مستقیم سوابق ثبتی، سرمایه، پرونده‌های دادگاهی و وضعیت مالیاتی شرکت‌های صادرکننده در چین:</p>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="audit_desc">جستجوی مستقیم سوابق ثبتی، سرمایه، پرونده‌های دادگاهی و وضعیت مالیاتی شرکت‌های صادرکننده در چین:</p>
 
                 <div style="display: flex; gap: 12px; margin-bottom: 24px;">
-                    <input type="text" id="search-company" placeholder="نام انگلیسی یا شناسه ثبتی شرکت چین (مثال: Shenzhen Precision Machinery Co., Ltd)" style="flex-grow: 1; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 12px 18px; border-radius: var(--radius-md); color: #fff; outline: none;">
-                    <button class="btn btn-primary" onclick="searchCompany()"><i class="fa-solid fa-magnifying-glass"></i> استعلام رسمی</button>
+                    <input type="text" id="search-company" placeholder="نام انگلیسی یا شناسه ثبتی شرکت چین (مثال: Shenzhen Precision Machinery Co., Ltd)" data-i18n-ph="audit_placeholder" style="flex-grow: 1; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 12px 18px; border-radius: var(--radius-md); color: var(--text-primary); outline: none;">
+                    <button class="btn btn-primary" onclick="searchCompany()"><i class="fa-solid fa-magnifying-glass"></i> <span data-i18n="audit_btn">استعلام رسمی</span></button>
                 </div>
 
                 <div id="audit-result-box" style="display: none; background: rgba(10,14,23,0.7); border: 1px solid var(--accent-cyan); border-radius: var(--radius-md); padding: 20px;">
@@ -1124,12 +1124,12 @@
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 0.88rem;">
-                        <div><span style="color: var(--text-muted);">شناسه اعتباری (USCC):</span><br><strong style="font-family: monospace;" id="comp-uscc">91440300MA5FB1234X</strong></div>
-                        <div><span style="color: var(--text-muted);">سرمایه ثبتی:</span><br><strong id="comp-capital">۱۰,۰۰۰,۰۰۰ یوان (RMB)</strong></div>
-                        <div><span style="color: var(--text-muted);">تاریخ تأسیس:</span><br><strong id="comp-date">2012-08-15 (۱۲ سال سابقه)</strong></div>
-                        <div><span style="color: var(--text-muted);">سابقه دعوای حقوقی:</span><br><strong style="color: var(--accent-emerald);" id="comp-litigation">۰ پرونده شاکی</strong></div>
-                        <div><span style="color: var(--text-muted);">نماینده قانونی:</span><br><strong id="comp-rep">Zhang Wei</strong></div>
-                        <div><span style="color: var(--text-muted);">تطابق حساب بانکی:</span><br><strong style="color: var(--accent-emerald);" id="comp-bank">تطابق کامل با PI</strong></div>
+                        <div><span style="color: var(--text-muted);" data-i18n="uscc_lbl">شناسه اعتباری (USCC):</span><br><strong style="font-family: monospace;" id="comp-uscc">91440300MA5FB1234X</strong></div>
+                        <div><span style="color: var(--text-muted);" data-i18n="capital_lbl">سرمایه ثبتی:</span><br><strong id="comp-capital">۱۰,۰۰۰,۰۰۰ یوان (RMB)</strong></div>
+                        <div><span style="color: var(--text-muted);" data-i18n="date_lbl">تاریخ تأسیس:</span><br><strong id="comp-date">2012-08-15 (۱۲ سال سابقه)</strong></div>
+                        <div><span style="color: var(--text-muted);" data-i18n="litigation_lbl">سابقه دعوای حقوقی:</span><br><strong style="color: var(--accent-emerald);" id="comp-litigation">۰ پرونده شاکی</strong></div>
+                        <div><span style="color: var(--text-muted);" data-i18n="rep_lbl">نماینده قانونی:</span><br><strong id="comp-rep">Zhang Wei</strong></div>
+                        <div><span style="color: var(--text-muted);" data-i18n="bank_lbl">تطابق حساب بانکی:</span><br><strong style="color: var(--accent-emerald);" id="comp-bank">تطابق کامل با PI</strong></div>
                     </div>
                 </div>
             </div>
@@ -1139,21 +1139,21 @@
         <section id="pipeline">
             <div class="section-title">
                 <i class="fa-solid fa-diagram-project"></i>
-                <h2>فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین</h2>
+                <h2 data-i18n="pipeline_heading">فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین</h2>
             </div>
 
             <div class="pipeline-grid">
-                <div class="pipeline-card"><div class="pipeline-num">۱</div><div class="pipeline-info"><h4>دریافت مشخصات کالا</h4><p>ثبت مشخصات فنی، پارت نامبر و پروفرما توسط کاربر در ایجنت.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۲</div><div class="pipeline-info"><h4>تعیین کد HS</h4><p>استخراج تعرفه گمرکی دقیق و اولویت گروه کالایی صمت.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۳</div><div class="pipeline-info"><h4>سورسینگ بین‌المللی</h4><p>یافتن تامین‌کنندگان دست اول در چین، هند، ترکیه و امارات.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۴</div><div class="pipeline-info"><h4>اعتبارسنجی حقوقی</h4><p>استعلام رسمی ثبتی، دادگاهی و مالیاتی کارخانه از QCC.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۵</div><div class="pipeline-info"><h4>دریافت نمونه (Sample)</h4><p>ارزیابی کیفی نمونه قبل از ثبت سفارش اصلی.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۶</div><div class="pipeline-info"><h4>مذاکره و اینکوترمز</h4><p>چنه‌زنی قیمت FOB/EXW و تخفیف حجمی توسط تیم بازرگانی.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۷</div><div class="pipeline-info"><h4>عقد قرارداد رسمی</h4><p>تنظیم قرارداد بین‌المللی دو زبانه حقوقی (ایران - چین).</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۸</div><div class="pipeline-info"><h4>کنترل کیفیت (PSI)</h4><p>بازرسی حضوری کارخانه و تست خط تولید قبل از حمل.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۹</div><div class="pipeline-info"><h4>حمل بین‌المللی</h4><p>رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۱۰</div><div class="pipeline-info"><h4>ترخیص گمرکی</h4><p>انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.</p></div></div>
-                <div class="pipeline-card"><div class="pipeline-num">۱۱</div><div class="pipeline-info"><h4>تحویل در انبار</h4><p>تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۱</div><div class="pipeline-info"><h4 data-i18n="pipe1_t">دریافت مشخصات کالا</h4><p data-i18n="pipe1_d">ثبت مشخصات فنی، پارت نامبر و پروفرما توسط کاربر در ایجنت.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۲</div><div class="pipeline-info"><h4 data-i18n="pipe2_t">تعیین کد HS</h4><p data-i18n="pipe2_d">استخراج تعرفه گمرکی دقیق و اولویت گروه کالایی صمت.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۳</div><div class="pipeline-info"><h4 data-i18n="pipe3_t">سورسینگ بین‌المللی</h4><p data-i18n="pipe3_d">یافتن تامین‌کنندگان دست اول در چین، هند، ترکیه و امارات.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۴</div><div class="pipeline-info"><h4 data-i18n="pipe4_t">اعتبارسنجی حقوقی</h4><p data-i18n="pipe4_d">استعلام رسمی ثبتی، دادگاهی و مالیاتی کارخانه از QCC.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۵</div><div class="pipeline-info"><h4 data-i18n="pipe5_t">دریافت نمونه (Sample)</h4><p data-i18n="pipe5_d">ارزیابی کیفی نمونه قبل از ثبت سفارش اصلی.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۶</div><div class="pipeline-info"><h4 data-i18n="pipe6_t">مذاکره و اینکوترمز</h4><p data-i18n="pipe6_d">چنه‌زنی قیمت FOB/EXW و تخفیف حجمی توسط تیم بازرگانی.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۷</div><div class="pipeline-info"><h4 data-i18n="pipe7_t">عقد قرارداد رسمی</h4><p data-i18n="pipe7_d">تنظیم قرارداد بین‌المللی دو زبانه حقوقی (ایران - چین).</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۸</div><div class="pipeline-info"><h4 data-i18n="pipe8_t">کنترل کیفیت (PSI)</h4><p data-i18n="pipe8_d">بازرسی حضوری کارخانه و تست خط تولید قبل از حمل.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۹</div><div class="pipeline-info"><h4 data-i18n="pipe9_t">حمل بین‌المللی</h4><p data-i18n="pipe9_d">رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۱۰</div><div class="pipeline-info"><h4 data-i18n="pipe10_t">ترخیص گمرکی</h4><p data-i18n="pipe10_d">انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.</p></div></div>
+                <div class="pipeline-card"><div class="pipeline-num">۱۱</div><div class="pipeline-info"><h4 data-i18n="pipe11_t">تحویل در انبار</h4><p data-i18n="pipe11_d">تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.</p></div></div>
             </div>
         </section>
     </div>
@@ -1162,23 +1162,23 @@
     <div class="modal-overlay" id="consult-modal">
         <div class="modal-card">
             <button class="modal-close" onclick="closeConsultModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="margin-bottom: 12px; color: var(--accent-cyan);"><i class="fa-solid fa-headset"></i> درخواست مشاوره تخصصی و سورسینگ</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">اطلاعات خود را وارد کنید تا ایجنت هوشمند ارشد و مشاوران بازرگانی با شما تماس بگیرند:</p>
+            <h3 style="margin-bottom: 12px; color: var(--accent-cyan);"><i class="fa-solid fa-headset"></i> <span data-i18n="modal_title">درخواست مشاوره تخصصی و سورسینگ</span></h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="modal_desc">اطلاعات خود را وارد کنید تا ایجنت هوشمند ارشد و مشاوران بازرگانی با شما تماس بگیرند:</p>
 
             <form onsubmit="handleFormSubmit(event)">
                 <div style="margin-bottom: 14px;">
-                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">نام و نام خانوادگی / نام شرکت</label>
-                    <input type="text" id="lead-name" required placeholder="مثال: علی محمدی / شرکت پترو شیمی" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;" data-i18n="modal_name_lbl">نام و نام خانوادگی / نام شرکت</label>
+                    <input type="text" id="lead-name" required placeholder="مثال: علی محمدی / شرکت پترو شیمی" data-i18n-ph="modal_name_ph" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
                 </div>
                 <div style="margin-bottom: 14px;">
-                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">شماره تماس / واتساپ</label>
-                    <input type="tel" id="lead-phone" required placeholder="09123456789" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;" data-i18n="modal_phone_lbl">شماره تماس / واتساپ</label>
+                    <input type="tel" id="lead-phone" required placeholder="09123456789" data-i18n-ph="modal_phone_ph" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">کالای مورد نظر برای واردات</label>
-                    <input type="text" id="lead-goods" required placeholder="مثال: دستگاه سی‌تی اسکن / مواد اولیه پلی‌اتیلن" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;" data-i18n="modal_goods_lbl">کالای مورد نظر برای واردات</label>
+                    <input type="text" id="lead-goods" required placeholder="مثال: دستگاه سی‌تی اسکن / مواد اولیه پلی‌اتیلن" data-i18n-ph="modal_goods_ph" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">ثبت درخواست و دریافت گزارش سورسینگ</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" data-i18n="modal_submit_btn">ثبت درخواست و دریافت گزارش سورسینگ</button>
             </form>
         </div>
     </div>
@@ -1186,7 +1186,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>اکوسیستم هوشمند ایجنت‌های واردات و سورسینگ بین‌المللی © ۲۰۲۶ | تمامی حقوق محفوظ است.</p>
+            <p data-i18n="footer_text">اکوسیستم هوشمند ایجنت‌های واردات و سورسینگ بین‌المللی © ۲۰۲۶ | تمامی حقوق محفوظ است.</p>
         </div>
     </footer>
 
@@ -1454,15 +1454,93 @@
                 sim_heading: "شبیه‌ساز گیمیفیکیشن «استراتژی ۵۰,۰۰۰ دلاری واردات»",
                 step1_title: "انتخاب صنعت",
                 step2_title: "سورسینگ و تامین‌کننده",
-                step3_title: "بازرسی کیفیت (PSI)",
-                step4_title: "نوع ارز & گمرک",
-                step5_title: "تحلیل مالی",
+                step3_title: "اعتبارسنجی و QC",
+                step4_title: "ارز و ترخیص",
+                step5_title: "نتایج و سود تقریبی",
+                p1_title: "مرحله اول: صنعت و کالای هدف خود را انتخاب کنید",
+                p1_desc: "فرض کنید ۵۰,۰۰۰ دلار سرمایه اولیه برای واردات دارید. کدام حوزه انتخاب شماست؟",
+                opt_med_t: "تجهیزات پزشکی و آزمایشگاهی",
+                opt_med_d: "حاشیه سود بالا، نیازمند مجوز اداره تجهیزات پزشکی و استاندارد CE/FDA",
+                opt_mac_t: "ماشین‌آلات صنعتی و خطوط تولید",
+                opt_mac_d: "تقاضای بالا در صنایع مادر، نیازمند بازرسی فنی و تست کارکرد PSI",
+                opt_raw_t: "مواد اولیه شیمیایی و پلیمری",
+                opt_raw_d: "خرید حجمی، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی استاندارد",
+                opt_elec_t: "لوازم جانبی و محصولات دیجیتال",
+                opt_elec_d: "گردش مالی سریع، رقابت بالا، نیازمند کنترل کیفیت ۱۰۰ درصد کالا",
+                p2_title: "مرحله دوم: استراتژی انتخاب کارخانه در چین",
+                p2_desc: "ایجنت دو تامین‌کننده در استان گوانگ‌دونگ پیدا کرده است. کدام را انتخاب می‌کنید؟",
+                opt_supp_b_t: "کارخانه B (دارای استعلام QCC و CE)",
+                opt_supp_b_d: "قیمت واقعی بازار. پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفیت PSI در چین.",
+                opt_supp_a_t: "تامین‌کننده A (قیمت ۱۸٪ ارزان‌تر)",
+                opt_supp_a_d: "بدون ثبت رسمی در QCC، تقاضای ۱۰۰٪ تسویه حساب قبل از ارسال کالا!",
+                p3_title: "مرحله سوم: بازرسی کیفیت قبل از حمل (PSI)",
+                p3_desc: "آیا تمایل دارید قبل از تسویه حساب و بارگیری، تیم بازرسی حضوری در کارخانه حاضر شود؟",
+                opt_qc_yes_t: "انجام بازرسی کیفیت کامل (PSI & Sampling)",
+                opt_qc_yes_d: "هزینه بازرس: ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تست نمونه.",
+                opt_qc_no_t: "صرفه‌جویی در هزینه بازرسی",
+                opt_qc_no_d: "اعتماد به تصاویر و فیلم‌های فرستاده شده توسط خود کارخانه فروشنده.",
+                p4_title: "مرحله چهارم: روش تخصیص ارز و ترخیص گمرکی",
+                p4_desc: "نوع ارز و روش ترخیص کالا در ایران را مشخص کنید:",
+                opt_curr_nima_t: "ارز نیما / تالار دوم مرکز مبادله",
+                opt_curr_nima_d: "نرخ دولتی، صف تخصیص ۳۰ تا ۶۰ روزه، کاهش هزینه تمام شده کالا",
+                opt_curr_exp_t: "ارز حاصل از صادرات خود/غیر",
+                opt_curr_exp_d: "تخصیص سریع‌تر، هزینه بالاتر، مناسب برای سفارش‌های فوری و خطوط تولید",
+                p5_title: "🎉 تحلیل جامع و نتیجه شبیه‌سازی واردات شما",
+                p5_desc: "این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شده است:",
+                rep_header: "جدول برآورد مالی و هزینه‌ها",
+                lbl_capital: "سرمایه اولیه:",
+                lbl_fob: "هزینه کالا (FOB China):",
+                lbl_freight: "حمل بین‌المللی & بیمه:",
+                lbl_qc: "اعتبارسنجی & بازرسی کیفیت (PSI):",
+                lbl_customs: "حقوق و عوارض گمرکی (تقریبی):",
+                lbl_profit: "سود خالص تخمینی:",
+                lbl_risk_level: "سطح ریسک پروژه:",
+                lbl_advice: "توصیه‌های ایجنت:",
+                btn_consult: "دریافت مشاوره تخصصی سورسینگ",
                 btn_next: "گام بعدی",
                 btn_prev: "گام قبلی",
-                agents_heading: "شبکه ۵ ایجنت هوشمند اختصاصی (Multi-Agent Playground)",
-                audit_heading: "سامانه اعتبارسنجی رسمی کارخانجات چین (QCC & TianYanCha)",
-                audit_btn: "استعلام فوری در QCC چین",
-                pipeline_heading: "فرآیند ۱۱ مرحله‌ای سورسینگ تا ترخیص کالا",
+                agents_heading: "شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)",
+                active_agent_lbl: "انتخاب ایجنت فعال:",
+                edulead_sub: "آموزش، جذب و گیمیفیکیشن",
+                sourcing_sub: "تعیین HS Code و استعلام قیمت",
+                risk_sub: "استعلام QCC چین و حقوقی",
+                logistics_sub: "حمل، تخصیص ارز و ترخیص",
+                chip1: "مراحل واردات خط تولید چیست؟",
+                chip2: "اعتبارسنجی کارخانه در چین",
+                chip3: "استعلام کد HS",
+                input_placeholder: "سوال خود را از ایجنت هوشمند بپرسید...",
+                agent_initial_msg: "سلام! من <strong>ایجنت EduLead</strong> هستم. چطور می‌تونم در زمینه آموزش مراحل واردات، محاسبه سود یا انتخاب بهترین کشور برای خرید کمکتون کنم؟",
+                audit_heading: "سامانه اعتبارسنجی کارخانجات چین (QCC & TianYanCha Integration)",
+                audit_desc: "جستجوی مستقیم سوابق ثبتی، سرمایه، پرونده‌های دادگاهی و وضعیت مالیاتی شرکت‌های صادرکننده در چین:",
+                audit_placeholder: "نام انگلیسی یا شناسه ثبتی شرکت چین (مثال: Shenzhen Precision Machinery Co., Ltd)",
+                audit_btn: "استعلام رسمی",
+                uscc_lbl: "شناسه اعتباری (USCC):",
+                capital_lbl: "سرمایه ثبتی:",
+                date_lbl: "تاریخ تأسیس:",
+                litigation_lbl: "سابقه دعوای حقوقی:",
+                rep_lbl: "نماینده قانونی:",
+                bank_lbl: "تطابق حساب بانکی:",
+                pipeline_heading: "فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین",
+                pipe1_t: "دریافت مشخصات کالا", pipe1_d: "ثبت مشخصات فنی، پارت نامبر و پروفرما توسط کاربر در ایجنت.",
+                pipe2_t: "تعیین کد HS", pipe2_d: "استخراج تعرفه گمرکی دقیق و اولویت گروه کالایی صمت.",
+                pipe3_t: "سورسینگ بین‌المللی", pipe3_d: "یافتن تامین‌کنندگان دست اول در چین، هند، ترکیه و امارات.",
+                pipe4_t: "اعتبارسنجی حقوقی", pipe4_d: "استعلام رسمی ثبتی، دادگاهی و مالیاتی کارخانه از QCC.",
+                pipe5_t: "دریافت نمونه (Sample)", pipe5_d: "ارزیابی کیفی نمونه قبل از ثبت سفارش اصلی.",
+                pipe6_t: "مذاکره و اینکوترمز", pipe6_d: "چنه‌زنی قیمت FOB/EXW و تخفیف حجمی توسط تیم بازرگانی.",
+                pipe7_t: "عقد قرارداد رسمی", pipe7_d: "تنظیم قرارداد بین‌المللی دو زبانه حقوقی (ایران - چین).",
+                pipe8_t: "کنترل کیفیت (PSI)", pipe8_d: "بازرسی حضوری کارخانه و تست خط تولید قبل از حمل.",
+                pipe9_t: "حمل بین‌المللی", pipe9_d: "رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.",
+                pipe10_t: "ترخیص گمرکی", pipe10_d: "انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.",
+                pipe11_t: "تحویل در انبار", pipe11_d: "تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.",
+                modal_title: "درخواست مشاوره تخصصی و سورسینگ",
+                modal_desc: "اطلاعات خود را وارد کنید تا ایجنت هوشمند ارشد و مشاوران بازرگانی با شما تماس بگیرند:",
+                modal_name_lbl: "نام و نام خانوادگی / نام شرکت",
+                modal_name_ph: "مثال: علی محمدی / شرکت پترو شیمی",
+                modal_phone_lbl: "شماره تماس / واتساپ",
+                modal_phone_ph: "09123456789",
+                modal_goods_lbl: "کالای مورد نظر برای واردات",
+                modal_goods_ph: "مثال: دستگاه سی‌تی اسکن / مواد اولیه پلی‌اتیلن",
+                modal_submit_btn: "ثبت درخواست و دریافت گزارش سورسینگ",
                 footer_text: "اکوسیستم هوشمند ایجنت‌های واردات و سورسینگ بین‌المللی © ۲۰۲۶ | تمامی حقوق محفوظ است."
             },
             en: {
@@ -1481,15 +1559,93 @@
                 sim_heading: "Import Gamification Simulator ($50,000 Capital)",
                 step1_title: "Industry Sector",
                 step2_title: "Supplier Sourcing",
-                step3_title: "Quality Inspection (PSI)",
+                step3_title: "Quality Control (PSI)",
                 step4_title: "Currency & Customs",
                 step5_title: "Financial Analysis",
+                p1_title: "Step 1: Select Target Industry & Product",
+                p1_desc: "Assume you have $50,000 initial capital for importing. Which sector do you choose?",
+                opt_med_t: "Medical & Lab Equipment",
+                opt_med_d: "High profit margin, requires Medical Device Directorate approval & CE/FDA standard",
+                opt_mac_t: "Industrial Machinery & Production Lines",
+                opt_mac_d: "High demand in core industries, requires technical inspection & PSI testing",
+                opt_raw_t: "Chemical & Polymer Raw Materials",
+                opt_raw_d: "Bulk purchases, high sensitivity to Certificate of Analysis (COA) & packaging",
+                opt_elec_t: "Digital Accessories & Consumer Tech",
+                opt_elec_d: "Fast turnover, high competition, requires 100% pre-shipment quality control",
+                p2_title: "Step 2: China Factory Sourcing Strategy",
+                p2_desc: "AI agent identified two suppliers in Guangdong. Which one do you select?",
+                opt_supp_b_t: "Factory B (QCC Verified & CE Certified)",
+                opt_supp_b_d: "Fair market price. Terms: 30% advance + 70% after PSI quality inspection in China.",
+                opt_supp_a_t: "Supplier A (18% Cheaper Price)",
+                opt_supp_a_d: "Unverified on QCC registry, demands 100% full payment prior to shipping!",
+                p3_title: "Step 3: Pre-Shipment Quality Inspection (PSI)",
+                p3_desc: "Do you want an on-site inspection team at the factory before final payment?",
+                opt_qc_yes_t: "Perform Full Quality Inspection (PSI & Sampling)",
+                opt_qc_yes_d: "Inspector fee: $450. Full verification of operation, quantity, packaging & sample testing.",
+                opt_qc_no_t: "Save Inspection Cost",
+                opt_qc_no_d: "Rely solely on photos and videos sent directly by the supplier factory.",
+                p4_title: "Step 4: Currency Allocation & Customs Clearance",
+                p4_desc: "Select currency allocation type and customs clearance method:",
+                opt_curr_nima_t: "NIMA Currency / Central Exchange Hall 2",
+                opt_curr_nima_d: "Official rate, 30-60 day allocation queue, lowers total landed cost",
+                opt_curr_exp_t: "Export Currency (Own / Third Party)",
+                opt_curr_exp_d: "Faster allocation, higher cost, ideal for urgent production line orders",
+                p5_title: "🎉 Comprehensive Analysis & Import Simulation Results",
+                p5_desc: "This report was generated by Sourcing & Risk AI Agent based on your choices:",
+                rep_header: "Financial Breakdown & Expenses",
+                lbl_capital: "Initial Capital:",
+                lbl_fob: "Goods Cost (FOB China):",
+                lbl_freight: "International Freight & Insurance:",
+                lbl_qc: "Verification & Quality Inspection (PSI):",
+                lbl_customs: "Customs Duty & Tariffs (Est.):",
+                lbl_profit: "Estimated Net Profit:",
+                lbl_risk_level: "Project Risk Level:",
+                lbl_advice: "AI Agent Advice:",
+                btn_consult: "Request Sourcing Advisory",
                 btn_next: "Next Step",
                 btn_prev: "Previous Step",
-                agents_heading: "5 Specialized AI Agents Playground",
-                audit_heading: "Official China Factory Verification (QCC & TianYanCha)",
-                audit_btn: "Verify on China QCC Now",
-                pipeline_heading: "11-Step Sourcing to Customs Pipeline",
+                agents_heading: "Specialized AI Agents Network (Live 24/7 Sandbox)",
+                active_agent_lbl: "Active AI Agent:",
+                edulead_sub: "Education, Onboarding & Gamification",
+                sourcing_sub: "HS Code Lookup & Price Quotes",
+                risk_sub: "China QCC Audit & Legal Verification",
+                logistics_sub: "Freight, Currency & Customs",
+                chip1: "What are the steps to import a production line?",
+                chip2: "How to verify a factory in China?",
+                chip3: "What is the HS Code for medical equipment?",
+                input_placeholder: "Ask your question to the AI Agent...",
+                agent_initial_msg: "Hello! I am <strong>EduLead AI Agent</strong>. How can I assist you with import tutorials, profit calculation, or choosing the best sourcing country?",
+                audit_heading: "China Official Factory Registry (QCC & TianYanCha Integration)",
+                audit_desc: "Direct search of official registration records, capital, court litigation, and tax status of Chinese exporters:",
+                audit_placeholder: "English name or USCC registration ID (e.g. Shenzhen Precision Machinery Co., Ltd)",
+                audit_btn: "Official QCC Audit",
+                uscc_lbl: "Credit Code (USCC):",
+                capital_lbl: "Registered Capital:",
+                date_lbl: "Establishment Date:",
+                litigation_lbl: "Legal Litigation History:",
+                rep_lbl: "Legal Representative:",
+                bank_lbl: "Bank Account Match:",
+                pipeline_heading: "11-Step End-to-End Supply Chain Management Pipeline",
+                pipe1_t: "1. Specifications Intake", pipe1_d: "User submits technical specs, part numbers, and proforma invoices.",
+                pipe2_t: "2. HS Code Determination", pipe2_d: "Extracting precise customs tariff codes and Ministry priority groups.",
+                pipe3_t: "3. Global Sourcing", pipe3_d: "Locating tier-1 direct manufacturers in China, India, Turkey, and UAE.",
+                pipe4_t: "4. Legal Verification", pipe4_d: "Official QCC lookup for factory registration, litigation, and tax records.",
+                pipe5_t: "5. Sample Evaluation", pipe5_d: "Quality assessment of pre-production samples before bulk order placement.",
+                pipe6_t: "6. Negotiation & Incoterms", pipe6_d: "Negotiating FOB/EXW pricing and volume discounts by trade specialists.",
+                pipe7_t: "7. Official Contracting", pipe7_d: "Drafting legally binding bilingual international trade contracts (Iran - China).",
+                pipe8_t: "8. Quality Control (PSI)", pipe8_d: "On-site factory inspection and production line testing prior to loading.",
+                pipe9_t: "9. International Freight", pipe9_d: "Booking sea containers or air freight with top freight forwarders.",
+                pipe10_t: "10. Customs Clearance", pipe10_d: "Handling customs formalities, order registration & NIMA currency allocation.",
+                pipe11_t: "11. Warehouse Delivery", pipe11_d: "Final delivery to buyer warehouse with official tax invoice and inspection certificate.",
+                modal_title: "Request Sourcing & Advisory Consultation",
+                modal_desc: "Fill in your details so our Lead AI Agent and Trade Consultants can reach out to you:",
+                modal_name_lbl: "Full Name / Company Name",
+                modal_name_ph: "e.g. John Doe / Petrochem Corp",
+                modal_phone_lbl: "Phone / WhatsApp Number",
+                modal_phone_ph: "+98 912 345 6789",
+                modal_goods_lbl: "Target Goods for Import",
+                modal_goods_ph: "e.g. CT Scan Equipment / Polyethylene Raw Material",
+                modal_submit_btn: "Submit Request & Get Sourcing Report",
                 footer_text: "Smart Import AI Agents & Global Sourcing Ecosystem © 2026 | All rights reserved."
             }
         };
@@ -1507,12 +1663,28 @@
             }
 
             const dict = i18nData[lang] || i18nData.fa;
+            
+            // Translate innerHTML elements
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (dict[key]) {
                     el.innerHTML = dict[key];
                 }
             });
+
+            // Translate placeholders
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (dict[key]) {
+                    el.placeholder = dict[key];
+                }
+            });
+
+            // Update initial agent bubble if unmodified
+            const initMsg = document.getElementById('initial-agent-msg');
+            if (initMsg && dict['agent_initial_msg']) {
+                initMsg.innerHTML = dict['agent_initial_msg'];
+            }
 
             localStorage.setItem('lang', lang);
         }
