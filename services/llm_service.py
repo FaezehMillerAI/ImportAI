@@ -1,13 +1,13 @@
 """
 Unified Ultra-Smart LLM Service for Multi-Agent AI System
-Supports OpenAI GPT-4o, Google Gemini, and Conversational Context Memory
+Supports DeepSeek V3/R1, OpenAI GPT-4o, Google Gemini, and Conversational Context Memory
 """
 import httpx
 from config import settings
 
 class LLMService:
     @staticmethod
-    async def generate_response(system_prompt: str, user_message: str, chat_history: list = None, model_name: str = "gpt-4o-mini") -> str:
+    async def generate_response(system_prompt: str, user_message: str, chat_history: list = None, model_name: str = "deepseek-chat") -> str:
         messages = [{"role": "system", "content": system_prompt}]
 
         if chat_history:
@@ -16,7 +16,27 @@ class LLMService:
         
         messages.append({"role": "user", "content": user_message})
 
-        # 1. Try Google Gemini API if GEMINI_API_KEY is present
+        # 1. Try DeepSeek API (V3 / R1) if DEEPSEEK_API_KEY is present
+        if settings.DEEPSEEK_API_KEY:
+            try:
+                async with httpx.AsyncClient(timeout=45.0) as client:
+                    resp = await client.post(
+                        "https://api.deepseek.com/chat/completions",
+                        headers={"Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}"},
+                        json={
+                            "model": model_name,
+                            "messages": messages,
+                            "temperature": 0.7
+                        }
+                    )
+                    if resp.status_code == 200:
+                        return resp.json()["choices"][0]["message"]["content"]
+                    else:
+                        print(f"[DeepSeek Status] {resp.status_code}: {resp.text[:150]}")
+            except Exception as e:
+                print(f"[LLM Error] DeepSeek API call failed: {e}")
+
+        # 2. Try Google Gemini API if GEMINI_API_KEY is present
         if settings.GEMINI_API_KEY:
             try:
                 async with httpx.AsyncClient(timeout=45.0) as client:
@@ -28,7 +48,7 @@ class LLMService:
             except Exception as e:
                 print(f"[LLM Error] Gemini API call failed: {e}")
 
-        # 2. Try OpenAI GPT-4o / GPT-4o-mini if API Key is present
+        # 3. Try OpenAI GPT-4o / GPT-4o-mini if API Key is present
         if settings.OPENAI_API_KEY:
             try:
                 async with httpx.AsyncClient(timeout=45.0) as client:
@@ -36,7 +56,7 @@ class LLMService:
                         "https://api.openai.com/v1/chat/completions",
                         headers={"Authorization": f"Bearer {settings.OPENAI_API_KEY}"},
                         json={
-                            "model": model_name,
+                            "model": "gpt-4o-mini",
                             "messages": messages,
                             "temperature": 0.7
                         }
@@ -46,14 +66,13 @@ class LLMService:
             except Exception as e:
                 print(f"[LLM Error] OpenAI API call failed: {e}")
 
-        # 3. Domain Expert Fallback Engine
+        # 4. Domain Expert Fallback Engine
         return LLMService._expert_domain_fallback(system_prompt, user_message)
 
     @staticmethod
     def _expert_domain_fallback(system_prompt: str, user_message: str) -> str:
         msg = user_message.lower().strip()
 
-        # Confirmation intent
         if any(w in msg for w in ["بله", "اره", "آره", "لطفا", "لطفاً", "میخوام", "می‌خوام", "بفرست"]):
             return (
                 "بسیار عالی! 🎯\n\n"
