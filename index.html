@@ -1083,9 +1083,9 @@
 
                 <div class="chat-area">
                     <div class="preset-prompts" id="preset-container">
-                        <span class="preset-chip" onclick="sendPreset('مراحل واردات خط تولید چیست؟')" data-i18n="chip1">مراحل واردات خط تولید چیست؟</span>
-                        <span class="preset-chip" onclick="sendPreset('چطور از ثبت رسمی کارخانه در چین مطمئن بشم؟')" data-i18n="chip2">اعتبارسنجی کارخانه در چین</span>
-                        <span class="preset-chip" onclick="sendPreset('کد HS تجهیزات دندانپزشکی چنده؟')" data-i18n="chip3">استعلام کد HS</span>
+                        <span class="preset-chip" onclick="sendPreset('chip1')" data-i18n="chip1">مراحل واردات خط تولید چیست؟</span>
+                        <span class="preset-chip" onclick="sendPreset('chip2')" data-i18n="chip2">اعتبارسنجی کارخانه در چین</span>
+                        <span class="preset-chip" onclick="sendPreset('chip3')" data-i18n="chip3">استعلام کد HS</span>
                     </div>
 
                     <div class="chat-messages" id="chat-messages">
@@ -1285,7 +1285,13 @@
             `;
         }
 
-        function sendPreset(text) {
+        function sendPreset(promptKey) {
+            const chipPrompts = {
+                chip1: { fa: 'مراحل واردات خط تولید چیست؟', en: 'What are the steps to import a production line?' },
+                chip2: { fa: 'چطور از ثبت رسمی کارخانه در چین مطمئن بشم؟', en: 'How to verify a factory in China?' },
+                chip3: { fa: 'کد HS تجهیزات دندانپزشکی چنده؟', en: 'What is the HS Code for medical equipment?' }
+            };
+            const text = (chipPrompts[promptKey] && chipPrompts[promptKey][currentLang]) || promptKey;
             document.getElementById('chat-input').value = text;
             sendMessage();
         }
@@ -1328,7 +1334,9 @@
             const typingBubble = document.createElement('div');
             typingBubble.className = 'chat-bubble agent';
             typingBubble.id = 'typing-indicator';
-            typingBubble.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> در حال نگارش پاسخ...';
+            typingBubble.innerHTML = currentLang === 'en' 
+                ? '<i class="fa-solid fa-circle-notch fa-spin"></i> Writing response...' 
+                : '<i class="fa-solid fa-circle-notch fa-spin"></i> در حال نگارش پاسخ...';
             chatMessages.appendChild(typingBubble);
             scrollToBottom();
 
@@ -1336,7 +1344,7 @@
                 const resp = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg, agent_id: currentActiveAgent })
+                    body: JSON.stringify({ message: msg, agent_id: currentActiveAgent, lang: currentLang })
                 });
 
                 const indicator = document.getElementById('typing-indicator');

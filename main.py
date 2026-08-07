@@ -52,6 +52,7 @@ class ChatRequest(BaseModel):
     message: str
     agent_id: Optional[str] = "auto"
     session_id: Optional[str] = "default_session"
+    lang: Optional[str] = "fa"
 
 class LeadCreateRequest(BaseModel):
     full_name: str
@@ -94,7 +95,7 @@ async def chat_endpoint(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="پیام نمی‌تواند خالی باشد")
 
-    result = await MasterOrchestrator.route_request(req.message, req.agent_id)
+    result = await MasterOrchestrator.route_request(req.message, req.agent_id, req.lang)
     return result
 
 @app.post("/api/audit")
