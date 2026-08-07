@@ -1,15 +1,16 @@
 """
-سرویس ربات تلگرام چندایجنتی واقعی پلتفرم واردات (همراه با حافظه مکالمه)
+سرویس ربات تلگرام چندایجنتی واقعی پلتفرم واردات (همراه با حافظه مکالمه و سیستم خودکار بازیابی شبکه)
 """
 import sys
 import os
+import asyncio
 
 # Add root directory to python path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
+from telegram.request import HTTPXRequest
 from config import settings
 from agents.orchestrator import MasterOrchestrator
 from services.qcc_verifier import verify_china_company
@@ -111,18 +112,29 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     formatted_reply = f"🤖 **{result['agent_name']}**:\n\n{result['response']}"
     await update.message.reply_text(formatted_reply, parse_mode="Markdown")
 
-def run_telegram_bot():
+async def start_telegram_bot_async():
     if not settings.TELEGRAM_BOT_TOKEN:
         print("[Telegram Bot] Warning: TELEGRAM_BOT_TOKEN is not set in .env. Bot skipped.")
         return
 
-    app = Application.builder().token(settings.TELEGRAM_BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", start_command))
-    app.add_handler(CallbackQueryHandler(button_handler))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
+    request_client = HTTPXRequest(read_timeout=60.0, connect_timeout=60.0)
 
-    print("[Telegram Bot] Bot service started successfully with conversational memory...")
-    app.run_polling()
+    try:
+        app = Application.builder().token(settings.TELEGRAM_BOT_TOKEN).request(request_client).build()
+        app.add_handler(CommandHandler("start", start_command))
+        app.add_handler(CallbackQueryHandler(button_handler))
+        app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
+
+        print("[Telegram Bot] Initializing unified Telegram Bot background task...")
+        await app.initialize()
+        await app.start()
+        await app.updater.start_polling(bootstrap_retries=10)
+        print("[Telegram Bot] Live Telegram Bot polling active!")
+    except Exception as e:
+        print(f"[Telegram Bot Async Error] {e}")
+
+def run_telegram_bot():
+    asyncio.run(start_telegram_bot_async())
 
 if __name__ == "__main__":
     run_telegram_bot()

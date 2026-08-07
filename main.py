@@ -1,7 +1,9 @@
 """
 FastAPI Server Entry Point for ImportAI Pro Platform
+Unified single-process execution for Web Portal, REST APIs, Telegram Bot & Social Webhooks
 """
 import uvicorn
+import asyncio
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -19,6 +21,7 @@ from services.instagram_content_generator import InstagramContentGenerator
 from services.instagram_dm_agent import InstagramDMAgent
 from services.linkedin_content_generator import LinkedInContentGenerator
 from services.linkedin_messaging_agent import LinkedInMessagingAgent
+from services.telegram_bot import start_telegram_bot_async
 
 # Initialize DB tables
 init_db()
@@ -37,6 +40,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Startup lifecycle: Launch Telegram bot automatically in unified single process
+@app.on_event("startup")
+async def startup_event():
+    print("🚀 [System Startup] Initializing unified background services...")
+    asyncio.create_task(start_telegram_bot_async())
 
 # Request Models
 class ChatRequest(BaseModel):
