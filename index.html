@@ -532,27 +532,34 @@
             justify-content: space-between;
             padding: 20px;
             background: rgba(15, 23, 42, 0.3);
+            height: 100%;
+            max-height: 100%;
+            overflow: hidden;
         }
 
         .chat-messages {
-            flex-grow: 1;
+            flex: 1 1 auto;
             overflow-y: auto;
+            scroll-behavior: smooth;
+            max-height: 430px;
             display: flex;
             flex-direction: column;
             gap: 16px;
             padding-left: 8px;
+            padding-bottom: 16px;
         }
 
         .chat-bubble {
-            max-width: 80%;
+            max-width: 85%;
             padding: 14px 18px;
             border-radius: var(--radius-md);
             font-size: 0.92rem;
             line-height: 1.6;
+            word-wrap: break-word;
         }
 
         .chat-bubble.agent {
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(30, 41, 59, 0.85);
             border: 1px solid var(--border-glass);
             align-self: flex-start;
             border-top-right-radius: 2px;
@@ -569,11 +576,12 @@
         .chat-input-wrapper {
             display: flex;
             gap: 12px;
-            margin-top: 16px;
+            margin-top: 12px;
             background: var(--bg-secondary);
-            padding: 8px;
+            padding: 8px 12px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-glass);
+            flex-shrink: 0;
         }
 
         .chat-input-wrapper input {
@@ -1181,6 +1189,25 @@
             sendMessage();
         }
 
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            if (chatMessages) {
+                setTimeout(() => {
+                    chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+                }, 50);
+            }
+        }
+
+        function formatMarkdown(text) {
+            if (!text) return '';
+            let formatted = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`([^`]+)`/g, '<code style="background: rgba(0,242,254,0.1); padding: 2px 6px; border-radius: 4px; color: var(--accent-cyan);">$1</code>')
+                .replace(/\n/g, '<br>');
+            return formatted;
+        }
+
         async function sendMessage() {
             const input = document.getElementById('chat-input');
             const msg = input.value.trim();
@@ -1194,7 +1221,15 @@
             chatMessages.appendChild(userBubble);
 
             input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            scrollToBottom();
+
+            // Typing indicator
+            const typingBubble = document.createElement('div');
+            typingBubble.className = 'chat-bubble agent';
+            typingBubble.id = 'typing-indicator';
+            typingBubble.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> در حال نگارش پاسخ...';
+            chatMessages.appendChild(typingBubble);
+            scrollToBottom();
 
             try {
                 const resp = await fetch('/api/chat', {
@@ -1203,16 +1238,21 @@
                     body: JSON.stringify({ message: msg, agent_id: currentActiveAgent })
                 });
 
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
+
                 if (resp.ok) {
                     const data = await resp.json();
                     const agentBubble = document.createElement('div');
                     agentBubble.className = 'chat-bubble agent';
-                    agentBubble.innerHTML = `<strong>${data.agent_name}:</strong> ${data.response}`;
+                    agentBubble.innerHTML = `<strong>${data.agent_name}:</strong><br>${formatMarkdown(data.response)}`;
                     chatMessages.appendChild(agentBubble);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    scrollToBottom();
                     return;
                 }
             } catch (e) {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
                 console.log("Local response mode");
             }
         }
