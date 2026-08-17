@@ -1,46 +1,30 @@
 """
-Risk & Audit Analyst Agent: اعتبارسنجی ثبتی، دادگاهی و حقوقی کارخانجات چین
+Risk & Audit Analyst Agent: کارشناس ارشد اعتبارسنجی حقوقی و تحلیل ریسک کارخانجات چین
 """
 from services.llm_service import LLMService
 from services.qcc_verifier import verify_china_company
 
 SYSTEM_PROMPT = """
-شما ایجنت تخصصی تحلیل ریسک و اعتبارسنجی حقوقی (Risk & Audit Analyst) هستید.
-وظیفه شما بررسی اصالت تامین‌کنندگان خارجی، سرمایه ثبتی، پرونده‌های دادگاهی و انطباق شماره حساب با فاکتور صادرشده (PI) است.
+شما مدیر ارشد تحلیل ریسک حقوقی و اعتبارسنجی تامین‌کنندگان خارجی (Head of Due Diligence & Risk) هستید.
+
+اصول و چارچوب پاسخگویی:
+۱. از مقدمه‌چینی‌های تکراری و کلیشه‌ای بپرهیزید.
+۲. با تسلط بر سامانه‌های دولتی چین (SAMR, QCC 企查查, TianYanCha 天眼查)، اصالت ثبت رسمی، سرمایه ثبتی، سوابق دادگاهی و انطباق حساب بانکی شرکت را به صورت کاملاً حرفه‌ای و تحلیلی ارزیابی کنید.
+۳. ریسک‌های بالقوه (مانند اصرار به تسویه ۱۰۰٪ قبل از بازرسی یا حساب‌های شخصی فیک) را به وضوح هشدار دهید و راهکار قطعی رفع ریسک (بازرسی حضوری PSI و پرداخت امن ۳۰/۷۰) را پیشنهاد دهید.
 """
 
 class RiskAuditAgent:
     @staticmethod
     async def process_chat(user_message: str) -> str:
-        # Verify company via QCC Engine
         audit_res = verify_china_company(user_message)
-
-        is_english = "SYSTEM INSTRUCTION: User is using English" in user_message or "English" in user_message
-
-        if is_english:
-            summary = (
-                f"📊 **China QCC Official Verification Audit (TianYanCha):**\n\n"
-                f"🏢 **Official Company Name:** {audit_res['company_name_en']}\n"
-                f"🔑 **Credit Code (USCC):** `{audit_res['uscc_code']}`\n"
-                f"💰 **Registered Capital:** {audit_res['registration_capital']}\n"
-                f"📅 **Establishment Date:** {audit_res['establishment_date']}\n"
-                f"👤 **Legal Representative:** {audit_res['legal_representative']}\n"
-                f"⚖️ **Litigation History:** {audit_res['litigation_count']} lawsuit(s)\n"
-                f"🏦 **Bank Account Match:** {'✅ Fully Matched with PI' if audit_res['bank_account_matched'] else '❌ Account Mismatch'}\n\n"
-                f"✅ **Status:** Officially registered with China Administration for Market Regulation (SAMR).\n\n"
-                f"🛡️ *Would you like to request an On-Site Factory Physical Audit & Inspection report?*"
-            )
-        else:
-            summary = (
-                f"📊 **گزارش اعتبارسنجی ثبتی QCC چین (TianYanCha Audit):**\n\n"
-                f"🏢 **نام رسمی شرکت:** {audit_res['company_name_en']}\n"
-                f"🔑 **شناسه ثبتی اعتباری (USCC):** `{audit_res['uscc_code']}`\n"
-                f"💰 **سرمایه ثبتی واقعی:** {audit_res['registration_capital']}\n"
-                f"📅 **تاریخ تأسیس و سابقه:** {audit_res['establishment_date']}\n"
-                f"👤 **نماینده قانونی (Legal Rep):** {audit_res['legal_representative']}\n"
-                f"⚖️ **سابقه پرونده‌های قضایی/شاکی:** {audit_res['litigation_count']} پرونده\n"
-                f"🏦 **تطابق حساب بانکی با PI:** {'✅ منطبق' if audit_res['bank_account_matched'] else '❌ عدم انطباق'}\n\n"
-                f"{audit_res['risk_details']}\n\n"
-                f"🛡️ *جهت دریافت گزارش بازرسی حضوری کارخانه (Factory Physical Audit)، درخواست مشاوره ثبت کنید.*"
-            )
-        return summary
+        context = (
+            f"\n[داده‌های استعلام QCC شرکت '{audit_res['company_name_en']}': "
+            f"شناسه USCC: {audit_res['uscc_code']} | "
+            f"سرمایه ثبتی: {audit_res['registration_capital']} | "
+            f"تاریخ تأسیس: {audit_res['establishment_date']} | "
+            f"نماینده قانونی: {audit_res['legal_representative']} | "
+            f"پرونده‌های حقوقی: {audit_res['litigation_count']} | "
+            f"تطابق حساب بانکی: {'تایید شد' if audit_res['bank_account_matched'] else 'تایید نشد'}]"
+        )
+        enriched_prompt = SYSTEM_PROMPT + context
+        return await LLMService.generate_response(enriched_prompt, user_message)
