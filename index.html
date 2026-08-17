@@ -1189,14 +1189,15 @@
                     </button>
                 </div>
 
-                <!-- Dropzone Area -->
-                <div class="dropzone-box" id="pi-dropzone" onclick="document.getElementById('pi-file-upload').click()">
+                <!-- Dropzone Area with Native Label & Explicit Button -->
+                <label for="pi-file-upload" class="dropzone-box" id="pi-dropzone" style="display: block; cursor: pointer;">
                     <div class="laser-scanner-bar" id="laser-bar"></div>
                     <input type="file" id="pi-file-upload" style="display: none;" accept=".pdf,.png,.jpg,.jpeg,.txt" onchange="handlePIScannerUpload(event)">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.2rem; color: var(--accent-cyan); margin-bottom: 12px;"></i>
-                    <h4 style="margin-bottom: 6px;" data-i18n="dropzone_title">فایل PDF یا عکس پیش‌فاکتور خود را اینجا بکشید یا کلیک کنید</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="dropzone_hint">پشتیبانی از فرمت‌های PDF، JPG، PNG و متن انگلیسی یا چینی فاکتور</p>
-                </div>
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.4rem; color: var(--accent-cyan); margin-bottom: 12px; display: block;"></i>
+                    <h4 style="margin-bottom: 8px;" id="dropzone-filename-display" data-i18n="dropzone_title">فایل PDF یا عکس پیش‌فاکتور خود را اینجا بکشید یا کلیک کنید</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;" data-i18n="dropzone_hint">پشتیبانی از فرمت‌های PDF، JPG، PNG و متن انگلیسی یا چینی فاکتور</p>
+                    <button type="button" class="btn btn-primary" style="pointer-events: none;"><i class="fa-solid fa-folder-open"></i> انتخاب فایل از سیستم</button>
+                </label>
 
                 <!-- Loading State -->
                 <div id="pi-loading-state" style="display: none; text-align: center; padding: 25px 0;">
@@ -1875,14 +1876,30 @@
         }
 
         async function handlePIScannerUpload(event) {
-            const file = event.target.files[0];
+            let file = null;
+            if (event.target && event.target.files && event.target.files.length > 0) {
+                file = event.target.files[0];
+            } else if (event.files && event.files.length > 0) {
+                file = event.files[0];
+            } else if (event instanceof File) {
+                file = event;
+            }
+
             if (!file) return;
+
+            const nameDisplay = document.getElementById('dropzone-filename-display');
+            if (nameDisplay) {
+                nameDisplay.innerHTML = `<i class="fa-solid fa-file-circle-check" style="color: var(--accent-cyan);"></i> فایل انتخاب شد: <strong>${file.name}</strong>`;
+            }
 
             const loading = document.getElementById('pi-loading-state');
             const resultCard = document.getElementById('pi-result-card');
             const laser = document.getElementById('laser-bar');
 
-            if (loading) loading.style.display = 'block';
+            if (loading) {
+                loading.style.display = 'block';
+                loading.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             if (laser) laser.style.display = 'block';
             if (resultCard) resultCard.style.display = 'none';
 
@@ -1898,9 +1915,14 @@
                 if (resp.ok) {
                     const data = await resp.json();
                     renderPIAuditResult(data);
+                } else {
+                    const errText = await resp.text();
+                    console.error("PI Upload server error:", errText);
+                    alert("خطا در پردازش فایل در سرور: " + (errText || "لطفاً مجدداً تلاش کنید"));
                 }
             } catch (err) {
-                console.error("PI File upload scan error:", err);
+                console.error("PI File upload network error:", err);
+                alert("خطای ارتباط با سرور. لطفاً اتصال اینترنت را بررسی کنید.");
             } finally {
                 if (loading) loading.style.display = 'none';
                 if (laser) laser.style.display = 'none';
