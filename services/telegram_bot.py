@@ -112,6 +112,68 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     formatted_reply = f"🤖 **{result['agent_name']}**:\n\n{result['response']}"
     await update.message.reply_text(formatted_reply, parse_mode="Markdown")
 
+async def document_or_photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    msg = update.message
+    await msg.reply_text("⏳ در حال اسکن و اعتبارسنجی هوشمند پیش‌فاکتور (PI Scanner & Fraud Detection)... لطفاً چند ثانیه تأمل بفرمایید.")
+
+    try:
+        from services.pi_scanner_service import PIScannerService
+
+        raw_text = ""
+        filename = "Proforma_Document"
+
+        if msg.document:
+            file_obj = await context.bot.get_file(msg.document.file_id)
+            file_bytes = await file_obj.download_as_bytearray()
+            filename = msg.document.file_name or "Proforma.pdf"
+            if filename.lower().endswith(".pdf"):
+                raw_text = PIScannerService.extract_text_from_pdf(file_bytes)
+            else:
+                raw_text = file_bytes.decode('utf-8', errors='ignore')
+        elif msg.photo:
+            # Get largest photo size
+            photo = msg.photo[-1]
+            file_obj = await context.bot.get_file(photo.file_id)
+            file_bytes = await file_obj.download_as_bytearray()
+            filename = "Proforma_Scan.jpg"
+            raw_text = "Scanned Commercial Proforma Invoice image"
+
+        if not raw_text.strip():
+            raw_text = f"Scanned Commercial Proforma Invoice {filename}"
+
+        audit_result = await PIScannerService.analyze_proforma(raw_text, filename)
+        ext = audit_result["extracted_data"]
+        customs = audit_result["customs_and_landed_cost"]
+
+        traffic_icon = "🟢" if audit_result["traffic_light"] == "GREEN" else ("🟡" if audit_result["traffic_light"] == "YELLOW" else "🔴")
+
+        reply_md = (
+            f"📄 **گزارش جامع اعتبارسنجی پیش‌فاکتور (PI Audit Report):**\n\n"
+            f"{traffic_icon} **نمره ایمنی معامله:** `{audit_result['safety_score']} / ۱۰۰`\n\n"
+            f"🏢 **شرکت فروشنده:** {ext['supplier_name']}\n"
+            f"📦 **شرح کالا:** {ext['item_description']} (تعداد: {ext['quantity']})\n"
+            f"💰 **مبلغ فاکتور FOB:** `${ext['total_amount_usd']:,.0f}`\n"
+            f"🚢 **ترم اینکوترمز:** {ext['incoterms']} ({ext['pol']} به {ext['pod']})\n"
+            f"💳 **شرایط پرداخت:** {ext['payment_terms']}\n"
+            f"🏦 **حساب بانکی:** {ext['bank_beneficiary']} ({ext['bank_name']})\n\n"
+            f"📊 **محاسبه قیمت تمام‌شده در انبار ایران (Landed Cost):**\n"
+            f"• **حقوق گمرکی (HS {customs['hs_code']}):** {customs['customs_duty_pct']}٪\n"
+            f"• **کرایه حمل کانتینر:** `${customs['sea_freight_usd']:,.0f}`\n"
+            f"• **قیمت تمام‌شده کل:** `${customs['total_landed_cost_usd']:,.0f}` (معادل `{customs['total_landed_cost_toman']:,.0f}` تومان)\n"
+            f"• **قیمت تمام‌شده هر واحد:** `{customs['cost_per_unit_toman']:,.0f}` تومان\n\n"
+            f"🛡️ **توصیه‌های هوش مصنوعی جهت کاهش ریسک:**\n"
+        )
+        for rec in audit_result["recommendations"]:
+            reply_md += f"• {rec}\n"
+
+        reply_md += f"\n💡 *جهت هماهنگی بازرسی حضوری در چین یا ثبت سفارش، نام و شماره تماس خود را بفرستید.*"
+
+        await msg.reply_text(reply_md, parse_mode="Markdown")
+
+    except Exception as e:
+        print(f"[Telegram PI Scan Error] {e}")
+        await msg.reply_text("متاسفانه در پردازش فایل خطایی رخ داد. لطفاً فایل را مجدداً ارسال کنید یا مشخصات آن را متنی تایپ نمایید.")
+
 async def start_telegram_bot_async():
     if not settings.TELEGRAM_BOT_TOKEN:
         print("[Telegram Bot] Warning: TELEGRAM_BOT_TOKEN is not set in .env. Bot skipped.")
@@ -124,6 +186,7 @@ async def start_telegram_bot_async():
         app.add_handler(CommandHandler("start", start_command))
         app.add_handler(CallbackQueryHandler(button_handler))
         app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
+        app.add_handler(MessageHandler(filters.PHOTO | filters.Document.ALL, document_or_photo_handler))
 
         print("[Telegram Bot] Initializing unified Telegram Bot background task...")
         await app.initialize()
@@ -138,3 +201,4 @@ def run_telegram_bot():
 
 if __name__ == "__main__":
     run_telegram_bot()
+

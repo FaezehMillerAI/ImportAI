@@ -4,7 +4,7 @@ Unified single-process execution for Web Portal, REST APIs, Telegram Bot & Socia
 """
 import uvicorn
 import asyncio
-from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi import FastAPI, Depends, HTTPException, Query, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -17,6 +17,7 @@ from database import init_db, get_db, Lead, AuditRecord, ChatLog
 from agents.orchestrator import MasterOrchestrator
 from services.qcc_verifier import verify_china_company
 from services.hs_database import search_hs_code
+from services.pi_scanner_service import PIScannerService
 from services.instagram_content_generator import InstagramContentGenerator
 from services.instagram_dm_agent import InstagramDMAgent
 from services.linkedin_content_generator import LinkedInContentGenerator
@@ -85,6 +86,10 @@ class LinkedInMessageWebhookRequest(BaseModel):
     company: str
     message: str
 
+class PIScanTextRequest(BaseModel):
+    raw_text: str
+    filename: Optional[str] = "Proforma.txt"
+
 # API Endpoints
 @app.get("/api/health")
 def health_check():
@@ -105,6 +110,35 @@ async def audit_company(req: CompanyAuditRequest):
     
     from services.qcc_verifier import verify_china_company_async
     result = await verify_china_company_async(req.company_name, req.uscc_code)
+    return result
+
+@app.post("/api/scan-pi")
+async def scan_pi_text_endpoint(req: PIScanTextRequest):
+    if not req.raw_text.strip():
+        raise HTTPException(status_code=400, detail="متن پیش‌فاکتور نمی‌تواند خالی باشد")
+    
+    result = await PIScannerService.analyze_proforma(req.raw_text, req.filename)
+    return result
+
+@app.post("/api/scan-pi-upload")
+async def scan_pi_upload_endpoint(file: UploadFile = File(...)):
+    content = await file.read()
+    filename = file.filename or "Uploaded_Document.pdf"
+    
+    raw_text = ""
+    if filename.lower().endswith(".pdf"):
+        raw_text = PIScannerService.extract_text_from_pdf(content)
+    else:
+        # Image or text file
+        try:
+            raw_text = content.decode("utf-8", errors="ignore")
+        except Exception:
+            raw_text = f"Scanned Commercial Invoice image {filename}"
+
+    if not raw_text.strip():
+        raw_text = f"Scanned Commercial Proforma Invoice {filename}"
+
+    result = await PIScannerService.analyze_proforma(raw_text, filename)
     return result
 
 @app.get("/api/hs-search")

@@ -795,6 +795,68 @@
 
         .modal-close:hover { color: #fff; }
 
+        /* Proforma Scanner Styles */
+        .scanner-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+        }
+
+        .dropzone-box {
+            border: 2px dashed rgba(0, 242, 254, 0.4);
+            border-radius: var(--radius-md);
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(0, 242, 254, 0.02);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropzone-box:hover, .dropzone-box.dragover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .laser-scanner-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00f2fe, #4facfe, transparent);
+            box-shadow: 0 0 15px #00f2fe;
+            animation: laserScan 2s infinite ease-in-out;
+            display: none;
+        }
+
+        @keyframes laserScan {
+            0% { top: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .score-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin: 0 auto;
+            border: 3px solid;
+        }
+
+        .score-green { border-color: var(--accent-emerald); color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); }
+        .score-yellow { border-color: var(--accent-amber); color: var(--accent-amber); background: rgba(245, 158, 11, 0.1); }
+        .score-red { border-color: var(--accent-rose); color: var(--accent-rose); background: rgba(244, 63, 94, 0.1); }
+
         @media (max-width: 992px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .agent-playground { grid-template-columns: 1fr; height: auto; }
@@ -815,6 +877,7 @@
             <ul class="nav-links">
                 <li><a href="#simulator" class="active"><i class="fa-solid fa-gamepad"></i> <span data-i18n="nav_simulator">شبیه‌ساز واردات</span></a></li>
                 <li><a href="#agents"><i class="fa-solid fa-network-wired"></i> <span data-i18n="nav_agents">شبکه ایجنت‌ها</span></a></li>
+                <li><a href="#pi-scanner"><i class="fa-solid fa-file-invoice-dollar"></i> <span data-i18n="nav_scanner">اسکنر پروفرما</span></a></li>
                 <li><a href="#verification"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="nav_audit">اعتبارسنجی چین</span></a></li>
                 <li><a href="#pipeline"><i class="fa-solid fa-diagram-project"></i> <span data-i18n="nav_pipeline">فرآیند ۱۱ مرحله‌ای</span></a></li>
             </ul>
@@ -1095,9 +1158,121 @@
                     </div>
 
                     <div class="chat-input-wrapper">
+                        <input type="file" id="chat-file-input" style="display:none;" accept=".pdf,.png,.jpg,.jpeg,.txt" onchange="handleChatFileUpload(event)">
+                        <button class="btn" style="background: var(--bg-glass); border: 1px solid var(--border-glass); color: var(--accent-cyan);" onclick="document.getElementById('chat-file-input').click()" title="پیوست پیش‌فاکتور یا سند"><i class="fa-solid fa-paperclip"></i></button>
                         <input type="text" id="chat-input" placeholder="سوال خود را از ایجنت هوشمند بپرسید..." data-i18n-ph="input_placeholder" onkeypress="handleKeyPress(event)">
                         <button class="btn btn-primary" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3.5: AI Proforma & Document Intelligence Scanner -->
+        <section id="pi-scanner" style="margin-bottom: 60px;">
+            <div class="section-title">
+                <i class="fa-solid fa-file-invoice-dollar" style="color: var(--accent-cyan);"></i>
+                <h2 data-i18n="scanner_heading">اسکنر و تحلیل‌گر هوشمند پیش‌فاکتور (AI Proforma / PI Scanner)</h2>
+            </div>
+
+            <div class="scanner-container">
+                <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="scanner_desc">
+                    آپلود فایل PDF یا تصویر پیش‌فاکتور چینی جهت استعلام زنده اصالت کارخانه، بررسی تطابق حساب بانکی، محاسبه دقیق قیمت تمام‌شده در انبار ایران (Landed Cost) و کشف ریسک‌های پنهان:
+                </p>
+
+                <!-- Demo PI Buttons -->
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px;">
+                    <button class="preset-chip" style="border-color: var(--accent-emerald); color: var(--accent-emerald);" onclick="loadDemoPI('safe')">
+                        <i class="fa-solid fa-shield-check"></i> <span data-i18n="demo_pi_safe">پیش‌فاکتور نمونه ۱ (خط تولید ماشین‌آلات - امن)</span>
+                    </button>
+                    <button class="preset-chip" style="border-color: var(--accent-rose); color: var(--accent-rose);" onclick="loadDemoPI('risky')">
+                        <i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="demo_pi_risk">پیش‌فاکتور نمونه ۲ (مشکوک - حساب متفرقه و پرداخت ریسکی)</span>
+                    </button>
+                </div>
+
+                <!-- Dropzone Area -->
+                <div class="dropzone-box" id="pi-dropzone" onclick="document.getElementById('pi-file-upload').click()">
+                    <div class="laser-scanner-bar" id="laser-bar"></div>
+                    <input type="file" id="pi-file-upload" style="display: none;" accept=".pdf,.png,.jpg,.jpeg,.txt" onchange="handlePIScannerUpload(event)">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.2rem; color: var(--accent-cyan); margin-bottom: 12px;"></i>
+                    <h4 style="margin-bottom: 6px;" data-i18n="dropzone_title">فایل PDF یا عکس پیش‌فاکتور خود را اینجا بکشید یا کلیک کنید</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="dropzone_hint">پشتیبانی از فرمت‌های PDF، JPG، PNG و متن انگلیسی یا چینی فاکتور</p>
+                </div>
+
+                <!-- Loading State -->
+                <div id="pi-loading-state" style="display: none; text-align: center; padding: 25px 0;">
+                    <div class="pulse-dot" style="width: 16px; height: 16px; margin: 0 auto 15px; background: var(--accent-cyan);"></div>
+                    <h4 style="color: var(--accent-cyan);" data-i18n="scanning_status">در حال اسکن نوری، استعلام زنده سامانه QCC چین و محاسبه قیمت تمام‌شده...</h4>
+                </div>
+
+                <!-- Comprehensive Audit Result Card -->
+                <div id="pi-result-card" style="display: none; margin-top: 24px; background: rgba(10, 14, 23, 0.85); border: 1px solid var(--accent-cyan); border-radius: var(--radius-md); padding: 24px;">
+                    
+                    <!-- Top Summary & Safety Score -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--border-glass); padding-bottom: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="score-circle score-green" id="pi-score-circle">
+                                <span id="pi-score-num">95</span>
+                                <small style="font-size: 0.65rem; font-weight: normal;">از ۱۰۰</small>
+                            </div>
+                            <div>
+                                <h3 id="pi-card-supplier" style="color: var(--accent-cyan); margin-bottom: 4px;">Shenzhen Precision Machinery Co., Ltd</h3>
+                                <span class="risk-badge risk-low" id="pi-card-traffic"><i class="fa-solid fa-shield-check"></i> وضعیت معامله: امن و قابل تایید (Low Risk)</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;" data-i18n="pi_total_lbl">ارزش کل پیش‌فاکتور (FOB):</span>
+                            <h2 style="color: #fff; margin-top: 2px;" id="pi-card-total">$29,000</h2>
+                        </div>
+                    </div>
+
+                    <!-- 3-Column Structured Breakdown -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; font-size: 0.9rem; margin-bottom: 24px;">
+                        
+                        <!-- Col 1: Extracted Contract Specs -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px;">
+                            <h5 style="color: var(--accent-blue); margin-bottom: 12px;"><i class="fa-solid fa-file-contract"></i> مشخصات استخراج‌شده قرارداد</h5>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">شرح کالا:</span> <strong id="pi-item-desc">اکسترودر پلاستیک</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">ترم اینکوترمز:</span> <strong id="pi-incoterm">FOB Shenzhen</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">شرایط پرداخت:</span> <strong id="pi-payment">30% T/T Advance, 70% PSI</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">بندر مقصد:</span> <strong id="pi-pod">Bandar Abbas, Iran</strong></p>
+                        </div>
+
+                        <!-- Col 2: Bank & Supplier Live Audit -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px;">
+                            <h5 style="color: var(--accent-emerald); margin-bottom: 12px;"><i class="fa-solid fa-building-shield"></i> استعلام زنده کارخانه و حساب بانکی</h5>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">صاحب حساب:</span> <strong id="pi-bank-beneficiary">Shenzhen Precision Co.</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">نام بانک:</span> <strong id="pi-bank-name">Bank of China</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">کد اعتباری USCC:</span> <strong style="font-family: monospace;" id="pi-uscc">91440300MA5FB1234X</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">تطابق حساب:</span> <strong id="pi-bank-status" style="color: var(--accent-emerald);">✅ تایید شد</strong></p>
+                        </div>
+
+                        <!-- Col 3: Landed Cost in Iran -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px;">
+                            <h5 style="color: var(--accent-amber); margin-bottom: 12px;"><i class="fa-solid fa-calculator"></i> برآورد قیمت تمام‌شده در انبار ایران</h5>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">حقوق گمرکی (HS):</span> <strong id="pi-duty-pct">۵٪ (کد 8477.20)</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">کرایه حمل کانتینر:</span> <strong id="pi-freight">$2,800</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">قیمت تمام‌شده کل:</span> <strong style="color: var(--accent-cyan);" id="pi-landed-usd">$34,800</strong></p>
+                            <p style="margin-bottom: 8px;"><span style="color: var(--text-muted);">معادل ریالی در انبار:</span> <strong style="color: var(--accent-emerald);" id="pi-landed-toman">۲,۱۵۷,۶۰۰,۰۰۰ تومان</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Risk Flags & Recommendations -->
+                    <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+                        <h5 style="color: var(--accent-amber); margin-bottom: 8px;"><i class="fa-solid fa-triangle-exclamation"></i> توصیه‌های هوشمند جهت کاهش ریسک معامله:</h5>
+                        <ul id="pi-recommendations-list" style="margin: 0; padding-right: 20px; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7;">
+                            <li>شرایط پرداخت را به ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی حضوری کیفیت (PSI) تغییر دهید.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Copyable Negotiation Counter-Offer -->
+                    <div style="background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <h5 style="color: var(--accent-cyan);"><i class="fa-brands fa-weixin"></i> متن آماده مذاکره و چانه‌زنی با کارخانه چینی (WeChat / Email Script):</h5>
+                            <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.8rem;" onclick="copyNegotiationScript()"><i class="fa-solid fa-copy"></i> <span data-i18n="copy_script_btn">کپی متن مذاکره</span></button>
+                        </div>
+                        <pre id="pi-negotiation-text" style="font-family: monospace; font-size: 0.82rem; color: var(--text-primary); white-space: pre-wrap; margin: 0; background: transparent;"></pre>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -1540,6 +1715,416 @@
                 pipe9_t: "حمل بین‌المللی", pipe9_d: "رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.",
                 pipe10_t: "ترخیص گمرکی", pipe10_d: "انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.",
                 pipe11_t: "تحویل در انبار", pipe11_d: "تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.",
+        // --- AI Proforma & Document Scanner Engine ---
+        let currentNegotiationScript = "";
+
+        async function scanProforma(rawText, filename = "Proforma.txt") {
+            const loading = document.getElementById('pi-loading-state');
+            const resultCard = document.getElementById('pi-result-card');
+            const laser = document.getElementById('laser-bar');
+
+            if (loading) loading.style.display = 'block';
+            if (laser) laser.style.display = 'block';
+            if (resultCard) resultCard.style.display = 'none';
+
+            try {
+                const resp = await fetch('/api/scan-pi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ raw_text: rawText, filename: filename })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    renderPIAuditResult(data);
+                }
+            } catch (err) {
+                console.error("PI Scan error:", err);
+            } finally {
+                if (loading) loading.style.display = 'none';
+                if (laser) laser.style.display = 'none';
+            }
+        }
+
+        async function handlePIScannerUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const loading = document.getElementById('pi-loading-state');
+            const resultCard = document.getElementById('pi-result-card');
+            const laser = document.getElementById('laser-bar');
+
+            if (loading) loading.style.display = 'block';
+            if (laser) laser.style.display = 'block';
+            if (resultCard) resultCard.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const resp = await fetch('/api/scan-pi-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    renderPIAuditResult(data);
+                }
+            } catch (err) {
+                console.error("PI File upload scan error:", err);
+            } finally {
+                if (loading) loading.style.display = 'none';
+                if (laser) laser.style.display = 'none';
+            }
+        }
+
+        async function handleChatFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.innerHTML = `<i class="fa-solid fa-file-pdf"></i> آپلود پیش‌فاکتور: <strong>${file.name}</strong>`;
+            chatMessages.appendChild(userBubble);
+            scrollToBottom();
+
+            // Typing indicator
+            const typingBubble = document.createElement('div');
+            typingBubble.className = 'chat-bubble agent';
+            typingBubble.id = 'typing-indicator-pi';
+            typingBubble.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> در حال اسکن هوشمند پیش‌فاکتور و اعتبارسنجی زنده...';
+            chatMessages.appendChild(typingBubble);
+            scrollToBottom();
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const resp = await fetch('/api/scan-pi-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const indicator = document.getElementById('typing-indicator-pi');
+                if (indicator) indicator.remove();
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const ext = data.extracted_data;
+                    const customs = data.customs_and_landed_cost;
+                    const traffic = data.traffic_light === 'GREEN' ? '🟢 امن' : (data.traffic_light === 'YELLOW' ? '🟡 متوسط' : '🔴 پرریسک');
+
+                    const agentBubble = document.createElement('div');
+                    agentBubble.className = 'chat-bubble agent';
+                    agentBubble.innerHTML = `
+                        <strong><i class="fa-solid fa-file-invoice-dollar"></i> گزارش هوشمند تحلیل پیش‌فاکتور:</strong><br><br>
+                        • <strong>نمره سلامت معامله:</strong> ${data.safety_score} از ۱۰۰ (${traffic})<br>
+                        • <strong>شرکت فروشنده:</strong> ${ext.supplier_name}<br>
+                        • <strong>مبلغ کل FOB:</strong> $${ext.total_amount_usd.toLocaleString()}<br>
+                        • <strong>ترم و شرایط پرداخت:</strong> ${ext.incoterms} (${ext.payment_terms})<br>
+                        • <strong>قیمت تمام‌شده در انبار ایران:</strong> $${customs.total_landed_cost_usd.toLocaleString()} (${Math.round(customs.total_landed_cost_toman).toLocaleString()} تومان)<br><br>
+                        🛡️ <em>برای مشاهده جزئیات حساب بانکی و متن مذاکره، به بخش اسکنر پروفرما در صفحه مراجعه کنید.</em>
+                    `;
+                    chatMessages.appendChild(agentBubble);
+                    scrollToBottom();
+
+                    renderPIAuditResult(data);
+                }
+            } catch (err) {
+                const indicator = document.getElementById('typing-indicator-pi');
+                if (indicator) indicator.remove();
+            }
+        }
+
+        function loadDemoPI(type) {
+            if (type === 'safe') {
+                const sampleSafe = `
+PROFORMA INVOICE
+PI Number: PI-2026-0889 | Date: 2026-08-16
+Seller: Shenzhen Precision Machinery Industrial Co., Ltd.
+Address: High-Tech Industrial Park, Nanshan, Shenzhen, Guangdong, China
+Buyer: Rayan Pars Trading Co., Tehran, Iran
+Product: High-Speed Industrial Plastic Extruder Machine Set (Model: PE-800)
+Quantity: 2 Sets
+Unit Price: $14,500.00 FOB Shenzhen Port
+Total Amount: $29,000.00 USD
+Payment Terms: 30% T/T Advance Deposit, 70% Balance payable against Official Pre-Shipment Inspection (PSI) Certificate
+Bank Information:
+Bank Name: Bank of China, Shenzhen High-Tech Branch
+Account Name: Shenzhen Precision Machinery Industrial Co., Ltd.
+SWIFT Code: BKCHCNBJ940
+Account Number: 7559 1820 4491 8820
+`;
+                scanProforma(sampleSafe, "Sample_Precision_Machinery_PI.pdf");
+            } else {
+                const sampleRisky = `
+PROFORMA INVOICE
+PI Number: SCAM-2026-99 | Date: 2026-08-17
+Seller: Guangzhou Cheap Wholesale Industrial Co., Ltd.
+Buyer: Valued Customer
+Product: Polymer Raw Material Resin
+Quantity: 50 Tons
+Unit Price: $400.00 EXW Factory
+Total Amount: $20,000.00 USD
+Payment Terms: 100% Full T/T Advance Payment strictly before container loading (No inspection allowed)
+Bank Information:
+Bank Name: HSBC Hong Kong Personal Branch
+Account Name: Mr. David Wong (Personal Agent Account)
+Account Number: 884-19283-001
+SWIFT Code: HSBCHKHHXXX
+`;
+                scanProforma(sampleRisky, "Suspicious_Resin_PI.pdf");
+            }
+        }
+
+        function renderPIAuditResult(data) {
+            const card = document.getElementById('pi-result-card');
+            if (!card) return;
+
+            const ext = data.extracted_data;
+            const audit = data.supplier_audit;
+            const customs = data.customs_and_landed_cost;
+
+            // Score Circle
+            const circle = document.getElementById('pi-score-circle');
+            const scoreNum = document.getElementById('pi-score-num');
+            scoreNum.textContent = data.safety_score;
+            circle.className = 'score-circle ' + (data.safety_score >= 75 ? 'score-green' : (data.safety_score >= 50 ? 'score-yellow' : 'score-red'));
+
+            // Supplier & Traffic Badge
+            document.getElementById('pi-card-supplier').textContent = ext.supplier_name;
+            const badge = document.getElementById('pi-card-traffic');
+            if (data.traffic_light === 'GREEN') {
+                badge.className = 'risk-badge risk-low';
+                badge.innerHTML = '<i class="fa-solid fa-shield-check"></i> وضعیت معامله: امن و قابل تایید (Low Risk)';
+            } else if (data.traffic_light === 'YELLOW') {
+                badge.className = 'risk-badge risk-med';
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> وضعیت معامله: نیازمند اصلاح بندهای قرارداد (Medium Risk)';
+            } else {
+                badge.className = 'risk-badge risk-high';
+                badge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> هشدار ریسک بالا: خطر کلاهبرداری یا حساب متفرقه (High Risk)';
+            }
+
+            document.getElementById('pi-card-total').textContent = `$${ext.total_amount_usd.toLocaleString()}`;
+
+            // Column 1
+            document.getElementById('pi-item-desc').textContent = `${ext.item_description} (${ext.quantity} دستگاه/واحد)`;
+            document.getElementById('pi-incoterm').textContent = `${ext.incoterms} (${ext.pol})`;
+            document.getElementById('pi-payment').textContent = ext.payment_terms;
+            document.getElementById('pi-pod').textContent = ext.pod;
+
+            // Column 2
+            document.getElementById('pi-bank-beneficiary').textContent = ext.bank_beneficiary;
+            document.getElementById('pi-bank-name').textContent = `${ext.bank_name} (${ext.swift_code})`;
+            document.getElementById('pi-uscc').textContent = audit.uscc_code;
+            const bankStatusEl = document.getElementById('pi-bank-status');
+            if (audit.bank_account_matched) {
+                bankStatusEl.textContent = '✅ تطابق کامل با شرکت';
+                bankStatusEl.style.color = 'var(--accent-emerald)';
+            } else {
+                bankStatusEl.textContent = '❌ عدم تطابق / حساب متفرقه!';
+                bankStatusEl.style.color = 'var(--accent-rose)';
+            }
+
+            // Column 3
+            document.getElementById('pi-duty-pct').textContent = `${customs.customs_duty_pct}٪ (کد HS: ${customs.hs_code})`;
+            document.getElementById('pi-freight').textContent = `$${customs.sea_freight_usd.toLocaleString()}`;
+            document.getElementById('pi-landed-usd').textContent = `$${customs.total_landed_cost_usd.toLocaleString()}`;
+            document.getElementById('pi-landed-toman').textContent = `${Math.round(customs.total_landed_cost_toman).toLocaleString()} تومان`;
+
+            // Recommendations
+            const list = document.getElementById('pi-recommendations-list');
+            list.innerHTML = '';
+            data.recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                list.appendChild(li);
+            });
+            if (data.risk_flags && data.risk_flags.length > 0) {
+                data.risk_flags.forEach(flag => {
+                    const li = document.createElement('li');
+                    li.style.color = 'var(--accent-rose)';
+                    li.innerHTML = `<strong>${flag}</strong>`;
+                    list.appendChild(li);
+                });
+            }
+
+            // Negotiation script
+            currentNegotiationScript = data.negotiation_counter_offer;
+            document.getElementById('pi-negotiation-text').textContent = currentNegotiationScript;
+
+            card.style.display = 'block';
+            card.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyNegotiationScript() {
+            if (!currentNegotiationScript) return;
+            navigator.clipboard.writeText(currentNegotiationScript);
+            alert(currentLang === 'en' ? '✅ Negotiation script copied to clipboard!' : '✅ متن مذاکره با تامین‌کننده در کلیپ‌بورد کپی شد!');
+        }
+
+        // Setup Drag and Drop
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropzone = document.getElementById('pi-dropzone');
+            if (dropzone) {
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropzone.classList.add('dragover');
+                    }, false);
+                });
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropzone.classList.remove('dragover');
+                    }, false);
+                });
+                dropzone.addEventListener('drop', (e) => {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0) {
+                        const fakeEvent = { target: { files: files } };
+                        handlePIScannerUpload(fakeEvent);
+                    }
+                }, false);
+            }
+        });
+
+        // --- Light/Dark Theme Switcher ---
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'light') {
+                    icon.className = 'fa-solid fa-moon';
+                    icon.style.color = '#3b82f6';
+                } else {
+                    icon.className = 'fa-solid fa-sun';
+                    icon.style.color = 'var(--accent-amber)';
+                }
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+        }
+
+        // --- i18n Bilingual Engine (FA / EN) ---
+        let currentLang = localStorage.getItem('lang') || 'fa';
+
+        const i18nData = {
+            fa: {
+                nav_simulator: "شبیه‌ساز واردات",
+                nav_agents: "شبکه ایجنت‌ها",
+                nav_scanner: "اسکنر پروفرما",
+                nav_audit: "اعتبارسنجی چین",
+                nav_pipeline: "فرآیند ۱۱ مرحله‌ای",
+                status_text: "پلتفرم عملیاتی (FastAPI & DeepSeek Connected)",
+                hero_tag: "اکوسیستم هوشمند سورسینگ و مدیریت زنجیره تأمین",
+                hero_title: "مستر پلن تبلیغات و مشاوره هوشمند واردات<br><span>با ایجنت‌های هوش مصنوعی ۲۴/۷</span>",
+                hero_desc: "تبدیل مخاطب به واردکننده آگاه از طریق آموزش، گیمیفیکیشن، استعلام رسمی از سامانه‌های چین (QCC) و کاهش ریسک کالا و حواله ارزی",
+                stat_roi: "پاسخگویی خودکار و هوشمند",
+                stat_audit: "اعتبارسنجی کارخانجات چین",
+                stat_commission: "فروش مستقیم (فقط کارمزد و مشاوره)",
+                stat_steps: "مدیریت زنجیره تأمین",
+                sim_heading: "بازی شبیه‌ساز واردات با ۵۰,۰۰۰ دلار سرمایه اولیه",
+                step1_title: "انتخاب صنعت",
+                step2_title: "انتخاب تأمین‌کننده",
+                step3_title: "کنترل کیفیت (PSI)",
+                step4_title: "تخصیص ارز و گمرک",
+                step5_title: "نتیجه و سودآوری",
+                p1_title: "گام اول: انتخاب صنعت و کالای هدف",
+                p1_desc: "فرض کنید ۵۰ هزار دلار سرمایه نقد برای واردات در اختیار دارید. کدام حوزه را برای شروع انتخاب می‌کنید؟",
+                opt_med_t: "تجهیزات پزشکی و آزمایشگاهی",
+                opt_med_d: "حاشیه سود بالا، نیازمند مجوز اداره کل تجهیزات پزشکی و استاندارد CE/FDA",
+                opt_mac_t: "ماشین‌آلات صنعتی و خطوط تولید",
+                opt_mac_d: "تقاضای دائمی در صنایع مادر، نیازمند بازرسی فنی و گواهی بازرسی قبل از حمل (PSI)",
+                opt_raw_t: "مواد اولیه شیمیایی و پلیمری",
+                opt_raw_d: "حجم خرید عمده (Bulk)، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی",
+                opt_elec_t: "لوازم جانبی دیجیتال و مصرفی",
+                opt_elec_d: "گردش سرمایه سریع، رقابت بالا، نیازمند کنترل کیفی دقیق برای جلوگیری از جنس فیک",
+                p2_title: "گام دوم: انتخاب کارخانه در چین",
+                p2_desc: "ایجنت سورسینگ ۲ کارخانه در استان گوانگ‌دونگ چین به شما پیشنهاد می‌دهد:",
+                opt_supp_b_t: "کارخانه دوم (ثبت‌شده در QCC با استاندارد CE)",
+                opt_supp_b_d: "قیمت منصفانه بازار. شرایط پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفی در کارخانه چین.",
+                opt_supp_a_t: "کارخانه اول (۱۸٪ ارزان‌تر)",
+                opt_supp_a_d: "نامشخص در سامانه QCC، درخواست ۱۰۰٪ تسویه قبل از ارسال بار بدون بازرسی!",
+                p3_title: "گام سوم: بازرسی کیفیت قبل از حمل (PSI)",
+                p3_desc: "آیا مایلید تیم بازرسی حضوری قبل از تسویه حساب در کارخانه چین حاضر شود؟",
+                opt_qc_yes_t: "انجام بازرسی حضوری (PSI & Testing)",
+                opt_qc_yes_d: "هزینه ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تطبیق نمونه با بار.",
+                opt_qc_no_t: "صرفه‌جویی در هزینه بازرسی",
+                opt_qc_no_d: "اعتماد به عکس‌ها و ویدیوهای ارسالی توسط کارخانه تامین‌کننده.",
+                p4_title: "گام چهارم: تخصیص ارز و ترخیص گمرکی",
+                p4_desc: "نوع ارز و روش ترخیص کالا را مشخص کنید:",
+                opt_curr_nima_t: "ارز نیما (تالار دوم مرکز مبادله)",
+                opt_curr_nima_d: "نرخ دولتی، ۳۰ تا ۶۰ روز صف تخصیص، کاهش قیمت تمام‌شده در انبار",
+                opt_curr_exp_t: "ارز حاصل از صادرات (اشخاص)",
+                opt_curr_exp_d: "تخصیص سریع‌تر، هزینه بالاتر، مناسب سفارش‌های فوری خط تولید",
+                p5_title: "🎉 تحلیل جامع و نتایج مالی شبیه‌سازی واردات",
+                p5_desc: "این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شد:",
+                rep_header: "ریز هزینه‌ها و محاسبات مالی",
+                lbl_capital: "سرمایه اولیه:",
+                lbl_fob: "هزینه خرید کالا (FOB):",
+                lbl_freight: "حمل و بیمه بین‌المللی:",
+                lbl_qc: "بازرسی و اعتبارسنجی (PSI):",
+                lbl_customs: "حقوق و عوارض گمرکی (تخمینی):",
+                lbl_profit: "سود خالص تخمینی:",
+                lbl_risk_level: "سطح ریسک پروژه:",
+                lbl_advice: "توصیه‌های ایجنت:",
+                btn_consult: "دریافت مشاوره تخصصی سورسینگ",
+                btn_next: "گام بعدی",
+                btn_prev: "گام قبلی",
+                agents_heading: "شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)",
+                active_agent_lbl: "انتخاب ایجنت فعال:",
+                edulead_sub: "آموزش، جذب و گیمیفیکیشن",
+                sourcing_sub: "تعیین HS Code و استعلام قیمت",
+                risk_sub: "استعلام QCC چین و حقوقی",
+                logistics_sub: "حمل، تخصیص ارز و ترخیص",
+                chip1: "مراحل واردات خط تولید چیست؟",
+                chip2: "اعتبارسنجی کارخانه در چین",
+                chip3: "استعلام کد HS",
+                input_placeholder: "سوال خود را از ایجنت هوشمند بپرسید...",
+                agent_initial_msg: "سلام! من <strong>ایجنت EduLead</strong> هستم. چطور می‌تونم در زمینه آموزش مراحل واردات، محاسبه سود یا انتخاب بهترین کشور برای خرید کمکتون کنم؟",
+                scanner_heading: "اسکنر و تحلیل‌گر هوشمند پیش‌فاکتور (AI Proforma / PI Scanner)",
+                scanner_desc: "آپلود فایل PDF یا تصویر پیش‌فاکتور چینی جهت استعلام زنده اصالت کارخانه، بررسی تطابق حساب بانکی، محاسبه دقیق قیمت تمام‌شده در انبار ایران (Landed Cost) و کشف ریسک‌های پنهان:",
+                demo_pi_safe: "پیش‌فاکتور نمونه ۱ (خط تولید ماشین‌آلات - امن)",
+                demo_pi_risk: "پیش‌فاکتور نمونه ۲ (مشکوک - حساب متفرقه و پرداخت ریسکی)",
+                dropzone_title: "فایل PDF یا عکس پیش‌فاکتور خود را اینجا بکشید یا کلیک کنید",
+                dropzone_hint: "پشتیبانی از فرمت‌های PDF، JPG، PNG و متن انگلیسی یا چینی فاکتور",
+                scanning_status: "در حال اسکن نوری، استعلام زنده سامانه QCC چین و محاسبه قیمت تمام‌شده...",
+                pi_total_lbl: "ارزش کل پیش‌فاکتور (FOB):",
+                copy_script_btn: "کپی متن مذاکره",
+                audit_heading: "سامانه اعتبارسنجی کارخانجات چین (QCC & TianYanCha Integration)",
+                audit_desc: "جستجوی مستقیم سوابق ثبتی، سرمایه، پرونده‌های دادگاهی و وضعیت مالیاتی شرکت‌های صادرکننده در چین:",
+                audit_placeholder: "نام انگلیسی یا شناسه ثبتی شرکت چین (مثال: Shenzhen Precision Machinery Co., Ltd)",
+                audit_btn: "استعلام رسمی",
+                uscc_lbl: "شناسه اعتباری (USCC):",
+                capital_lbl: "سرمایه ثبتی:",
+                date_lbl: "تاریخ تأسیس:",
+                litigation_lbl: "سابقه دعوای حقوقی:",
+                rep_lbl: "نماینده قانونی:",
+                bank_lbl: "تطابق حساب بانکی:",
+                pipeline_heading: "فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین",
+                pipe1_t: "دریافت مشخصات کالا", pipe1_d: "ثبت مشخصات فنی، پارت نامبر و پروفرما توسط کاربر در ایجنت.",
+                pipe2_t: "تعیین کد HS", pipe2_d: "استخراج تعرفه گمرکی دقیق و اولویت گروه کالایی صمت.",
+                pipe3_t: "سورسینگ بین‌المللی", pipe3_d: "یافتن تامین‌کنندگان دست اول در چین، هند، ترکیه و امارات.",
+                pipe4_t: "اعتبارسنجی حقوقی", pipe4_d: "استعلام رسمی ثبتی، دادگاهی و مالیاتی کارخانه از QCC.",
+                pipe5_t: "دریافت نمونه (Sample)", pipe5_d: "ارزیابی کیفی نمونه قبل از ثبت سفارش اصلی.",
+                pipe6_t: "مذاکره و اینکوترمز", pipe6_d: "چنه‌زنی قیمت FOB/EXW و تخفیف حجمی توسط تیم بازرگانی.",
+                pipe7_t: "عقد قرارداد رسمی", pipe7_d: "تنظیم قرارداد بین‌المللی دو زبانه حقوقی (ایران - چین).",
+                pipe8_t: "کنترل کیفیت (PSI)", pipe8_d: "بازرسی حضوری کارخانه و تست خط تولید قبل از حمل.",
+                pipe9_t: "حمل بین‌المللی", pipe9_d: "رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.",
+                pipe10_t: "ترخیص گمرکی", pipe10_d: "انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.",
+                pipe11_t: "تحویل در انبار", pipe11_d: "تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.",
                 modal_title: "درخواست مشاوره تخصصی و سورسینگ",
                 modal_desc: "اطلاعات خود را وارد کنید تا ایجنت هوشمند ارشد و مشاوران بازرگانی با شما تماس بگیرند:",
                 modal_name_lbl: "نام و نام خانوادگی / نام شرکت",
@@ -1554,6 +2139,7 @@
             en: {
                 nav_simulator: "Import Simulator",
                 nav_agents: "AI Agent Network",
+                nav_scanner: "PI Scanner",
                 nav_audit: "China QCC Audit",
                 nav_pipeline: "11-Step Pipeline",
                 status_text: "Live Platform (FastAPI & DeepSeek Connected)",
@@ -1623,6 +2209,15 @@
                 chip3: "What is the HS Code for medical equipment?",
                 input_placeholder: "Ask your question to the AI Agent...",
                 agent_initial_msg: "Hello! I am <strong>EduLead AI Agent</strong>. How can I assist you with import tutorials, profit calculation, or choosing the best sourcing country?",
+                scanner_heading: "AI Proforma Invoice Intelligence Scanner (PI Audit & Landed Cost)",
+                scanner_desc: "Upload a PDF or image of your Chinese Proforma Invoice for real-time factory verification, bank account mismatch audit, Iranian landed cost calculation & hidden risk detection:",
+                demo_pi_safe: "Sample PI 1 (Machinery Production Line - Low Risk)",
+                demo_pi_risk: "Sample PI 2 (Suspicious - Offshore Account & 100% Upfront)",
+                dropzone_title: "Drag & Drop your Proforma PDF/Image here or Click to Browse",
+                dropzone_hint: "Supports PDF, JPG, PNG and English/Chinese commercial invoice text",
+                scanning_status: "Optical scan in progress, checking live China QCC registry and computing landed cost...",
+                pi_total_lbl: "Total Proforma Value (FOB):",
+                copy_script_btn: "Copy Negotiation Script",
                 audit_heading: "China Official Factory Registry (QCC & TianYanCha Integration)",
                 audit_desc: "Direct search of official registration records, capital, court litigation, and tax status of Chinese exporters:",
                 audit_placeholder: "English name or USCC registration ID (e.g. Shenzhen Precision Machinery Co., Ltd)",
