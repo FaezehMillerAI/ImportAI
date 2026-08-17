@@ -1715,416 +1715,6 @@
                 pipe9_t: "حمل بین‌المللی", pipe9_d: "رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.",
                 pipe10_t: "ترخیص گمرکی", pipe10_d: "انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.",
                 pipe11_t: "تحویل در انبار", pipe11_d: "تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.",
-        // --- AI Proforma & Document Scanner Engine ---
-        let currentNegotiationScript = "";
-
-        async function scanProforma(rawText, filename = "Proforma.txt") {
-            const loading = document.getElementById('pi-loading-state');
-            const resultCard = document.getElementById('pi-result-card');
-            const laser = document.getElementById('laser-bar');
-
-            if (loading) loading.style.display = 'block';
-            if (laser) laser.style.display = 'block';
-            if (resultCard) resultCard.style.display = 'none';
-
-            try {
-                const resp = await fetch('/api/scan-pi', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ raw_text: rawText, filename: filename })
-                });
-
-                if (resp.ok) {
-                    const data = await resp.json();
-                    renderPIAuditResult(data);
-                }
-            } catch (err) {
-                console.error("PI Scan error:", err);
-            } finally {
-                if (loading) loading.style.display = 'none';
-                if (laser) laser.style.display = 'none';
-            }
-        }
-
-        async function handlePIScannerUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const loading = document.getElementById('pi-loading-state');
-            const resultCard = document.getElementById('pi-result-card');
-            const laser = document.getElementById('laser-bar');
-
-            if (loading) loading.style.display = 'block';
-            if (laser) laser.style.display = 'block';
-            if (resultCard) resultCard.style.display = 'none';
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try {
-                const resp = await fetch('/api/scan-pi-upload', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (resp.ok) {
-                    const data = await resp.json();
-                    renderPIAuditResult(data);
-                }
-            } catch (err) {
-                console.error("PI File upload scan error:", err);
-            } finally {
-                if (loading) loading.style.display = 'none';
-                if (laser) laser.style.display = 'none';
-            }
-        }
-
-        async function handleChatFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const chatMessages = document.getElementById('chat-messages');
-            const userBubble = document.createElement('div');
-            userBubble.className = 'chat-bubble user';
-            userBubble.innerHTML = `<i class="fa-solid fa-file-pdf"></i> آپلود پیش‌فاکتور: <strong>${file.name}</strong>`;
-            chatMessages.appendChild(userBubble);
-            scrollToBottom();
-
-            // Typing indicator
-            const typingBubble = document.createElement('div');
-            typingBubble.className = 'chat-bubble agent';
-            typingBubble.id = 'typing-indicator-pi';
-            typingBubble.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> در حال اسکن هوشمند پیش‌فاکتور و اعتبارسنجی زنده...';
-            chatMessages.appendChild(typingBubble);
-            scrollToBottom();
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try {
-                const resp = await fetch('/api/scan-pi-upload', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const indicator = document.getElementById('typing-indicator-pi');
-                if (indicator) indicator.remove();
-
-                if (resp.ok) {
-                    const data = await resp.json();
-                    const ext = data.extracted_data;
-                    const customs = data.customs_and_landed_cost;
-                    const traffic = data.traffic_light === 'GREEN' ? '🟢 امن' : (data.traffic_light === 'YELLOW' ? '🟡 متوسط' : '🔴 پرریسک');
-
-                    const agentBubble = document.createElement('div');
-                    agentBubble.className = 'chat-bubble agent';
-                    agentBubble.innerHTML = `
-                        <strong><i class="fa-solid fa-file-invoice-dollar"></i> گزارش هوشمند تحلیل پیش‌فاکتور:</strong><br><br>
-                        • <strong>نمره سلامت معامله:</strong> ${data.safety_score} از ۱۰۰ (${traffic})<br>
-                        • <strong>شرکت فروشنده:</strong> ${ext.supplier_name}<br>
-                        • <strong>مبلغ کل FOB:</strong> $${ext.total_amount_usd.toLocaleString()}<br>
-                        • <strong>ترم و شرایط پرداخت:</strong> ${ext.incoterms} (${ext.payment_terms})<br>
-                        • <strong>قیمت تمام‌شده در انبار ایران:</strong> $${customs.total_landed_cost_usd.toLocaleString()} (${Math.round(customs.total_landed_cost_toman).toLocaleString()} تومان)<br><br>
-                        🛡️ <em>برای مشاهده جزئیات حساب بانکی و متن مذاکره، به بخش اسکنر پروفرما در صفحه مراجعه کنید.</em>
-                    `;
-                    chatMessages.appendChild(agentBubble);
-                    scrollToBottom();
-
-                    renderPIAuditResult(data);
-                }
-            } catch (err) {
-                const indicator = document.getElementById('typing-indicator-pi');
-                if (indicator) indicator.remove();
-            }
-        }
-
-        function loadDemoPI(type) {
-            if (type === 'safe') {
-                const sampleSafe = `
-PROFORMA INVOICE
-PI Number: PI-2026-0889 | Date: 2026-08-16
-Seller: Shenzhen Precision Machinery Industrial Co., Ltd.
-Address: High-Tech Industrial Park, Nanshan, Shenzhen, Guangdong, China
-Buyer: Rayan Pars Trading Co., Tehran, Iran
-Product: High-Speed Industrial Plastic Extruder Machine Set (Model: PE-800)
-Quantity: 2 Sets
-Unit Price: $14,500.00 FOB Shenzhen Port
-Total Amount: $29,000.00 USD
-Payment Terms: 30% T/T Advance Deposit, 70% Balance payable against Official Pre-Shipment Inspection (PSI) Certificate
-Bank Information:
-Bank Name: Bank of China, Shenzhen High-Tech Branch
-Account Name: Shenzhen Precision Machinery Industrial Co., Ltd.
-SWIFT Code: BKCHCNBJ940
-Account Number: 7559 1820 4491 8820
-`;
-                scanProforma(sampleSafe, "Sample_Precision_Machinery_PI.pdf");
-            } else {
-                const sampleRisky = `
-PROFORMA INVOICE
-PI Number: SCAM-2026-99 | Date: 2026-08-17
-Seller: Guangzhou Cheap Wholesale Industrial Co., Ltd.
-Buyer: Valued Customer
-Product: Polymer Raw Material Resin
-Quantity: 50 Tons
-Unit Price: $400.00 EXW Factory
-Total Amount: $20,000.00 USD
-Payment Terms: 100% Full T/T Advance Payment strictly before container loading (No inspection allowed)
-Bank Information:
-Bank Name: HSBC Hong Kong Personal Branch
-Account Name: Mr. David Wong (Personal Agent Account)
-Account Number: 884-19283-001
-SWIFT Code: HSBCHKHHXXX
-`;
-                scanProforma(sampleRisky, "Suspicious_Resin_PI.pdf");
-            }
-        }
-
-        function renderPIAuditResult(data) {
-            const card = document.getElementById('pi-result-card');
-            if (!card) return;
-
-            const ext = data.extracted_data;
-            const audit = data.supplier_audit;
-            const customs = data.customs_and_landed_cost;
-
-            // Score Circle
-            const circle = document.getElementById('pi-score-circle');
-            const scoreNum = document.getElementById('pi-score-num');
-            scoreNum.textContent = data.safety_score;
-            circle.className = 'score-circle ' + (data.safety_score >= 75 ? 'score-green' : (data.safety_score >= 50 ? 'score-yellow' : 'score-red'));
-
-            // Supplier & Traffic Badge
-            document.getElementById('pi-card-supplier').textContent = ext.supplier_name;
-            const badge = document.getElementById('pi-card-traffic');
-            if (data.traffic_light === 'GREEN') {
-                badge.className = 'risk-badge risk-low';
-                badge.innerHTML = '<i class="fa-solid fa-shield-check"></i> وضعیت معامله: امن و قابل تایید (Low Risk)';
-            } else if (data.traffic_light === 'YELLOW') {
-                badge.className = 'risk-badge risk-med';
-                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> وضعیت معامله: نیازمند اصلاح بندهای قرارداد (Medium Risk)';
-            } else {
-                badge.className = 'risk-badge risk-high';
-                badge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> هشدار ریسک بالا: خطر کلاهبرداری یا حساب متفرقه (High Risk)';
-            }
-
-            document.getElementById('pi-card-total').textContent = `$${ext.total_amount_usd.toLocaleString()}`;
-
-            // Column 1
-            document.getElementById('pi-item-desc').textContent = `${ext.item_description} (${ext.quantity} دستگاه/واحد)`;
-            document.getElementById('pi-incoterm').textContent = `${ext.incoterms} (${ext.pol})`;
-            document.getElementById('pi-payment').textContent = ext.payment_terms;
-            document.getElementById('pi-pod').textContent = ext.pod;
-
-            // Column 2
-            document.getElementById('pi-bank-beneficiary').textContent = ext.bank_beneficiary;
-            document.getElementById('pi-bank-name').textContent = `${ext.bank_name} (${ext.swift_code})`;
-            document.getElementById('pi-uscc').textContent = audit.uscc_code;
-            const bankStatusEl = document.getElementById('pi-bank-status');
-            if (audit.bank_account_matched) {
-                bankStatusEl.textContent = '✅ تطابق کامل با شرکت';
-                bankStatusEl.style.color = 'var(--accent-emerald)';
-            } else {
-                bankStatusEl.textContent = '❌ عدم تطابق / حساب متفرقه!';
-                bankStatusEl.style.color = 'var(--accent-rose)';
-            }
-
-            // Column 3
-            document.getElementById('pi-duty-pct').textContent = `${customs.customs_duty_pct}٪ (کد HS: ${customs.hs_code})`;
-            document.getElementById('pi-freight').textContent = `$${customs.sea_freight_usd.toLocaleString()}`;
-            document.getElementById('pi-landed-usd').textContent = `$${customs.total_landed_cost_usd.toLocaleString()}`;
-            document.getElementById('pi-landed-toman').textContent = `${Math.round(customs.total_landed_cost_toman).toLocaleString()} تومان`;
-
-            // Recommendations
-            const list = document.getElementById('pi-recommendations-list');
-            list.innerHTML = '';
-            data.recommendations.forEach(rec => {
-                const li = document.createElement('li');
-                li.textContent = rec;
-                list.appendChild(li);
-            });
-            if (data.risk_flags && data.risk_flags.length > 0) {
-                data.risk_flags.forEach(flag => {
-                    const li = document.createElement('li');
-                    li.style.color = 'var(--accent-rose)';
-                    li.innerHTML = `<strong>${flag}</strong>`;
-                    list.appendChild(li);
-                });
-            }
-
-            // Negotiation script
-            currentNegotiationScript = data.negotiation_counter_offer;
-            document.getElementById('pi-negotiation-text').textContent = currentNegotiationScript;
-
-            card.style.display = 'block';
-            card.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function copyNegotiationScript() {
-            if (!currentNegotiationScript) return;
-            navigator.clipboard.writeText(currentNegotiationScript);
-            alert(currentLang === 'en' ? '✅ Negotiation script copied to clipboard!' : '✅ متن مذاکره با تامین‌کننده در کلیپ‌بورد کپی شد!');
-        }
-
-        // Setup Drag and Drop
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropzone = document.getElementById('pi-dropzone');
-            if (dropzone) {
-                ['dragenter', 'dragover'].forEach(eventName => {
-                    dropzone.addEventListener(eventName, (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        dropzone.classList.add('dragover');
-                    }, false);
-                });
-                ['dragleave', 'drop'].forEach(eventName => {
-                    dropzone.addEventListener(eventName, (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        dropzone.classList.remove('dragover');
-                    }, false);
-                });
-                dropzone.addEventListener('drop', (e) => {
-                    const dt = e.dataTransfer;
-                    const files = dt.files;
-                    if (files.length > 0) {
-                        const fakeEvent = { target: { files: files } };
-                        handlePIScannerUpload(fakeEvent);
-                    }
-                }, false);
-            }
-        });
-
-        // --- Light/Dark Theme Switcher ---
-        let currentTheme = localStorage.getItem('theme') || 'dark';
-        
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            const icon = document.getElementById('theme-icon');
-            if (icon) {
-                if (theme === 'light') {
-                    icon.className = 'fa-solid fa-moon';
-                    icon.style.color = '#3b82f6';
-                } else {
-                    icon.className = 'fa-solid fa-sun';
-                    icon.style.color = 'var(--accent-amber)';
-                }
-            }
-            localStorage.setItem('theme', theme);
-        }
-
-        function toggleTheme() {
-            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-        }
-
-        // --- i18n Bilingual Engine (FA / EN) ---
-        let currentLang = localStorage.getItem('lang') || 'fa';
-
-        const i18nData = {
-            fa: {
-                nav_simulator: "شبیه‌ساز واردات",
-                nav_agents: "شبکه ایجنت‌ها",
-                nav_scanner: "اسکنر پروفرما",
-                nav_audit: "اعتبارسنجی چین",
-                nav_pipeline: "فرآیند ۱۱ مرحله‌ای",
-                status_text: "پلتفرم عملیاتی (FastAPI & DeepSeek Connected)",
-                hero_tag: "اکوسیستم هوشمند سورسینگ و مدیریت زنجیره تأمین",
-                hero_title: "مستر پلن تبلیغات و مشاوره هوشمند واردات<br><span>با ایجنت‌های هوش مصنوعی ۲۴/۷</span>",
-                hero_desc: "تبدیل مخاطب به واردکننده آگاه از طریق آموزش، گیمیفیکیشن، استعلام رسمی از سامانه‌های چین (QCC) و کاهش ریسک کالا و حواله ارزی",
-                stat_roi: "پاسخگویی خودکار و هوشمند",
-                stat_audit: "اعتبارسنجی کارخانجات چین",
-                stat_commission: "فروش مستقیم (فقط کارمزد و مشاوره)",
-                stat_steps: "مدیریت زنجیره تأمین",
-                sim_heading: "بازی شبیه‌ساز واردات با ۵۰,۰۰۰ دلار سرمایه اولیه",
-                step1_title: "انتخاب صنعت",
-                step2_title: "انتخاب تأمین‌کننده",
-                step3_title: "کنترل کیفیت (PSI)",
-                step4_title: "تخصیص ارز و گمرک",
-                step5_title: "نتیجه و سودآوری",
-                p1_title: "گام اول: انتخاب صنعت و کالای هدف",
-                p1_desc: "فرض کنید ۵۰ هزار دلار سرمایه نقد برای واردات در اختیار دارید. کدام حوزه را برای شروع انتخاب می‌کنید؟",
-                opt_med_t: "تجهیزات پزشکی و آزمایشگاهی",
-                opt_med_d: "حاشیه سود بالا، نیازمند مجوز اداره کل تجهیزات پزشکی و استاندارد CE/FDA",
-                opt_mac_t: "ماشین‌آلات صنعتی و خطوط تولید",
-                opt_mac_d: "تقاضای دائمی در صنایع مادر، نیازمند بازرسی فنی و گواهی بازرسی قبل از حمل (PSI)",
-                opt_raw_t: "مواد اولیه شیمیایی و پلیمری",
-                opt_raw_d: "حجم خرید عمده (Bulk)، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی",
-                opt_elec_t: "لوازم جانبی دیجیتال و مصرفی",
-                opt_elec_d: "گردش سرمایه سریع، رقابت بالا، نیازمند کنترل کیفی دقیق برای جلوگیری از جنس فیک",
-                p2_title: "گام دوم: انتخاب کارخانه در چین",
-                p2_desc: "ایجنت سورسینگ ۲ کارخانه در استان گوانگ‌دونگ چین به شما پیشنهاد می‌دهد:",
-                opt_supp_b_t: "کارخانه دوم (ثبت‌شده در QCC با استاندارد CE)",
-                opt_supp_b_d: "قیمت منصفانه بازار. شرایط پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفی در کارخانه چین.",
-                opt_supp_a_t: "کارخانه اول (۱۸٪ ارزان‌تر)",
-                opt_supp_a_d: "نامشخص در سامانه QCC، درخواست ۱۰۰٪ تسویه قبل از ارسال بار بدون بازرسی!",
-                p3_title: "گام سوم: بازرسی کیفیت قبل از حمل (PSI)",
-                p3_desc: "آیا مایلید تیم بازرسی حضوری قبل از تسویه حساب در کارخانه چین حاضر شود؟",
-                opt_qc_yes_t: "انجام بازرسی حضوری (PSI & Testing)",
-                opt_qc_yes_d: "هزینه ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تطبیق نمونه با بار.",
-                opt_qc_no_t: "صرفه‌جویی در هزینه بازرسی",
-                opt_qc_no_d: "اعتماد به عکس‌ها و ویدیوهای ارسالی توسط کارخانه تامین‌کننده.",
-                p4_title: "گام چهارم: تخصیص ارز و ترخیص گمرکی",
-                p4_desc: "نوع ارز و روش ترخیص کالا را مشخص کنید:",
-                opt_curr_nima_t: "ارز نیما (تالار دوم مرکز مبادله)",
-                opt_curr_nima_d: "نرخ دولتی، ۳۰ تا ۶۰ روز صف تخصیص، کاهش قیمت تمام‌شده در انبار",
-                opt_curr_exp_t: "ارز حاصل از صادرات (اشخاص)",
-                opt_curr_exp_d: "تخصیص سریع‌تر، هزینه بالاتر، مناسب سفارش‌های فوری خط تولید",
-                p5_title: "🎉 تحلیل جامع و نتایج مالی شبیه‌سازی واردات",
-                p5_desc: "این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شد:",
-                rep_header: "ریز هزینه‌ها و محاسبات مالی",
-                lbl_capital: "سرمایه اولیه:",
-                lbl_fob: "هزینه خرید کالا (FOB):",
-                lbl_freight: "حمل و بیمه بین‌المللی:",
-                lbl_qc: "بازرسی و اعتبارسنجی (PSI):",
-                lbl_customs: "حقوق و عوارض گمرکی (تخمینی):",
-                lbl_profit: "سود خالص تخمینی:",
-                lbl_risk_level: "سطح ریسک پروژه:",
-                lbl_advice: "توصیه‌های ایجنت:",
-                btn_consult: "دریافت مشاوره تخصصی سورسینگ",
-                btn_next: "گام بعدی",
-                btn_prev: "گام قبلی",
-                agents_heading: "شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)",
-                active_agent_lbl: "انتخاب ایجنت فعال:",
-                edulead_sub: "آموزش، جذب و گیمیفیکیشن",
-                sourcing_sub: "تعیین HS Code و استعلام قیمت",
-                risk_sub: "استعلام QCC چین و حقوقی",
-                logistics_sub: "حمل، تخصیص ارز و ترخیص",
-                chip1: "مراحل واردات خط تولید چیست؟",
-                chip2: "اعتبارسنجی کارخانه در چین",
-                chip3: "استعلام کد HS",
-                input_placeholder: "سوال خود را از ایجنت هوشمند بپرسید...",
-                agent_initial_msg: "سلام! من <strong>ایجنت EduLead</strong> هستم. چطور می‌تونم در زمینه آموزش مراحل واردات، محاسبه سود یا انتخاب بهترین کشور برای خرید کمکتون کنم؟",
-                scanner_heading: "اسکنر و تحلیل‌گر هوشمند پیش‌فاکتور (AI Proforma / PI Scanner)",
-                scanner_desc: "آپلود فایل PDF یا تصویر پیش‌فاکتور چینی جهت استعلام زنده اصالت کارخانه، بررسی تطابق حساب بانکی، محاسبه دقیق قیمت تمام‌شده در انبار ایران (Landed Cost) و کشف ریسک‌های پنهان:",
-                demo_pi_safe: "پیش‌فاکتور نمونه ۱ (خط تولید ماشین‌آلات - امن)",
-                demo_pi_risk: "پیش‌فاکتور نمونه ۲ (مشکوک - حساب متفرقه و پرداخت ریسکی)",
-                dropzone_title: "فایل PDF یا عکس پیش‌فاکتور خود را اینجا بکشید یا کلیک کنید",
-                dropzone_hint: "پشتیبانی از فرمت‌های PDF، JPG، PNG و متن انگلیسی یا چینی فاکتور",
-                scanning_status: "در حال اسکن نوری، استعلام زنده سامانه QCC چین و محاسبه قیمت تمام‌شده...",
-                pi_total_lbl: "ارزش کل پیش‌فاکتور (FOB):",
-                copy_script_btn: "کپی متن مذاکره",
-                audit_heading: "سامانه اعتبارسنجی کارخانجات چین (QCC & TianYanCha Integration)",
-                audit_desc: "جستجوی مستقیم سوابق ثبتی، سرمایه، پرونده‌های دادگاهی و وضعیت مالیاتی شرکت‌های صادرکننده در چین:",
-                audit_placeholder: "نام انگلیسی یا شناسه ثبتی شرکت چین (مثال: Shenzhen Precision Machinery Co., Ltd)",
-                audit_btn: "استعلام رسمی",
-                uscc_lbl: "شناسه اعتباری (USCC):",
-                capital_lbl: "سرمایه ثبتی:",
-                date_lbl: "تاریخ تأسیس:",
-                litigation_lbl: "سابقه دعوای حقوقی:",
-                rep_lbl: "نماینده قانونی:",
-                bank_lbl: "تطابق حساب بانکی:",
-                pipeline_heading: "فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین",
-                pipe1_t: "دریافت مشخصات کالا", pipe1_d: "ثبت مشخصات فنی، پارت نامبر و پروفرما توسط کاربر در ایجنت.",
-                pipe2_t: "تعیین کد HS", pipe2_d: "استخراج تعرفه گمرکی دقیق و اولویت گروه کالایی صمت.",
-                pipe3_t: "سورسینگ بین‌المللی", pipe3_d: "یافتن تامین‌کنندگان دست اول در چین، هند، ترکیه و امارات.",
-                pipe4_t: "اعتبارسنجی حقوقی", pipe4_d: "استعلام رسمی ثبتی، دادگاهی و مالیاتی کارخانه از QCC.",
-                pipe5_t: "دریافت نمونه (Sample)", pipe5_d: "ارزیابی کیفی نمونه قبل از ثبت سفارش اصلی.",
-                pipe6_t: "مذاکره و اینکوترمز", pipe6_d: "چنه‌زنی قیمت FOB/EXW و تخفیف حجمی توسط تیم بازرگانی.",
-                pipe7_t: "عقد قرارداد رسمی", pipe7_d: "تنظیم قرارداد بین‌المللی دو زبانه حقوقی (ایران - چین).",
-                pipe8_t: "کنترل کیفیت (PSI)", pipe8_d: "بازرسی حضوری کارخانه و تست خط تولید قبل از حمل.",
-                pipe9_t: "حمل بین‌المللی", pipe9_d: "رزرو کانتینر دریایی یا فریت هوایی با بهترین فریت فورواردر.",
-                pipe10_t: "ترخیص گمرکی", pipe10_d: "انجام تشریفات گمرکی، ثبت سفارش و تخصیص ارز نیما/صادرات.",
-                pipe11_t: "تحویل در انبار", pipe11_d: "تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.",
                 modal_title: "درخواست مشاوره تخصصی و سورسینگ",
                 modal_desc: "اطلاعات خود را وارد کنید تا ایجنت هوشمند ارشد و مشاوران بازرگانی با شما تماس بگیرند:",
                 modal_name_lbl: "نام و نام خانوادگی / نام شرکت",
@@ -2253,6 +1843,248 @@ SWIFT Code: HSBCHKHHXXX
             }
         };
 
+        // --- Proforma Scanner Functions ---
+        let currentNegotiationScript = "";
+
+        async function scanProforma(rawText, filename = "Proforma.txt") {
+            const loading = document.getElementById('pi-loading-state');
+            const resultCard = document.getElementById('pi-result-card');
+            const laser = document.getElementById('laser-bar');
+
+            if (loading) loading.style.display = 'block';
+            if (laser) laser.style.display = 'block';
+            if (resultCard) resultCard.style.display = 'none';
+
+            try {
+                const resp = await fetch('/api/scan-pi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ raw_text: rawText, filename: filename })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    renderPIAuditResult(data);
+                }
+            } catch (err) {
+                console.error("PI Scan error:", err);
+            } finally {
+                if (loading) loading.style.display = 'none';
+                if (laser) laser.style.display = 'none';
+            }
+        }
+
+        async function handlePIScannerUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const loading = document.getElementById('pi-loading-state');
+            const resultCard = document.getElementById('pi-result-card');
+            const laser = document.getElementById('laser-bar');
+
+            if (loading) loading.style.display = 'block';
+            if (laser) laser.style.display = 'block';
+            if (resultCard) resultCard.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const resp = await fetch('/api/scan-pi-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    renderPIAuditResult(data);
+                }
+            } catch (err) {
+                console.error("PI File upload scan error:", err);
+            } finally {
+                if (loading) loading.style.display = 'none';
+                if (laser) laser.style.display = 'none';
+            }
+        }
+
+        async function handleChatFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.innerHTML = `<i class="fa-solid fa-file-pdf"></i> آپلود پیش‌فاکتور: <strong>${file.name}</strong>`;
+            chatMessages.appendChild(userBubble);
+            scrollToBottom();
+
+            const typingBubble = document.createElement('div');
+            typingBubble.className = 'chat-bubble agent';
+            typingBubble.id = 'typing-indicator-pi';
+            typingBubble.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> در حال اسکن هوشمند پیش‌فاکتور و اعتبارسنجی زنده...';
+            chatMessages.appendChild(typingBubble);
+            scrollToBottom();
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const resp = await fetch('/api/scan-pi-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const indicator = document.getElementById('typing-indicator-pi');
+                if (indicator) indicator.remove();
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const ext = data.extracted_data;
+                    const customs = data.customs_and_landed_cost;
+                    const traffic = data.traffic_light === 'GREEN' ? '🟢 امن' : (data.traffic_light === 'YELLOW' ? '🟡 متوسط' : '🔴 پرریسک');
+
+                    const agentBubble = document.createElement('div');
+                    agentBubble.className = 'chat-bubble agent';
+                    agentBubble.innerHTML = `
+                        <strong><i class="fa-solid fa-file-invoice-dollar"></i> گزارش هوشمند تحلیل پیش‌فاکتور:</strong><br><br>
+                        • <strong>نمره سلامت معامله:</strong> ${data.safety_score} از ۱۰۰ (${traffic})<br>
+                        • <strong>شرکت فروشنده:</strong> ${ext.supplier_name}<br>
+                        • <strong>مبلغ کل FOB:</strong> $${ext.total_amount_usd.toLocaleString()}<br>
+                        • <strong>ترم و شرایط پرداخت:</strong> ${ext.incoterms} (${ext.payment_terms})<br>
+                        • <strong>قیمت تمام‌شده در انبار ایران:</strong> $${customs.total_landed_cost_usd.toLocaleString()} (${Math.round(customs.total_landed_cost_toman).toLocaleString()} تومان)<br><br>
+                        🛡️ <em>برای مشاهده جزئیات حساب بانکی و متن مذاکره، به بخش اسکنر پروفرما در صفحه مراجعه کنید.</em>
+                    `;
+                    chatMessages.appendChild(agentBubble);
+                    scrollToBottom();
+
+                    renderPIAuditResult(data);
+                }
+            } catch (err) {
+                const indicator = document.getElementById('typing-indicator-pi');
+                if (indicator) indicator.remove();
+            }
+        }
+
+        function loadDemoPI(type) {
+            if (type === 'safe') {
+                const sampleSafe = `
+PROFORMA INVOICE
+PI Number: PI-2026-0889 | Date: 2026-08-16
+Seller: Shenzhen Precision Machinery Industrial Co., Ltd.
+Address: High-Tech Industrial Park, Nanshan, Shenzhen, Guangdong, China
+Buyer: Rayan Pars Trading Co., Tehran, Iran
+Product: High-Speed Industrial Plastic Extruder Machine Set (Model: PE-800)
+Quantity: 2 Sets
+Unit Price: $14,500.00 FOB Shenzhen Port
+Total Amount: $29,000.00 USD
+Payment Terms: 30% T/T Advance Deposit, 70% Balance payable against Official Pre-Shipment Inspection (PSI) Certificate
+Bank Information:
+Bank Name: Bank of China, Shenzhen High-Tech Branch
+Account Name: Shenzhen Precision Machinery Industrial Co., Ltd.
+SWIFT Code: BKCHCNBJ940
+Account Number: 7559 1820 4491 8820
+`;
+                scanProforma(sampleSafe, "Sample_Precision_Machinery_PI.pdf");
+            } else {
+                const sampleRisky = `
+PROFORMA INVOICE
+PI Number: SCAM-2026-99 | Date: 2026-08-17
+Seller: Guangzhou Cheap Wholesale Industrial Co., Ltd.
+Buyer: Valued Customer
+Product: Polymer Raw Material Resin
+Quantity: 50 Tons
+Unit Price: $400.00 EXW Factory
+Total Amount: $20,000.00 USD
+Payment Terms: 100% Full T/T Advance Payment strictly before container loading (No inspection allowed)
+Bank Information:
+Bank Name: HSBC Hong Kong Personal Branch
+Account Name: Mr. David Wong (Personal Agent Account)
+Account Number: 884-19283-001
+SWIFT Code: HSBCHKHHXXX
+`;
+                scanProforma(sampleRisky, "Suspicious_Resin_PI.pdf");
+            }
+        }
+
+        function renderPIAuditResult(data) {
+            const card = document.getElementById('pi-result-card');
+            if (!card) return;
+
+            const ext = data.extracted_data;
+            const audit = data.supplier_audit;
+            const customs = data.customs_and_landed_cost;
+
+            const circle = document.getElementById('pi-score-circle');
+            const scoreNum = document.getElementById('pi-score-num');
+            scoreNum.textContent = data.safety_score;
+            circle.className = 'score-circle ' + (data.safety_score >= 75 ? 'score-green' : (data.safety_score >= 50 ? 'score-yellow' : 'score-red'));
+
+            document.getElementById('pi-card-supplier').textContent = ext.supplier_name;
+            const badge = document.getElementById('pi-card-traffic');
+            if (data.traffic_light === 'GREEN') {
+                badge.className = 'risk-badge risk-low';
+                badge.innerHTML = '<i class="fa-solid fa-shield-check"></i> وضعیت معامله: امن و قابل تایید (Low Risk)';
+            } else if (data.traffic_light === 'YELLOW') {
+                badge.className = 'risk-badge risk-med';
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> وضعیت معامله: نیازمند اصلاح بندهای قرارداد (Medium Risk)';
+            } else {
+                badge.className = 'risk-badge risk-high';
+                badge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> هشدار ریسک بالا: خطر کلاهبرداری یا حساب متفرقه (High Risk)';
+            }
+
+            document.getElementById('pi-card-total').textContent = `$${ext.total_amount_usd.toLocaleString()}`;
+
+            document.getElementById('pi-item-desc').textContent = `${ext.item_description} (${ext.quantity} دستگاه/واحد)`;
+            document.getElementById('pi-incoterm').textContent = `${ext.incoterms} (${ext.pol})`;
+            document.getElementById('pi-payment').textContent = ext.payment_terms;
+            document.getElementById('pi-pod').textContent = ext.pod;
+
+            document.getElementById('pi-bank-beneficiary').textContent = ext.bank_beneficiary;
+            document.getElementById('pi-bank-name').textContent = `${ext.bank_name} (${ext.swift_code})`;
+            document.getElementById('pi-uscc').textContent = audit.uscc_code;
+            const bankStatusEl = document.getElementById('pi-bank-status');
+            if (audit.bank_account_matched) {
+                bankStatusEl.textContent = '✅ تطابق کامل با شرکت';
+                bankStatusEl.style.color = 'var(--accent-emerald)';
+            } else {
+                bankStatusEl.textContent = '❌ عدم تطابق / حساب متفرقه!';
+                bankStatusEl.style.color = 'var(--accent-rose)';
+            }
+
+            document.getElementById('pi-duty-pct').textContent = `${customs.customs_duty_pct}٪ (کد HS: ${customs.hs_code})`;
+            document.getElementById('pi-freight').textContent = `$${customs.sea_freight_usd.toLocaleString()}`;
+            document.getElementById('pi-landed-usd').textContent = `$${customs.total_landed_cost_usd.toLocaleString()}`;
+            document.getElementById('pi-landed-toman').textContent = `${Math.round(customs.total_landed_cost_toman).toLocaleString()} تومان`;
+
+            const list = document.getElementById('pi-recommendations-list');
+            list.innerHTML = '';
+            data.recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                list.appendChild(li);
+            });
+            if (data.risk_flags && data.risk_flags.length > 0) {
+                data.risk_flags.forEach(flag => {
+                    const li = document.createElement('li');
+                    li.style.color = 'var(--accent-rose)';
+                    li.innerHTML = `<strong>${flag}</strong>`;
+                    list.appendChild(li);
+                });
+            }
+
+            currentNegotiationScript = data.negotiation_counter_offer;
+            document.getElementById('pi-negotiation-text').textContent = currentNegotiationScript;
+
+            card.style.display = 'block';
+            card.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyNegotiationScript() {
+            if (!currentNegotiationScript) return;
+            navigator.clipboard.writeText(currentNegotiationScript);
+            alert(currentLang === 'en' ? '✅ Negotiation script copied to clipboard!' : '✅ متن مذاکره با تامین‌کننده در کلیپ‌بورد کپی شد!');
+        }
+
         function setLanguage(lang) {
             currentLang = lang;
             document.documentElement.setAttribute('lang', lang);
@@ -2267,7 +2099,6 @@ SWIFT Code: HSBCHKHHXXX
 
             const dict = i18nData[lang] || i18nData.fa;
             
-            // Translate innerHTML elements
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (dict[key]) {
@@ -2275,7 +2106,6 @@ SWIFT Code: HSBCHKHHXXX
                 }
             });
 
-            // Translate placeholders
             document.querySelectorAll('[data-i18n-ph]').forEach(el => {
                 const key = el.getAttribute('data-i18n-ph');
                 if (dict[key]) {
@@ -2283,7 +2113,6 @@ SWIFT Code: HSBCHKHHXXX
                 }
             });
 
-            // Update initial agent bubble if unmodified
             const initMsg = document.getElementById('initial-agent-msg');
             if (initMsg && dict['agent_initial_msg']) {
                 initMsg.innerHTML = dict['agent_initial_msg'];
@@ -2292,10 +2121,36 @@ SWIFT Code: HSBCHKHHXXX
             localStorage.setItem('lang', lang);
         }
 
-        // Initialize theme and language on load
+        // Initialize theme and drag & drop on load
         document.addEventListener('DOMContentLoaded', () => {
             applyTheme(currentTheme);
             setLanguage(currentLang);
+
+            const dropzone = document.getElementById('pi-dropzone');
+            if (dropzone) {
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropzone.classList.add('dragover');
+                    }, false);
+                });
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropzone.classList.remove('dragover');
+                    }, false);
+                });
+                dropzone.addEventListener('drop', (e) => {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0) {
+                        const fakeEvent = { target: { files: files } };
+                        handlePIScannerUpload(fakeEvent);
+                    }
+                }, false);
+            }
         });
     </script>
 </body>
