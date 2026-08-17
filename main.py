@@ -99,11 +99,12 @@ async def chat_endpoint(req: ChatRequest):
     return result
 
 @app.post("/api/audit")
-def audit_company(req: CompanyAuditRequest):
+async def audit_company(req: CompanyAuditRequest):
     if not req.company_name.strip():
         raise HTTPException(status_code=400, detail="نام شرکت نمی‌تواند خالی باشد")
     
-    result = verify_china_company(req.company_name, req.uscc_code)
+    from services.qcc_verifier import verify_china_company_async
+    result = await verify_china_company_async(req.company_name, req.uscc_code)
     return result
 
 @app.get("/api/hs-search")

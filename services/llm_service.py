@@ -1,14 +1,48 @@
 """
-Unified Ultra-Smart LLM Service for Multi-Agent AI System
-Supports DeepSeek V3/R1, OpenAI GPT-4o, Google Gemini, and Conversational Context Memory
+Unified Ultra-Smart LLM Service with Live Web Search & Dynamic Intelligence
+Supports DeepSeek V3/R1 with Live Web Augmentation (RAG), OpenAI, Gemini, and Domain Reasoning
 """
 import httpx
 from config import settings
+from services.web_search_service import WebSearchService
+import asyncio
 
 class LLMService:
     @staticmethod
-    async def generate_response(system_prompt: str, user_message: str, chat_history: list = None, model_name: str = "deepseek-chat") -> str:
-        messages = [{"role": "system", "content": system_prompt}]
+    async def generate_response(
+        system_prompt: str, 
+        user_message: str, 
+        chat_history: list = None, 
+        model_name: str = "deepseek-chat",
+        enable_web_search: bool = True
+    ) -> str:
+        """
+        تولید پاسخ هوشمند و زنده با اتصال به جستجوی وب (Live Web Augmentation) و تحلیل عمیق
+        """
+        web_context = ""
+        
+        # 1. اجرای خودکار جستجوی وب برای سوالات استعلام شرکت، قیمت، قوانین، کالاها یا اخبار روز
+        if enable_web_search:
+            try:
+                # تشخیص کلمات کلیدی نیازمند جستجوی زنده
+                search_triggers = [
+                    "شرکت", "کارخانه", "قیمت", "اعتبار", "استعلام", "قانون", "تعرفه", "چین", 
+                    "company", "factory", "price", "audit", "verify", "supplier", "hs", "customs",
+                    "co.", "ltd", "inc", "shenzhen", "guangzhou", "shanghai", "ningbo"
+                ]
+                msg_lower = user_message.lower()
+                if any(t in msg_lower for t in search_triggers) or len(user_message.split()) >= 3:
+                    web_results = await WebSearchService.search(user_message, max_results=3)
+                    web_context = WebSearchService.format_search_context(web_results)
+            except Exception as e:
+                print(f"[LLM Web Search Error] {e}")
+
+        # ترکیب پرامپت با داده‌های زنده وب
+        enhanced_system_prompt = system_prompt
+        if web_context:
+            enhanced_system_prompt += f"\n\n{web_context}"
+
+        messages = [{"role": "system", "content": enhanced_system_prompt}]
 
         if chat_history:
             for item in chat_history[-6:]:
@@ -16,7 +50,7 @@ class LLMService:
         
         messages.append({"role": "user", "content": user_message})
 
-        # 1. Try DeepSeek API (V3 / R1) if DEEPSEEK_API_KEY is present
+        # 2. ارسال به DeepSeek API (V3 / R1)
         if settings.DEEPSEEK_API_KEY:
             try:
                 async with httpx.AsyncClient(timeout=45.0) as client:
@@ -26,7 +60,7 @@ class LLMService:
                         json={
                             "model": model_name,
                             "messages": messages,
-                            "temperature": 0.7
+                            "temperature": 0.6
                         }
                     )
                     if resp.status_code == 200:
@@ -36,19 +70,19 @@ class LLMService:
             except Exception as e:
                 print(f"[LLM Error] DeepSeek API call failed: {e}")
 
-        # 2. Try Google Gemini API if GEMINI_API_KEY is present
+        # 3. پشتیبان Gemini API
         if settings.GEMINI_API_KEY:
             try:
                 async with httpx.AsyncClient(timeout=45.0) as client:
                     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={settings.GEMINI_API_KEY}"
-                    contents = [{"role": "user", "parts": [{"text": f"{system_prompt}\n\nUser Question: {user_message}"}]}]
+                    contents = [{"role": "user", "parts": [{"text": f"{enhanced_system_prompt}\n\nUser Question: {user_message}"}]}]
                     resp = await client.post(url, json={"contents": contents})
                     if resp.status_code == 200:
                         return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
             except Exception as e:
                 print(f"[LLM Error] Gemini API call failed: {e}")
 
-        # 3. Try OpenAI GPT-4o / GPT-4o-mini if API Key is present
+        # 4. پشتیبان OpenAI GPT-4o
         if settings.OPENAI_API_KEY:
             try:
                 async with httpx.AsyncClient(timeout=45.0) as client:
@@ -58,7 +92,7 @@ class LLMService:
                         json={
                             "model": "gpt-4o-mini",
                             "messages": messages,
-                            "temperature": 0.7
+                            "temperature": 0.6
                         }
                     )
                     if resp.status_code == 200:
@@ -66,8 +100,8 @@ class LLMService:
             except Exception as e:
                 print(f"[LLM Error] OpenAI API call failed: {e}")
 
-        # 4. Domain Expert Fallback Engine
-        return LLMService._expert_domain_fallback(system_prompt, user_message)
+        # 5. موتور تحلیل هوشمند داخلی (Fallback)
+        return LLMService._expert_domain_fallback(enhanced_system_prompt, user_message)
 
     @staticmethod
     def _expert_domain_fallback(system_prompt: str, user_message: str) -> str:
