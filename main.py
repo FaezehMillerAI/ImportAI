@@ -285,12 +285,19 @@ async def linkedin_message_webhook(req: LinkedInMessageWebhookRequest):
     reply = await LinkedInMessagingAgent.handle_incoming_linkedin_message(req.profile_id, req.full_name, req.company, req.message)
     return {"profile_id": req.profile_id, "reply": reply}
 
-# Serve Index Page
+# Serve Index Page with Anti-Cache Headers
 @app.get("/")
 def read_root():
     index_path = os.path.join(os.path.dirname(__file__), "index.html")
     if os.path.exists(index_path):
-        return FileResponse(index_path)
+        return FileResponse(
+            index_path,
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
     return {"message": "Welcome to ImportAI Pro API"}
 
 if __name__ == "__main__":
