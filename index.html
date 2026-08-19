@@ -1099,12 +1099,187 @@
             font-weight: 700;
         }
 
+        /* --- Full-Fledged Import Tycoon Game Engine Styles --- */
+        .game-wrapper {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(10, 14, 23, 0.98));
+            border: 2px solid var(--accent-cyan);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
+            margin-bottom: 24px;
+        }
+
+        .game-hud-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hud-gold {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-amber);
+            font-family: monospace;
+        }
+
+        .hud-hp-bar {
+            width: 140px;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hud-hp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #00f2fe);
+            width: 100%;
+            transition: width 0.4s ease;
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .char-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+        }
+
+        .char-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.06);
+        }
+
+        .char-card.selected {
+            border-color: var(--accent-cyan);
+            background: linear-gradient(180deg, rgba(0, 242, 254, 0.15), rgba(15, 23, 42, 0.8));
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
+        }
+
+        .char-avatar-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid;
+        }
+
+        .char-perk-badge {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .game-quest-card {
+            background: rgba(10, 14, 23, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .quest-event-alert {
+            background: rgba(244, 63, 94, 0.12);
+            border: 1px solid var(--accent-rose);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: pulseAlert 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseAlert {
+            0% { box-shadow: 0 0 0 rgba(244, 63, 94, 0); }
+            50% { box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+            100% { box-shadow: 0 0 0 rgba(244, 63, 94, 0); }
+        }
+
+        .game-choice-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            color: var(--text-primary);
+            text-align: right;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-bottom: 12px;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .game-choice-btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateX(-4px);
+        }
+
+        .game-choice-btn.chosen {
+            border-color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .victory-trophy {
+            font-size: 4rem;
+            color: var(--accent-amber);
+            animation: bounceTrophy 1.5s infinite alternate ease-in-out;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes bounceTrophy {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(-10px) scale(1.1); }
+        }
+
         @media (max-width: 992px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .agent-playground { grid-template-columns: 1fr; height: auto; }
             .agent-sidebar { border-left: none; border-bottom: 1px solid var(--border-glass); }
             .report-grid { grid-template-columns: 1fr; }
             .pricing-grid { grid-template-columns: 1fr; }
+            .char-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -1173,189 +1348,266 @@
             </div>
         </section>
 
-        <!-- Section 1: Interactive Gamification Simulator -->
+        <!-- Section 1: Full-Fledged Import Tycoon Interactive Game -->
         <section id="simulator">
             <div class="section-title">
-                <i class="fa-solid fa-gamepad"></i>
-                <h2 data-i18n="sim_heading">شبیه‌ساز گیمیفیکیشن «استراتژی واردات و مدیریت سرمایه»</h2>
+                <i class="fa-solid fa-gamepad" style="color: var(--accent-amber);"></i>
+                <h2 data-i18n="sim_heading">بازی تعاملی «تاجر بین‌المللی: راه ابریشم نوین (Import Tycoon)»</h2>
             </div>
 
-            <div class="simulator-card">
-                <!-- Interactive Capital Selector -->
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 14px 18px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-sack-dollar" style="color: var(--accent-amber); font-size: 1.3rem;"></i>
-                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">انتخاب سرمایه اولیه شبیه‌سازی:</span>
+            <div class="game-wrapper">
+                
+                <!-- Game HUD (Heads-Up Display) -->
+                <div class="game-hud">
+                    <div class="game-hud-stat">
+                        <div style="font-size: 1.8rem;" id="hud-char-icon">👔</div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">کاراکتر فعال:</div>
+                            <strong style="color: var(--accent-cyan);" id="hud-char-name">مهندس کیان (صنعتگر ماشین‌آلات)</strong>
+                        </div>
                     </div>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="sim-capital-selector">
-                        <button type="button" class="preset-chip" onclick="setSimCapital(20000, this)">۲۰,۰۰۰ دلار</button>
-                        <button type="button" class="preset-chip active" style="border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="setSimCapital(50000, this)">۵۰,۰۰۰ دلار (پیش‌فرض)</button>
-                        <button type="button" class="preset-chip" onclick="setSimCapital(100000, this)">۱۰۰,۰۰۰ دلار</button>
-                        <button type="button" class="preset-chip" onclick="setSimCapital(250000, this)">۲۵۰,۰۰۰ دلار</button>
+
+                    <div class="game-hud-stat">
+                        <i class="fa-solid fa-coins" style="color: var(--accent-amber); font-size: 1.4rem;"></i>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">سرمایه تجاری (Gold/Capital):</div>
+                            <div class="hud-gold" id="hud-capital-display">$50,000</div>
+                        </div>
                     </div>
+
+                    <div class="game-hud-stat">
+                        <i class="fa-solid fa-shield-heart" style="color: var(--accent-emerald); font-size: 1.4rem;"></i>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">اعتبار و سلامت معامله (HP):</div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="hud-hp-bar">
+                                    <div class="hud-hp-fill" id="hud-hp-fill" style="width: 100%;"></div>
+                                </div>
+                                <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-emerald);" id="hud-hp-text">100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-hud-stat">
+                        <i class="fa-solid fa-medal" style="color: var(--accent-purple); font-size: 1.4rem;"></i>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">سطح تاجر (Rank):</div>
+                            <strong style="color: #fff;" id="hud-rank-text">تاجر نوپای بین‌الملل</strong>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="toggleGameSound()" id="btn-sound-toggle">
+                        <i class="fa-solid fa-volume-high" id="sound-icon"></i> صدا فعال
+                    </button>
                 </div>
 
-                <div class="sim-steps-header">
-                    <div class="step-item active" onclick="goToSimStep(1)" id="step-nav-1">
-                        <div class="step-number">۱</div>
-                        <div class="step-title" data-i18n="step1_title">انتخاب صنعت</div>
-                    </div>
-                    <div class="step-item" onclick="goToSimStep(2)" id="step-nav-2">
-                        <div class="step-number">۲</div>
-                        <div class="step-title" data-i18n="step2_title">سورسینگ و تامین‌کننده</div>
-                    </div>
-                    <div class="step-item" onclick="goToSimStep(3)" id="step-nav-3">
-                        <div class="step-number">۳</div>
-                        <div class="step-title" data-i18n="step3_title">اعتبارسنجی و QC</div>
-                    </div>
-                    <div class="step-item" onclick="goToSimStep(4)" id="step-nav-4">
-                        <div class="step-number">۴</div>
-                        <div class="step-title" data-i18n="step4_title">ارز و ترخیص</div>
-                    </div>
-                    <div class="step-item" onclick="goToSimStep(5)" id="step-nav-5">
-                        <div class="step-number">۵</div>
-                        <div class="step-title" data-i18n="step5_title">نتایج و سود تقریبی</div>
-                    </div>
-                </div>
-
-                <div class="sim-content">
-                    <!-- Step 1 Panel -->
-                    <div class="sim-panel active" id="sim-panel-1">
-                        <h3 data-i18n="p1_title">مرحله اول: صنعت و کالای هدف خود را انتخاب کنید</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p1_desc">فرض کنید ۵۰,۰۰۰ دلار سرمایه اولیه برای واردات دارید. کدام حوزه انتخاب شماست؟</p>
-                        <div class="option-grid">
-                            <div class="option-card selected" onclick="selectOption(this, 'industry', 'medical')">
-                                <div class="option-icon"><i class="fa-solid fa-stethoscopes"></i></div>
-                                <h3 data-i18n="opt_med_t">تجهیزات پزشکی و آزمایشگاهی</h3>
-                                <p data-i18n="opt_med_d">حاشیه سود بالا، نیازمند مجوز اداره تجهیزات پزشکی و استاندارد CE/FDA</p>
-                            </div>
-                            <div class="option-card" onclick="selectOption(this, 'industry', 'machinery')">
-                                <div class="option-icon"><i class="fa-solid fa-industry"></i></div>
-                                <h3 data-i18n="opt_mac_t">ماشین‌آلات صنعتی و خطوط تولید</h3>
-                                <p data-i18n="opt_mac_d">تقاضای بالا در صنایع مادر، نیازمند بازرسی فنی و تست کارکرد PSI</p>
-                            </div>
-                            <div class="option-card" onclick="selectOption(this, 'industry', 'raw_materials')">
-                                <div class="option-icon"><i class="fa-solid fa-flask-vial"></i></div>
-                                <h3 data-i18n="opt_raw_t">مواد اولیه شیمیایی و پلیمری</h3>
-                                <p data-i18n="opt_raw_d">خرید حجمی، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی استاندارد</p>
-                            </div>
-                            <div class="option-card" onclick="selectOption(this, 'industry', 'electronics')">
-                                <div class="option-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                                <h3 data-i18n="opt_elec_t">لوازم جانبی و محصولات دیجیتال</h3>
-                                <p data-i18n="opt_elec_d">گردش مالی سریع، رقابت بالا، نیازمند کنترل کیفیت ۱۰۰ درصد کالا</p>
-                            </div>
-                        </div>
+                <!-- Game Step 1: Character & Capital Selection Screen -->
+                <div class="game-stage" id="game-stage-1">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="color: #fff; margin-bottom: 6px;"><i class="fa-solid fa-user-ninja" style="color: var(--accent-cyan);"></i> مرحله اول: قهرمان تجاری و میزان سرمایه خود را انتخاب کنید</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.88rem;">هر کاراکتر دارای ویژگی انحصاری و تخصص تجاری متفاوتی در بازار چین و ایران است:</p>
                     </div>
 
-                    <!-- Step 2 Panel -->
-                    <div class="sim-panel" id="sim-panel-2">
-                        <h3 data-i18n="p2_title">مرحله دوم: استراتژی انتخاب کارخانه در چین</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p2_desc">ایجنت دو تامین‌کننده در استان گوانگ‌دونگ پیدا کرده است. کدام را انتخاب می‌کنید؟</p>
-                        <div class="option-grid">
-                            <div class="option-card selected" onclick="selectOption(this, 'supplier', 'verified')">
-                                <div class="option-icon"><i class="fa-solid fa-circle-check"></i></div>
-                                <h3 data-i18n="opt_supp_b_t">کارخانه B (دارای استعلام QCC و CE)</h3>
-                                <p data-i18n="opt_supp_b_d">قیمت واقعی بازار. پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفیت PSI در چین.</p>
-                            </div>
-                            <div class="option-card" onclick="selectOption(this, 'supplier', 'cheap')">
-                                <div class="option-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                                <h3 data-i18n="opt_supp_a_t">تامین‌کننده A (قیمت ۱۸٪ ارزان‌تر)</h3>
-                                <p data-i18n="opt_supp_a_d">بدون ثبت رسمی در QCC، تقاضای ۱۰۰٪ تسویه حساب قبل از ارسال کالا!</p>
-                            </div>
-                        </div>
+                    <!-- Capital Selector -->
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;">
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">تنظیم سرمایه شروع بازی:</span>
+                        <button type="button" class="preset-chip" onclick="setGameCapital(20000, this)">۲۰,۰۰۰ دلار (واردات خرد)</button>
+                        <button type="button" class="preset-chip active" style="border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="setGameCapital(50000, this)">۵۰,۰۰۰ دلار (کانتینر استاندارد)</button>
+                        <button type="button" class="preset-chip" onclick="setGameCapital(100000, this)">۱۰۰,۰۰۰ دلار (خط تولید صنعتی)</button>
+                        <button type="button" class="preset-chip" onclick="setGameCapital(250000, this)">۲۵۰,۰۰۰ دلار (صنایع مادر و عمده)</button>
                     </div>
 
-                    <!-- Step 3 Panel -->
-                    <div class="sim-panel" id="sim-panel-3">
-                        <h3 data-i18n="p3_title">مرحله سوم: بازرسی کیفیت قبل از حمل (PSI)</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p3_desc">آیا تمایل دارید قبل از تسویه حساب و بارگیری، تیم بازرسی حضوری در کارخانه حاضر شود؟</p>
-                        <div class="option-grid">
-                            <div class="option-card selected" onclick="selectOption(this, 'qc', 'yes')">
-                                <div class="option-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                                <h3 data-i18n="opt_qc_yes_t">انجام بازرسی کیفیت کامل (PSI & Sampling)</h3>
-                                <p data-i18n="opt_qc_yes_d">هزینه بازرس: ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تست نمونه.</p>
-                            </div>
-                            <div class="option-card" onclick="selectOption(this, 'qc', 'no')">
-                                <div class="option-icon"><i class="fa-solid fa-ban"></i></div>
-                                <h3 data-i18n="opt_qc_no_t">صرفه‌جویی در هزینه بازرسی</h3>
-                                <p data-i18n="opt_qc_no_d">اعتماد به تصاویر و فیلم‌های فرستاده شده توسط خود کارخانه فروشنده.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 Panel -->
-                    <div class="sim-panel" id="sim-panel-4">
-                        <h3 data-i18n="p4_title">مرحله چهارم: روش تخصیص ارز و ترخیص گمرکی</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="p4_desc">نوع ارز و روش ترخیص کالا در ایران را مشخص کنید:</p>
-                        <div class="option-grid">
-                            <div class="option-card selected" onclick="selectOption(this, 'currency', 'nima')">
-                                <div class="option-icon"><i class="fa-solid fa-building-columns"></i></div>
-                                <h3 data-i18n="opt_curr_nima_t">ارز نیما / تالار دوم مرکز مبادله</h3>
-                                <p data-i18n="opt_curr_nima_d">نرخ دولتی، صف تخصیص ۳۰ تا ۶۰ روزه، کاهش هزینه تمام شده کالا</p>
-                            </div>
-                            <div class="option-card" onclick="selectOption(this, 'currency', 'export')">
-                                <div class="option-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
-                                <h3 data-i18n="opt_curr_exp_t">ارز حاصل از صادرات خود/غیر</h3>
-                                <p data-i18n="opt_curr_exp_d">تخصیص سریع‌تر، هزینه بالاتر، مناسب برای سفارش‌های فوری و خطوط تولید</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 Panel (Report Result) -->
-                    <div class="sim-panel" id="sim-panel-5">
-                        <h3 data-i18n="p5_title">🎉 تحلیل جامع و نتیجه شبیه‌سازی واردات شما</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="p5_desc">این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شده است:</p>
+                    <!-- 4 Playable Characters -->
+                    <div class="char-grid">
                         
-                        <div class="report-grid">
-                            <div class="report-main">
-                                <h4 style="margin-bottom: 16px; color: var(--accent-cyan);" data-i18n="rep_header">جدول برآورد مالی و هزینه‌ها</h4>
-                                <div class="breakdown-row">
-                                    <span data-i18n="lbl_capital">سرمایه اولیه:</span>
-                                    <strong>۵۰,۰۰۰ دلار</strong>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span data-i18n="lbl_fob">هزینه کالا (FOB China):</span>
-                                    <span id="res-fob">$41,500</span>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span data-i18n="lbl_freight">حمل بین‌المللی & بیمه:</span>
-                                    <span id="res-freight">$3,200</span>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span data-i18n="lbl_qc">اعتبارسنجی & بازرسی کیفیت (PSI):</span>
-                                    <span id="res-qc">$450</span>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span data-i18n="lbl_customs">حقوق و عوارض گمرکی (تقریبی):</span>
-                                    <span id="res-customs">$4,850</span>
-                                </div>
-                                <div class="breakdown-row" style="border-top: 2px solid var(--accent-cyan); padding-top: 12px; font-size: 1.1rem;">
-                                    <span data-i18n="lbl_profit">سود خالص تخمینی:</span>
-                                    <strong style="color: var(--accent-emerald);" id="res-profit">$12,400 (٪24.8)</strong>
-                                </div>
+                        <!-- Character 1 -->
+                        <div class="char-card selected" onclick="selectCharacter('kian', this)">
+                            <div class="char-avatar-img" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan); color: var(--accent-cyan);">
+                                👔
                             </div>
-
-                            <div class="report-side">
-                                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: var(--radius-md);">
-                                    <h5 style="margin-bottom: 8px;" data-i18n="lbl_risk_level">سطح ریسک پروژه:</h5>
-                                    <div id="res-risk-badge" class="risk-badge risk-low"><i class="fa-solid fa-shield-check"></i> ریسک بسیار پایین</div>
-                                </div>
-
-                                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: var(--radius-md);">
-                                    <h5 style="margin-bottom: 8px; color: var(--accent-amber);"><i class="fa-solid fa-lightbulb"></i> <span data-i18n="lbl_advice">توصیه‌های ایجنت:</span></h5>
-                                    <p id="res-advice" style="font-size: 0.82rem; color: var(--text-secondary);">با انتخاب اعتبارسنجی QCC و بازرسی PSI، ریسک دریافت کالای بی‌کیفیت و کلاهبرداری صفر شد!</p>
-                                </div>
-
-                                <button class="btn btn-primary" onclick="openConsultModal()"><i class="fa-solid fa-headset"></i> <span data-i18n="btn_consult">دریافت مشاوره تخصصی سورسینگ</span></button>
-                            </div>
+                            <h4 style="color: #fff; margin-bottom: 4px;">مهندس کیان</h4>
+                            <span style="font-size: 0.78rem; color: var(--accent-cyan);">صنعتگر خطوط تولید و ماشین‌آلات</span>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px;">تخصص: بازرسی فنی عمیق و مذاکره قیمت FOB در کارخانجات چین</p>
+                            <div class="char-perk-badge">⚡ ویژگی: ۱۵٪ تخفیف در مذاکره با کارخانه</div>
                         </div>
+
+                        <!-- Character 2 -->
+                        <div class="char-card" onclick="selectCharacter('sara', this)">
+                            <div class="char-avatar-img" style="background: rgba(16, 185, 129, 0.1); border-color: var(--accent-emerald); color: var(--accent-emerald);">
+                                👩‍💼
+                            </div>
+                            <h4 style="color: #fff; margin-bottom: 4px;">دکتر سارا</h4>
+                            <span style="font-size: 0.78rem; color: var(--accent-emerald);">تاجر سلامت و تجهیزات پزشکی</span>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px;">تخصص: اخذ مجوزهای استاندارد CE/FDA و شناسایی قطعات دانش‌بنیان</p>
+                            <div class="char-perk-badge" style="border-color: var(--accent-emerald); color: var(--accent-emerald);">⚡ ویژگی: ۲۰٪ حاشیه سود بیشتر در بازار ایران</div>
+                        </div>
+
+                        <!-- Character 3 -->
+                        <div class="char-card" onclick="selectCharacter('saman', this)">
+                            <div class="char-avatar-img" style="background: rgba(245, 158, 11, 0.1); border-color: var(--accent-amber); color: var(--accent-amber);">
+                                🕶️
+                            </div>
+                            <h4 style="color: #fff; margin-bottom: 4px;">سامان دیجیتال</h4>
+                            <span style="font-size: 0.78rem; color: var(--accent-amber);">تاجر اکسپرس و ترندهای الکترونیک</span>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px;">تخصص: گردش مالی سریع و حمل اکسپرس با قطار ریلی ابریشم و هوایی</p>
+                            <div class="char-perk-badge" style="border-color: var(--accent-amber); color: var(--accent-amber);">⚡ ویژگی: ۵۰٪ کاهش زمان ترانزیت مسیر</div>
+                        </div>
+
+                        <!-- Character 4 -->
+                        <div class="char-card" onclick="selectCharacter('arash', this)">
+                            <div class="char-avatar-img" style="background: rgba(168, 85, 247, 0.1); border-color: var(--accent-purple); color: var(--accent-purple);">
+                                🧪
+                            </div>
+                            <h4 style="color: #fff; margin-bottom: 4px;">مهندس آرش</h4>
+                            <span style="font-size: 0.78rem; color: var(--accent-purple);">سلطان پلیمر و مواد اولیه شیمیایی</span>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px;">تخصص: خریدهای تناژ سنگین (Bulk) و تست برگه آنالیز COA در آزمایشگاه</p>
+                            <div class="char-perk-badge" style="border-color: var(--accent-purple); color: var(--accent-purple);">⚡ ویژگی: اولویت اول تخصیص ارز نیما</div>
+                        </div>
+
+                    </div>
+
+                    <div style="text-align: center; margin-top: 24px;">
+                        <button class="btn btn-primary" style="font-size: 1rem; padding: 12px 30px;" onclick="startQuestRound(2)">
+                            <i class="fa-solid fa-play"></i> شروع ماجراجویی تجاری (Round 1)
+                        </button>
                     </div>
                 </div>
 
-                <div class="sim-actions">
-                    <button class="btn btn-secondary" id="btn-prev" onclick="prevSimStep()" style="display: none;"><i class="fa-solid fa-arrow-right"></i> <span data-i18n="btn_prev">گام قبلی</span></button>
-                    <button class="btn btn-primary" id="btn-next" onclick="nextSimStep()"><span data-i18n="btn_next">گام بعدی</span> <i class="fa-solid fa-arrow-left"></i></button>
+                <!-- Game Step 2: Quest 1 (Sourcing & Factory Discovery in Guangdong) -->
+                <div class="game-stage" id="game-stage-2" style="display: none;">
+                    <div class="game-quest-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                            <span class="risk-badge risk-low"><i class="fa-solid fa-compass"></i> راند ۱ از ۴: چالش سورسینگ در گوانگژو</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">موقعیت: استان گوانگ‌دونگ، چین 🇨🇳</span>
+                        </div>
+
+                        <h3 style="color: #fff; margin-bottom: 12px;">🏭 کشف کارخانه: با کدام تامین‌کننده وارد مذاکره می‌شوید؟</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;">
+                            ایجنت هوشمند شما در گوانگژو دو تامین‌کننده پیدا کرده است. یکی قیمت بسیار ارزان‌تر اما بدون سوابق ثبتی می‌دهد و دیگری کارخانه رسمی با استاندارد ایزو است:
+                        </p>
+
+                        <button class="game-choice-btn" onclick="makeGameDecision(2, 'verified')">
+                            <div>
+                                <strong style="color: var(--accent-emerald); display: block; margin-bottom: 4px;">گزینه A: انتخاب کارخانه رسمی و دارای گواهی بازرسی (QCC Verified)</strong>
+                                <span style="font-size: 0.83rem; color: var(--text-secondary);">قیمت منصفانه بازار. شرط پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از صدور برگه تست و بازرسی PSI در چین.</span>
+                            </div>
+                            <i class="fa-solid fa-shield-check" style="font-size: 1.6rem; color: var(--accent-emerald); margin-right: 14px;"></i>
+                        </button>
+
+                        <button class="game-choice-btn" onclick="makeGameDecision(2, 'cheap')">
+                            <div>
+                                <strong style="color: var(--accent-amber); display: block; margin-bottom: 4px;">گزینه B: انتخاب تامین‌کننده متفرقه (تخفیف استثنایی ۱۸٪)</strong>
+                                <span style="font-size: 0.83rem; color: var(--text-secondary);">قیمت بسیار ارزان‌تر از عرف بازار، اما کارخانه ثبت رسمی در سامانه چین ندارد و تقاضای واریز نقدی دارد!</span>
+                            </div>
+                            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.6rem; color: var(--accent-amber); margin-right: 14px;"></i>
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Game Step 3: Quest 2 (Random Crisis Event - Offshore Account & Fraud Risk) -->
+                <div class="game-stage" id="game-stage-3" style="display: none;">
+                    <div class="game-quest-card">
+                        <div class="quest-event-alert">
+                            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.6rem; color: var(--accent-rose);"></i>
+                            <div>
+                                <strong>🚨 رویداد غیرمنتظره امنیتی: درخواست واریز به حساب شخصی هنگ‌کنگ!</strong>
+                                <p style="font-size: 0.82rem; margin: 2px 0 0;">فروشنده چینی پیش‌فاکتوری با شماره حساب شخصی متفرقه ارسال کرده و می‌گوید اگر امروز واریز نکنید سفارش لغو می‌شود!</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #fff; margin-bottom: 12px;">🛡️ تصمیم استراتژیک در برابر ریسک مالی:</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">چه واکنشی نشان می‌دهید؟</p>
+
+                        <button class="game-choice-btn" onclick="makeGameDecision(3, 'audit')">
+                            <div>
+                                <strong style="color: var(--accent-cyan); display: block; margin-bottom: 4px;">گزینه A: توقف پرداخت و استعلام رسمی ثبتی و بانکی از سامانه QCC چین</strong>
+                                <span style="font-size: 0.83rem; color: var(--text-secondary);">الزام کارخانه به ارائه حساب شرکتی منطبق با گواهی ثبت SAMR و استعلام دادگاه خلق چین.</span>
+                            </div>
+                            <i class="fa-solid fa-magnifying-glass-check" style="font-size: 1.6rem; color: var(--accent-cyan); margin-right: 14px;"></i>
+                        </button>
+
+                        <button class="game-choice-btn" onclick="makeGameDecision(3, 'blind')">
+                            <div>
+                                <strong style="color: var(--accent-rose); display: block; margin-bottom: 4px;">گزینه B: اعتماد به ادعای فروشنده و واریز فوری جهت از دست نرفتن زمان</strong>
+                                <span style="font-size: 0.83rem; color: var(--text-secondary);">واریز به حساب متفرقه بدون استعلام رسمی (ریسک بسیار بالای کلاهبرداری ارزی).</span>
+                            </div>
+                            <i class="fa-solid fa-money-bill-wave" style="font-size: 1.6rem; color: var(--accent-rose); margin-right: 14px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game Step 4: Quest 3 (Logistics Storm & Border Crisis) -->
+                <div class="game-stage" id="game-stage-4" style="display: none;">
+                    <div class="game-quest-card">
+                        <div class="quest-event-alert" style="border-color: var(--accent-amber); background: rgba(245, 158, 11, 0.1);">
+                            <i class="fa-solid fa-cloud-bolt" style="font-size: 1.6rem; color: var(--accent-amber);"></i>
+                            <div>
+                                <strong>🌊 بحران لجستیکی در مسیر: ترافیک شدید اسکله و طوفان در تنگه هرمز!</strong>
+                                <p style="font-size: 0.82rem; margin: 2px 0 0;">کشتی‌های کانتینری بندرعباس با معطلی ۲۵ روزه در لنگرگاه و خطر هزینه دموراژ سنگین مواجه شده‌اند.</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #fff; margin-bottom: 12px;">🚢 انتخاب کریدور هوشمند ورود به کشور:</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">ایجنت لجستیک دو راهکار پیش روی شما می‌گذارد:</p>
+
+                        <button class="game-choice-btn" onclick="makeGameDecision(4, 'silk_rail')">
+                            <div>
+                                <strong style="color: var(--accent-amber); display: block; margin-bottom: 4px;">گزینه A: تغییر فوری به قطار باری مستقیم جاده ابریشم (مرز ریلی سرخس)</strong>
+                                <span style="font-size: 0.83rem; color: var(--text-secondary);">ترانزیت سریع ۱۴ روزه، بدون معطلی در بنادر دریایی و تحویل مستقیم در گمرک غرب تهران.</span>
+                            </div>
+                            <i class="fa-solid fa-train" style="font-size: 1.6rem; color: var(--accent-amber); margin-right: 14px;"></i>
+                        </button>
+
+                        <button class="game-choice-btn" onclick="makeGameDecision(4, 'sea_wait')">
+                            <div>
+                                <strong style="color: var(--accent-cyan); display: block; margin-bottom: 4px;">گزینه B: حفظ مسیر دریایی سنتی بندرعباس و منتظر ماندن در نوبت اسکله</strong>
+                                <span style="font-size: 0.83rem; color: var(--text-secondary);">هزینه کرایه حمل کمتر، اما افزایش زمان خواب سرمایه و احتمال جریمه تاخیر دموراژ.</span>
+                            </div>
+                            <i class="fa-solid fa-anchor" style="font-size: 1.6rem; color: var(--accent-cyan); margin-right: 14px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game Step 5: Boss Fight - Final Scorecard & Victory Trophy -->
+                <div class="game-stage" id="game-stage-5" style="display: none; text-align: center;">
+                    <div class="victory-trophy">🏆</div>
+                    <h2 style="color: var(--accent-amber); margin-bottom: 6px;" id="game-end-title">تبریک! مأموریت تجاری با موفقیت به پایان رسید</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 24px;" id="game-end-subtitle">کارنامه و گواهی عملکرد شما در اکوسیستم بازرگانی بین‌المللی صادر شد:</p>
+
+                    <!-- Scorecard Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; text-align: right;">
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">سرمایه اولیه:</span>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: #fff;" id="card-init-cap">$50,000</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">سود خالص کسب‌شده:</span>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--accent-emerald);" id="card-net-profit">+$14,200 (٪28.4)</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">شاخص سلامت و امنیت معامله:</span>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--accent-cyan);" id="card-deal-safety">96 از 100</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">مدال و لقب تجاری:</span>
+                            <div style="font-size: 1.05rem; font-weight: 700; color: var(--accent-amber);" id="card-final-rank">کاپیتان بازرگانی راه ابریشم 🌟</div>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Advice -->
+                    <div style="background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px; text-align: right;">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 6px;"><i class="fa-solid fa-brain"></i> کارنامه تحلیلی ایجنت‌های هوشمند:</h4>
+                        <p id="game-feedback-text" style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                            تصمیمات شما در اعتبارسنجی کارخانه از طریق سامانه QCC و انتخاب کریدور بدون ترافیک ریلی باعث شد سرمایه شما کاملاً امن مانده و بالاترین حاشیه سود با بازرسی PSI محقق شود!
+                        </p>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" onclick="resetGameToStart()"><i class="fa-solid fa-rotate-left"></i> بازی مجدد با کاراکتر جدید</button>
+                        <button class="btn btn-primary" onclick="openConsultModal()"><i class="fa-solid fa-file-contract"></i> تبدیل سناریو به قرارداد واقعی واردات</button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -2085,18 +2337,150 @@
 
     <!-- Interactive Script -->
     <script>
-        let currentStep = 1;
-        let selectedSimCapital = 50000;
-        const simSelections = {
-            industry: 'medical',
-            supplier: 'verified',
-            qc: 'yes',
-            currency: 'nima'
+    <!-- Interactive Script -->
+    <script>
+        // --- Full Import Tycoon Game Engine ---
+        let gameSoundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            return audioCtx;
+        }
+
+        function playSynthSound(type) {
+            if (!gameSoundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                if (ctx.state === 'suspended') ctx.resume();
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'coin') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(987.77, now); // B5
+                    osc.frequency.setValueAtTime(1318.51, now + 0.08); // E6
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'danger') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.setValueAtTime(160, now + 0.12);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'victory') {
+                    const freqs = [523.25, 659.25, 783.99, 1046.50]; // C - E - G - C
+                    freqs.forEach((f, idx) => {
+                        const o = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        o.connect(g);
+                        g.connect(ctx.destination);
+                        o.frequency.setValueAtTime(f, now + idx * 0.1);
+                        g.gain.setValueAtTime(0.2, now + idx * 0.1);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.1 + 0.3);
+                        o.start(now + idx * 0.1);
+                        o.stop(now + idx * 0.1 + 0.3);
+                    });
+                }
+            } catch (e) {
+                // Audio not allowed before user gesture
+            }
+        }
+
+        function toggleGameSound() {
+            gameSoundEnabled = !gameSoundEnabled;
+            const icon = document.getElementById('sound-icon');
+            const btn = document.getElementById('btn-sound-toggle');
+            if (gameSoundEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+                btn.innerHTML = '<i class="fa-solid fa-volume-high" id="sound-icon"></i> صدا فعال';
+                playSynthSound('coin');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark';
+                btn.innerHTML = '<i class="fa-solid fa-volume-xmark" id="sound-icon"></i> صدا خاموش';
+            }
+        }
+
+        const charactersData = {
+            kian: {
+                name: 'مهندس کیان (صنعتگر ماشین‌آلات)',
+                icon: '👔',
+                industry: 'machinery',
+                perk: 'fob_discount',
+                rank: 'کارآفرین خطوط تولید صنعتی',
+                bonusProfit: 1.15
+            },
+            sara: {
+                name: 'دکتر سارا (تجهیزات پزشکی)',
+                icon: '👩‍💼',
+                industry: 'medical',
+                perk: 'margin_boost',
+                rank: 'تاجر سلامت و استانداردهای CE',
+                bonusProfit: 1.22
+            },
+            saman: {
+                name: 'سامان دیجیتال (ترندهای اکسپرس)',
+                icon: '🕶️',
+                industry: 'electronics',
+                perk: 'express_speed',
+                rank: 'کاپیتان تجارت سریع راه ابریشم',
+                bonusProfit: 1.18
+            },
+            arash: {
+                name: 'مهندس آرش (پتروشیمی و مواد اولیه)',
+                icon: '🧪',
+                industry: 'raw_materials',
+                perk: 'nima_priority',
+                rank: 'سلطان قراردادهای تناژ بالا (Bulk)',
+                bonusProfit: 1.14
+            }
         };
 
-        function setSimCapital(amt, btn) {
-            selectedSimCapital = amt;
-            document.querySelectorAll('#sim-capital-selector button').forEach(b => {
+        let activeCharacter = 'kian';
+        let gameCapital = 50000;
+        let gameHP = 100;
+        let gameDecisions = {
+            sourcing: 'verified',
+            fraudResponse: 'audit',
+            route: 'silk_rail'
+        };
+
+        function selectCharacter(charId, el) {
+            playSynthSound('click');
+            activeCharacter = charId;
+            document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+
+            const char = charactersData[charId];
+            document.getElementById('hud-char-icon').textContent = char.icon;
+            document.getElementById('hud-char-name').textContent = char.name;
+            document.getElementById('hud-rank-text').textContent = char.rank;
+        }
+
+        function setGameCapital(amt, btn) {
+            playSynthSound('coin');
+            gameCapital = amt;
+            document.querySelectorAll('.preset-chip').forEach(b => {
                 b.classList.remove('active');
                 b.style.borderColor = 'var(--border-glass)';
                 b.style.color = 'var(--text-secondary)';
@@ -2104,80 +2488,115 @@
             btn.classList.add('active');
             btn.style.borderColor = 'var(--accent-cyan)';
             btn.style.color = 'var(--accent-cyan)';
+
+            document.getElementById('hud-capital-display').textContent = `$${amt.toLocaleString()}`;
+        }
+
+        function updateHPBar() {
+            const fill = document.getElementById('hud-hp-fill');
+            const text = document.getElementById('hud-hp-text');
+            fill.style.width = `${gameHP}%`;
+            text.textContent = `${gameHP}%`;
             
-            if (currentStep === 5) {
-                calculateSimResult();
-            }
-        }
-
-        function goToSimStep(step) { currentStep = step; updateSimUI(); }
-        function nextSimStep() { if (currentStep < 5) { currentStep++; updateSimUI(); } }
-        function prevSimStep() { if (currentStep > 1) { currentStep--; updateSimUI(); } }
-
-        function selectOption(card, key, val) {
-            const parent = card.parentElement;
-            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            simSelections[key] = val;
-        }
-
-        function updateSimUI() {
-            for (let i = 1; i <= 5; i++) {
-                const nav = document.getElementById(`step-nav-${i}`);
-                const panel = document.getElementById(`sim-panel-${i}`);
-                nav.classList.remove('active', 'completed');
-                panel.classList.remove('active');
-
-                if (i < currentStep) nav.classList.add('completed');
-                else if (i === currentStep) { nav.classList.add('active'); panel.classList.add('active'); }
-            }
-
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            btnPrev.style.display = currentStep > 1 ? 'inline-flex' : 'none';
-
-            if (currentStep === 4) {
-                btnNext.innerHTML = 'مشاهده تحلیل و برآورد مالی <i class="fa-solid fa-chart-line"></i>';
-            } else if (currentStep === 5) {
-                btnNext.style.display = 'none';
-                calculateSimResult();
+            if (gameHP >= 75) {
+                fill.style.background = 'linear-gradient(90deg, #10b981, #00f2fe)';
+                text.style.color = 'var(--accent-emerald)';
+            } else if (gameHP >= 45) {
+                fill.style.background = 'linear-gradient(90deg, #f59e0b, #eab308)';
+                text.style.color = 'var(--accent-amber)';
             } else {
-                btnNext.style.display = 'inline-flex';
-                btnNext.innerHTML = 'گام بعدی <i class="fa-solid fa-arrow-left"></i>';
+                fill.style.background = 'linear-gradient(90deg, #f43f5e, #dc2626)';
+                text.style.color = 'var(--accent-rose)';
             }
         }
 
-        async function calculateSimResult() {
-            try {
-                const resp = await fetch('/api/gamification/calculate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        capital_usd: selectedSimCapital,
-                        industry: simSelections.industry,
-                        supplier_type: simSelections.supplier,
-                        qc_requested: simSelections.qc === 'yes',
-                        currency_type: simSelections.currency
-                    })
-                });
-
-                if (resp.ok) {
-                    const data = await resp.json();
-                    document.getElementById('res-fob').textContent = `$${data.fob_cost.toLocaleString()}`;
-                    document.getElementById('res-freight').textContent = `$${data.freight_cost.toLocaleString()}`;
-                    document.getElementById('res-qc').textContent = `$${data.qc_cost.toLocaleString()}`;
-                    document.getElementById('res-customs').textContent = `$${data.customs_cost.toLocaleString()}`;
-                    document.getElementById('res-profit').textContent = `$${data.profit_usd.toLocaleString()} (٪${data.profit_percent.toFixed(1)})`;
-                    
-                    const badge = document.getElementById('res-risk-badge');
-                    badge.className = `risk-badge ${data.risk_level === 'HIGH' ? 'risk-high' : data.risk_level === 'MEDIUM' ? 'risk-med' : 'risk-low'}`;
-                    badge.innerHTML = `<i class="fa-solid fa-shield"></i> ریسک ${data.risk_level}`;
-                    document.getElementById('res-advice').textContent = data.advice;
-                    return;
-                }
-            } catch (e) {
-                console.log("Fallback client calculation mode");
+        function startQuestRound(roundNum) {
+            playSynthSound('coin');
+            for (let i = 1; i <= 5; i++) {
+                const stage = document.getElementById(`game-stage-${i}`);
+                if (stage) stage.style.display = (i === roundNum) ? 'block' : 'none';
             }
+            const gameSec = document.getElementById('simulator');
+            if (gameSec) gameSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function makeGameDecision(roundNum, choice) {
+            if (roundNum === 2) {
+                gameDecisions.sourcing = choice;
+                if (choice === 'verified') {
+                    playSynthSound('coin');
+                    gameHP = Math.min(100, gameHP + 5);
+                } else {
+                    playSynthSound('danger');
+                    gameHP = Math.max(20, gameHP - 25);
+                }
+                updateHPBar();
+                startQuestRound(3);
+            } else if (roundNum === 3) {
+                gameDecisions.fraudResponse = choice;
+                if (choice === 'audit') {
+                    playSynthSound('coin');
+                    gameHP = Math.min(100, gameHP + 10);
+                } else {
+                    playSynthSound('danger');
+                    gameHP = Math.max(10, gameHP - 45);
+                }
+                updateHPBar();
+                startQuestRound(4);
+            } else if (roundNum === 4) {
+                gameDecisions.route = choice;
+                if (choice === 'silk_rail') {
+                    playSynthSound('coin');
+                } else {
+                    playSynthSound('danger');
+                    gameHP = Math.max(10, gameHP - 15);
+                }
+                updateHPBar();
+                renderFinalScorecard();
+                startQuestRound(5);
+            }
+        }
+
+        function renderFinalScorecard() {
+            playSynthSound('victory');
+            const char = charactersData[activeCharacter];
+            
+            let baseProfitPct = 24.5;
+            if (gameDecisions.sourcing === 'verified') baseProfitPct += 4;
+            if (gameDecisions.fraudResponse === 'audit') baseProfitPct += 5;
+            if (gameDecisions.route === 'silk_rail') baseProfitPct += 3.5;
+            
+            // Character specific perk multiplier
+            const finalProfitPct = baseProfitPct * char.bonusProfit;
+            const netProfitUsd = gameCapital * (finalProfitPct / 100);
+
+            document.getElementById('card-init-cap').textContent = `$${gameCapital.toLocaleString()}`;
+            document.getElementById('card-net-profit').textContent = `+$${Math.round(netProfitUsd).toLocaleString()} (٪${finalProfitPct.toFixed(1)})`;
+            document.getElementById('card-deal-safety').textContent = `${gameHP} از 100`;
+
+            let rankAward = 'تاجر ممتاز راه ابریشم 🌟';
+            if (gameHP >= 90) rankAward = 'کاپیتان افسانه‌ای بازرگانی بین‌الملل 👑';
+            else if (gameHP >= 70) rankAward = 'مدیر ارشد بازرگانی و سورسینگ 🎖️';
+            else rankAward = 'تاجر ریسک‌پذیر (نیازمند اصلاح استراتژی) ⚠️';
+
+            document.getElementById('card-final-rank').textContent = rankAward;
+
+            let feedback = `با هدایت ${char.name} و تصمیمات هوشمندانه، معامله شما با امنیت ${gameHP}٪ و سود خالص $${Math.round(netProfitUsd).toLocaleString()} نهایی شد.`;
+            if (gameDecisions.fraudResponse === 'audit') {
+                feedback += ' استعلام رسمی QCC از کلاهبرداری حساب شخصی جلوگیری کرد!';
+            }
+            if (gameDecisions.route === 'silk_rail') {
+                feedback += ' قطار باری جاده ابریشم بار شما را بدون معطلی و با نصف زمان تحویل داد.';
+            }
+
+            document.getElementById('game-feedback-text').textContent = feedback;
+        }
+
+        function resetGameToStart() {
+            playSynthSound('click');
+            gameHP = 100;
+            updateHPBar();
+            startQuestRound(1);
         }
 
         let currentActiveAgent = 'edulead';
@@ -2357,9 +2776,13 @@
 
         const i18nData = {
             fa: {
-                nav_simulator: "شبیه‌ساز واردات",
+                nav_simulator: "بازی تاجر بین‌المللی",
+                nav_warroom: "اتاق جنگ ۵ ایجنته",
+                nav_corridors: "امکان‌سنجی مرزها",
                 nav_agents: "شبکه ایجنت‌ها",
+                nav_scanner: "اسکنر پروفرما",
                 nav_audit: "اعتبارسنجی چین",
+                nav_pricing: "بسته‌ها و پرداخت",
                 nav_pipeline: "فرآیند ۱۱ مرحله‌ای",
                 status_text: "پلتفرم عملیاتی (FastAPI & DeepSeek Connected)",
                 hero_tag: "اکوسیستم هوشمند سورسینگ و مدیریت زنجیره تأمین",
@@ -2369,54 +2792,14 @@
                 stat_audit: "اعتبارسنجی کارخانجات چین",
                 stat_commission: "فروش مستقیم (فقط کارمزد و مشاوره)",
                 stat_steps: "مدیریت کامل زنجیره تامین",
-                sim_heading: "شبیه‌ساز گیمیفیکیشن «استراتژی ۵۰,۰۰۰ دلاری واردات»",
-                step1_title: "انتخاب صنعت",
-                step2_title: "سورسینگ و تامین‌کننده",
-                step3_title: "اعتبارسنجی و QC",
-                step4_title: "ارز و ترخیص",
-                step5_title: "نتایج و سود تقریبی",
-                p1_title: "مرحله اول: صنعت و کالای هدف خود را انتخاب کنید",
-                p1_desc: "فرض کنید ۵۰,۰۰۰ دلار سرمایه اولیه برای واردات دارید. کدام حوزه انتخاب شماست؟",
-                opt_med_t: "تجهیزات پزشکی و آزمایشگاهی",
-                opt_med_d: "حاشیه سود بالا، نیازمند مجوز اداره تجهیزات پزشکی و استاندارد CE/FDA",
-                opt_mac_t: "ماشین‌آلات صنعتی و خطوط تولید",
-                opt_mac_d: "تقاضای بالا در صنایع مادر، نیازمند بازرسی فنی و تست کارکرد PSI",
-                opt_raw_t: "مواد اولیه شیمیایی و پلیمری",
-                opt_raw_d: "خرید حجمی، حساسیت بالا به برگه آنالیز (COA) و بسته‌بندی استاندارد",
-                opt_elec_t: "لوازم جانبی و محصولات دیجیتال",
-                opt_elec_d: "گردش مالی سریع، رقابت بالا، نیازمند کنترل کیفیت ۱۰۰ درصد کالا",
-                p2_title: "مرحله دوم: استراتژی انتخاب کارخانه در چین",
-                p2_desc: "ایجنت دو تامین‌کننده در استان گوانگ‌دونگ پیدا کرده است. کدام را انتخاب می‌کنید؟",
-                opt_supp_b_t: "کارخانه B (دارای استعلام QCC و CE)",
-                opt_supp_b_d: "قیمت واقعی بازار. پرداخت: ۳۰٪ پیش‌پرداخت + ۷۰٪ پس از بازرسی کیفیت PSI در چین.",
-                opt_supp_a_t: "تامین‌کننده A (قیمت ۱۸٪ ارزان‌تر)",
-                opt_supp_a_d: "بدون ثبت رسمی در QCC، تقاضای ۱۰۰٪ تسویه حساب قبل از ارسال کالا!",
-                p3_title: "مرحله سوم: بازرسی کیفیت قبل از حمل (PSI)",
-                p3_desc: "آیا تمایل دارید قبل از تسویه حساب و بارگیری، تیم بازرسی حضوری در کارخانه حاضر شود؟",
-                opt_qc_yes_t: "انجام بازرسی کیفیت کامل (PSI & Sampling)",
-                opt_qc_yes_d: "هزینه بازرس: ۴۵۰ دلار. بررسی کامل عملکرد، تعداد، بسته‌بندی و تست نمونه.",
-                opt_qc_no_t: "صرفه‌جویی در هزینه بازرسی",
-                opt_qc_no_d: "اعتماد به تصاویر و فیلم‌های فرستاده شده توسط خود کارخانه فروشنده.",
-                p4_title: "مرحله چهارم: روش تخصیص ارز و ترخیص گمرکی",
-                p4_desc: "نوع ارز و روش ترخیص کالا در ایران را مشخص کنید:",
-                opt_curr_nima_t: "ارز نیما / تالار دوم مرکز مبادله",
-                opt_curr_nima_d: "نرخ دولتی، صف تخصیص ۳۰ تا ۶۰ روزه، کاهش هزینه تمام شده کالا",
-                opt_curr_exp_t: "ارز حاصل از صادرات خود/غیر",
-                opt_curr_exp_d: "تخصیص سریع‌تر، هزینه بالاتر، مناسب برای سفارش‌های فوری و خطوط تولید",
-                p5_title: "🎉 تحلیل جامع و نتیجه شبیه‌سازی واردات شما",
-                p5_desc: "این گزارش توسط ایجنت هوشمند Sourcing & Risk بر اساس انتخاب‌های شما تولید شده است:",
-                rep_header: "جدول برآورد مالی و هزینه‌ها",
-                lbl_capital: "سرمایه اولیه:",
-                lbl_fob: "هزینه کالا (FOB China):",
-                lbl_freight: "حمل بین‌المللی & بیمه:",
-                lbl_qc: "اعتبارسنجی & بازرسی کیفیت (PSI):",
-                lbl_customs: "حقوق و عوارض گمرکی (تقریبی):",
-                lbl_profit: "سود خالص تخمینی:",
-                lbl_risk_level: "سطح ریسک پروژه:",
-                lbl_advice: "توصیه‌های ایجنت:",
+                sim_heading: "بازی تعاملی «تاجر بین‌المللی: راه ابریشم نوین (Import Tycoon)»",
+                corridors_heading: "سامانه هوشمند امکان‌سنجی مرزها و کریدورهای ورود کالا (Sea, Rail, Road, Air)",
+                corridors_desc: "امکان‌سنجی دقیق مسیرهای دریایی، ریلی، زمینی و هوایی، زمان ترانزیت، گمرکات تخصصی و پیشنهاد فوری مسیر جایگزین (Contingency Route) در شرایط بحران و تحریم:",
+                pricing_heading: "تعرفه خدمات و درگاه پرداخت آنلاین (شتاب / کریپتو USDT)",
+                pricing_desc: "پرداخت آنلاین و آنی جهت دریافت گزارش‌های اعتبارسنجی ثبتی چین، گزارش سورسینگ قیمت تمام‌شده، رزرو بازرس حضوری در کارخانه چین و عقد قرارداد کارگزاری:",
+                warroom_heading: "اتاق جنگ چند ایجنته تجارت بین‌الملل (Trade War-Room Consensus Engine)",
+                warroom_desc: "بررسی هم‌زمان یک محصول وارداتی توسط ۵ ایجنت ارشد تخصصی، مناظره چندوجهی و صدور حکم نهایی اقدام:",
                 btn_consult: "دریافت مشاوره تخصصی سورسینگ",
-                btn_next: "گام بعدی",
-                btn_prev: "گام قبلی",
                 agents_heading: "شبکه ایجنت‌های متخصص (تست زنده ۲۴/۷)",
                 active_agent_lbl: "انتخاب ایجنت فعال:",
                 edulead_sub: "آموزش، جذب و گیمیفیکیشن",
