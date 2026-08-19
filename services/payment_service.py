@@ -114,7 +114,9 @@ class PaymentService:
                 "gateway_name": "سامانه پرداخت الکترونیک شتاب (زرین‌پال شاپرک)",
                 "payment_url": payment_url,
                 "iban_number": "IR840120000000008492019382",
-                "bank_name": "بانک ملت - حساب ارزی/ریالی کارگزاری تجارت هوشمند"
+                "bank_name": "بانک ملت",
+                "card_number": "6104 3373 0325 8709",
+                "account_title": "حساب رسمی کارگزاری واردات و تجارت بین‌الملل"
             },
             "features": package["features"]
         }

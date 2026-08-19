@@ -2508,10 +2508,25 @@
                         <p style="margin-bottom: 0;">مبلغ پرداختی: <strong id="inv-amount-display" style="color: var(--accent-emerald);">۳,۰۰۰,۰۰۰ تومان</strong></p>
                     </div>
 
-                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-emerald); border-radius: var(--radius-sm); padding: 16px; text-align: center; margin-bottom: 20px;">
-                        <i class="fa-solid fa-building-columns" style="font-size: 2rem; color: var(--accent-emerald); margin-bottom: 8px;"></i>
-                        <h4 style="color: #fff;">درگاه پرداخت شاپرک / زرین‌پال آماده اتصال است</h4>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">با کلیک روی دکمه زیر به صفحه پرداخت امن هدایت می‌شوید.</p>
+                    <!-- Bank Mellat Official Shetab Card Box -->
+                    <div style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(15, 23, 42, 0.85)); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px; text-align: right;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-building-columns" style="color: #ef4444; font-size: 1.2rem;"></i>
+                                <strong style="color: #fff; font-size: 0.92rem;">بانک ملت | حساب رسمی کارگزاری بازرگانی</strong>
+                            </div>
+                            <span style="font-size: 0.72rem; background: rgba(239, 68, 68, 0.25); color: #fca5a5; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(239, 68, 68, 0.3);">عضو شبکه شتاب</span>
+                        </div>
+                        
+                        <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">شماره کارت جهت واریز / انتقال کارت به کارت شتاب:</label>
+                        <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px;">
+                            <span style="font-family: monospace; font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; color: var(--accent-cyan);" id="mellat-card-num">6104 3373 0325 8709</span>
+                            <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.78rem; border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="copyMellatCard()"><i class="fa-solid fa-copy"></i> کپی شماره کارت</button>
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+                            <span>به نام: مدیریت کارگزاری واردات و تجارت بین‌الملل</span>
+                            <span>بانک ملت</span>
+                        </div>
                     </div>
 
                     <button class="btn btn-primary" style="width: 100%; justify-content: center; height: 44px; margin-bottom: 10px;" onclick="simulateShetabPaymentSuccess()">
@@ -3989,6 +4004,18 @@ SWIFT Code: HSBCHKHHXXX
             fetchLiveCurrencyRates();
             setInterval(() => fetchLiveCurrencyRates(false), 60000);
         });
+
+    
+        function copyMellatCard() {
+            const cardNum = "6104337303258709";
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(cardNum).then(() => {
+                    alert('✅ شماره کارت بانک ملت با موفقیت کپی شد:\n۶۱۰۴-۳۳۷۳-۰۳۲۵-۸۷۰۹');
+                });
+            } else {
+                alert('شماره کارت بانک ملت:\n6104 3373 0325 8709');
+            }
+        }
 
     </script>
 </body>
