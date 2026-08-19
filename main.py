@@ -23,6 +23,7 @@ from services.instagram_dm_agent import InstagramDMAgent
 from services.linkedin_content_generator import LinkedInContentGenerator
 from services.linkedin_messaging_agent import LinkedInMessagingAgent
 from services.telegram_bot import start_telegram_bot_async
+from services.currency_rate_service import CurrencyRateService
 
 # Initialize DB tables
 init_db()
@@ -107,6 +108,11 @@ class CreateInvoiceRequest(BaseModel):
     client_name: str
     client_phone: str
     payment_method: Optional[str] = "shetab"
+
+class CurrencyConvertRequest(BaseModel):
+    amount: float
+    from_currency: Optional[str] = "USD"
+    to_currency: Optional[str] = "TOMAN"
 
 class VerifyPaymentRequest(BaseModel):
     invoice_number: str
@@ -284,6 +290,23 @@ async def generate_linkedin_posts():
 async def linkedin_message_webhook(req: LinkedInMessageWebhookRequest):
     reply = await LinkedInMessagingAgent.handle_incoming_linkedin_message(req.profile_id, req.full_name, req.company, req.message)
     return {"profile_id": req.profile_id, "reply": reply}
+
+# Live Iranian Currency & Exchange Rates Endpoints
+@app.get("/api/currency/rates")
+async def get_live_currency_rates():
+    """
+    Returns real-time currency exchange rates from Nobitex / Wallex / Iranian Market
+    """
+    rates = await CurrencyRateService.get_live_rates()
+    return rates
+
+@app.post("/api/currency/convert")
+async def convert_currency_rate(req: CurrencyConvertRequest):
+    """
+    Convert any trade amount using real-time Iranian exchange rates
+    """
+    res = await CurrencyRateService.convert_currency(req.amount, req.from_currency, req.to_currency)
+    return res
 
 # Serve Index Page with Anti-Cache Headers
 @app.get("/")

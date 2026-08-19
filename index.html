@@ -1941,6 +1941,77 @@
                 </p>
             </div>
 
+            <!-- Live Iranian Exchange Rates Ticker Widget -->
+            <div class="live-currency-banner" style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-md); padding: 18px 20px; margin-bottom: 28px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="pulse-dot" style="background: var(--accent-emerald); box-shadow: 0 0 10px var(--accent-emerald);"></span>
+                        <strong style="color: var(--accent-emerald); font-size: 0.95rem;"><i class="fa-solid fa-chart-line"></i> استعلام زنده نرخ ارزهای تجاری از صرافی‌های ایران</strong>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); background: var(--bg-glass); padding: 3px 10px; border-radius: 12px; border: 1px solid var(--border-glass);" id="currency-source-label">اتصال زنده: صرافی نوبیتکس & والکس</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 0.78rem; color: var(--text-muted);">آخرین به‌روزرسانی: <span id="currency-time-label" style="color: var(--text-primary); font-family: monospace;">در حال دریافت...</span></span>
+                        <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.78rem; border-color: var(--accent-emerald); color: var(--accent-emerald);" onclick="fetchLiveCurrencyRates(true)">
+                            <i class="fa-solid fa-arrows-rotate" id="currency-refresh-icon"></i> به‌روزرسانی زنده
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Rate Cards Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;">
+                    <!-- USDT -->
+                    <div style="background: rgba(10, 14, 23, 0.75); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">
+                            <span>تتر دیجیتال</span>
+                            <span style="color: var(--accent-emerald); font-weight: 700;">USDT</span>
+                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #fff;" id="rate-val-usdt">۹۱,۸۰۰ <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small></div>
+                        <span style="font-size: 0.7rem; color: var(--accent-emerald);"><i class="fa-solid fa-arrow-trend-up"></i> مبنای پرداخت آنلاین</span>
+                    </div>
+
+                    <!-- Free USD -->
+                    <div style="background: rgba(10, 14, 23, 0.75); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">
+                            <span>دلار بازار آزاد</span>
+                            <span style="color: var(--accent-cyan); font-weight: 700;">USD</span>
+                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #fff;" id="rate-val-usd">۹۲,۲۰۰ <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small></div>
+                        <span style="font-size: 0.7rem; color: var(--text-muted);">صرافی‌های مجاز تهران</span>
+                    </div>
+
+                    <!-- CNY -->
+                    <div style="background: rgba(10, 14, 23, 0.75); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">
+                            <span>حواله یوان چین</span>
+                            <span style="color: var(--accent-rose); font-weight: 700;">CNY (¥)</span>
+                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #fff;" id="rate-val-cny">۱۲,۷۲۰ <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small></div>
+                        <span style="font-size: 0.7rem; color: var(--text-muted);">حواله بانکی / وی‌چت</span>
+                    </div>
+
+                    <!-- AED -->
+                    <div style="background: rgba(10, 14, 23, 0.75); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">
+                            <span>حواله درهم امارات</span>
+                            <span style="color: var(--accent-amber); font-weight: 700;">AED</span>
+                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #fff;" id="rate-val-aed">۲۵,۱۰۰ <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small></div>
+                        <span style="font-size: 0.7rem; color: var(--text-muted);">صرافی‌های تجاری دبی</span>
+                    </div>
+
+                    <!-- USD NIMA -->
+                    <div style="background: rgba(10, 14, 23, 0.75); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">
+                            <span>ارز نیمایی صمت</span>
+                            <span style="color: var(--accent-purple); font-weight: 700;">NIMA</span>
+                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #fff;" id="rate-val-nima">۶۹,۲۰۰ <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small></div>
+                        <span style="font-size: 0.7rem; color: var(--accent-purple);">مرکز مبادله / گمرک</span>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- Pricing Grid -->
             <div class="pricing-grid">
                 
@@ -2045,7 +2116,10 @@
             
             <div id="pay-step-1">
                 <h3 style="color: var(--accent-cyan); margin-bottom: 8px;"><i class="fa-solid fa-shield-halved"></i> صدور فاکتور و درگاه پرداخت امن</h3>
-                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 18px;" id="modal-package-title">بسته انتخابی: استعلام جامع ثبتی QCC چین</p>
+                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 8px;" id="modal-package-title">بسته انتخابی: استعلام جامع ثبتی QCC چین</p>
+                <div id="modal-rate-note" style="font-size: 0.78rem; color: var(--accent-emerald); margin-bottom: 14px; background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                    <i class="fa-solid fa-bolt"></i> استعلام زنده نرخ لحظه‌ای صرافی نوبیتکس
+                </div>
 
                 <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
@@ -3471,6 +3545,115 @@ SWIFT Code: HSBCHKHHXXX
             }
         });
     
+    
+        // --- Live Iranian Currency Rates Engine ---
+        let currentLiveRates = null;
+        let liveUSDRate = 91800; // fallback base
+
+        async function fetchLiveCurrencyRates(showToast = false) {
+            const refreshIcon = document.getElementById('currency-refresh-icon');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+            try {
+                const resp = await fetch('/api/currency/rates');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data && data.rates) {
+                        currentLiveRates = data.rates;
+                        liveUSDRate = data.rates.USDT ? data.rates.USDT.rate : 91800;
+                        
+                        // Update UI Ticker Values
+                        if (document.getElementById('rate-val-usdt')) {
+                            document.getElementById('rate-val-usdt').innerHTML = `${Number(data.rates.USDT.rate).toLocaleString('fa-IR')} <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small>`;
+                        }
+                        if (document.getElementById('rate-val-usd') && data.rates.USD_FREE) {
+                            document.getElementById('rate-val-usd').innerHTML = `${Number(data.rates.USD_FREE.rate).toLocaleString('fa-IR')} <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small>`;
+                        }
+                        if (document.getElementById('rate-val-cny') && data.rates.CNY) {
+                            document.getElementById('rate-val-cny').innerHTML = `${Number(data.rates.CNY.rate).toLocaleString('fa-IR')} <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small>`;
+                        }
+                        if (document.getElementById('rate-val-aed') && data.rates.AED) {
+                            document.getElementById('rate-val-aed').innerHTML = `${Number(data.rates.AED.rate).toLocaleString('fa-IR')} <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small>`;
+                        }
+                        if (document.getElementById('rate-val-nima') && data.rates.USD_NIMA) {
+                            document.getElementById('rate-val-nima').innerHTML = `${Number(data.rates.USD_NIMA.rate).toLocaleString('fa-IR')} <small style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">تومان</small>`;
+                        }
+                        if (document.getElementById('currency-source-label') && data.primary_source) {
+                            document.getElementById('currency-source-label').innerText = `منبع: ${data.primary_source}`;
+                        }
+                        if (document.getElementById('currency-time-label') && data.updated_at) {
+                            document.getElementById('currency-time-label').innerText = data.updated_at;
+                        }
+
+                        // Dynamically update package card prices in Toman based on live rate
+                        updatePricingCardValues(liveUSDRate);
+
+                        if (showToast) {
+                            alert(`✅ نرخ لحظه‌ای ارزها از صرافی به‌روزرسانی شد!
+نرخ لحظه‌ای هر تتر: ${Number(liveUSDRate).toLocaleString('fa-IR')} تومان`);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.warn('Currency rates live fetch warning:', err);
+            } finally {
+                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+            }
+        }
+
+        function updatePricingCardValues(usdRate) {
+            // Plan 1 ($49)
+            const p1 = Math.round(49 * usdRate);
+            const p2 = Math.round(99 * usdRate);
+            const p3 = Math.round(450 * usdRate);
+            const p4 = Math.round(950 * usdRate);
+
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            if (pricingCards.length >= 4) {
+                const el1 = pricingCards[0].querySelector('.pricing-price');
+                if (el1) el1.innerHTML = `${p1.toLocaleString('fa-IR')} <small>تومان ($49)</small>`;
+                
+                const el2 = pricingCards[1].querySelector('.pricing-price');
+                if (el2) el2.innerHTML = `${p2.toLocaleString('fa-IR')} <small>تومان ($99)</small>`;
+                
+                const el3 = pricingCards[2].querySelector('.pricing-price');
+                if (el3) el3.innerHTML = `${p3.toLocaleString('fa-IR')} <small>تومان ($450)</small>`;
+                
+                const el4 = pricingCards[3].querySelector('.pricing-price');
+                if (el4) el4.innerHTML = `${p4.toLocaleString('fa-IR')} <small>تومان ($950)</small>`;
+            }
+        }
+
+        // Hook openPaymentModal to dynamically recalculate using live rate
+        const origOpenPaymentModal = window.openPaymentModal;
+        window.openPaymentModal = function(serviceId, title, tomanAmount, usdAmount) {
+            if (liveUSDRate && liveUSDRate > 1000) {
+                tomanAmount = Math.round(usdAmount * liveUSDRate);
+            }
+            currentPaymentService = {
+                serviceId: serviceId,
+                title: title,
+                amountToman: tomanAmount,
+                amountUSD: usdAmount
+            };
+            document.getElementById('modal-package-title').innerText = `بسته انتخابی: ${title}`;
+            document.getElementById('modal-amount-toman').innerText = `${tomanAmount.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('modal-amount-usd').innerText = `$${usdAmount.toFixed(2)} USDT`;
+            
+            const rateNote = document.getElementById('modal-rate-note');
+            if (rateNote) {
+                rateNote.innerHTML = `<i class="fa-solid fa-bolt" style="color: var(--accent-emerald);"></i> استعلام زنده صرافی: هر تتر ${liveUSDRate.toLocaleString('fa-IR')} تومان`;
+            }
+
+            document.getElementById('payment-modal').style.display = 'flex';
+        };
+
+        // Fetch on initial load & poll every 60 seconds
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLiveCurrencyRates();
+            setInterval(() => fetchLiveCurrencyRates(false), 60000);
+        });
+
     </script>
 </body>
 </html>
