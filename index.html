@@ -1075,14 +1075,354 @@
             margin-top: 40px;
         }
 
+
+        /* --- Comprehensive Mobile-Responsive & Touch Engine --- */
         @media (max-width: 992px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .agent-playground { grid-template-columns: 1fr; height: auto; }
-            .agent-sidebar { border-left: none; border-bottom: 1px solid var(--border-glass); }
-            .char-grid { grid-template-columns: repeat(2, 1fr); }
             .nav-links { display: none; }
-            .main-tab-nav { top: 60px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .char-grid { grid-template-columns: repeat(2, 1fr); }
         }
+
+        @media (max-width: 768px) {
+            /* General Sizing & Container */
+            body {
+                font-size: 14px;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .container {
+                padding: 0 12px;
+            }
+
+            /* Header */
+            header {
+                padding: 8px 0;
+            }
+            .logo {
+                font-size: 1.1rem;
+                gap: 8px;
+            }
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.95rem;
+                border-radius: 8px;
+            }
+            .theme-toggle-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .lang-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+
+            /* Hero Section */
+            .hero {
+                padding: 20px 0 8px;
+            }
+            .hero-tag {
+                font-size: 0.74rem;
+                padding: 4px 10px;
+                margin-bottom: 12px;
+            }
+            .hero h1 {
+                font-size: 1.42rem;
+                line-height: 1.4;
+                margin-bottom: 10px;
+            }
+            .hero p {
+                font-size: 0.85rem;
+                padding: 0 4px;
+                margin-bottom: 14px;
+                line-height: 1.55;
+            }
+
+            /* Stats Grid */
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+            .stat-card {
+                padding: 10px 8px;
+                border-radius: var(--radius-sm);
+            }
+            .stat-value {
+                font-size: 1.25rem;
+                margin-bottom: 2px;
+            }
+            .stat-label {
+                font-size: 0.72rem;
+            }
+
+            /* Sticky Tab Navigation Bar: Touch Horizontal Scroll */
+            .main-tab-nav {
+                top: 52px;
+                padding: 6px 8px;
+                margin: 12px -12px 20px -12px;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+                gap: 6px;
+            }
+            .main-tab-nav::-webkit-scrollbar {
+                display: none;
+            }
+            .main-tab-btn {
+                flex-shrink: 0;
+                padding: 8px 12px;
+                font-size: 0.78rem;
+                white-space: nowrap;
+                border-radius: var(--radius-sm);
+            }
+
+            /* Section Titles */
+            .section-title {
+                margin-bottom: 16px;
+                gap: 8px;
+            }
+            .section-title i {
+                font-size: 1.2rem;
+            }
+            .section-title h2 {
+                font-size: 1.15rem;
+            }
+
+            /* Game Engine & HUD on Mobile */
+            .game-wrapper {
+                padding: 16px 12px;
+                border-radius: var(--radius-md);
+                margin-bottom: 24px;
+            }
+            .game-hud {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                padding: 10px;
+                margin-bottom: 16px;
+            }
+            .game-hud-stat {
+                font-size: 0.78rem;
+                gap: 6px;
+            }
+            .hud-gold {
+                font-size: 1.05rem;
+            }
+            .hud-hp-bar {
+                width: 65px;
+                height: 8px;
+            }
+            #btn-sound-toggle {
+                grid-column: span 2;
+                width: 100%;
+                justify-content: center;
+                padding: 6px 10px;
+            }
+            .char-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .char-card {
+                padding: 12px;
+                display: flex;
+                align-items: center;
+                text-align: right;
+                gap: 12px;
+            }
+            .char-avatar-img {
+                width: 46px;
+                height: 46px;
+                font-size: 1.4rem;
+                margin: 0;
+                flex-shrink: 0;
+            }
+            .game-quest-card {
+                padding: 16px 12px;
+            }
+            .game-choice-btn {
+                padding: 12px 14px;
+                font-size: 0.82rem;
+                margin-bottom: 10px;
+            }
+            .quest-event-alert {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+
+            /* Agent Playground on Mobile */
+            .agent-playground {
+                grid-template-columns: 1fr;
+                height: auto;
+                max-height: none;
+                border-radius: var(--radius-md);
+            }
+            .agent-sidebar {
+                border-left: none;
+                border-bottom: 1px solid var(--border-glass);
+                padding: 10px 12px;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 8px;
+            }
+            .agent-sidebar::-webkit-scrollbar { display: none; }
+            .agent-sidebar h4 { display: none; }
+            .agent-selector {
+                flex-shrink: 0;
+                padding: 6px 10px;
+                border-radius: var(--radius-sm);
+                gap: 6px;
+            }
+            .agent-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.85rem;
+            }
+            .agent-info h4 {
+                font-size: 0.8rem;
+            }
+            .agent-info p {
+                display: none;
+            }
+            .chat-area {
+                height: 420px;
+            }
+            .preset-prompts {
+                padding: 8px 12px;
+                gap: 6px;
+            }
+            .preset-prompts .chip, .preset-prompts .preset-chip {
+                font-size: 0.74rem;
+                padding: 4px 10px;
+            }
+            .chat-messages {
+                padding: 12px;
+                gap: 10px;
+            }
+            .chat-bubble {
+                max-width: 90%;
+                font-size: 0.82rem;
+                padding: 10px 12px;
+            }
+            .chat-input-wrapper {
+                padding: 10px 12px;
+                gap: 6px;
+            }
+            .chat-input-wrapper input {
+                padding: 10px 12px;
+                font-size: 0.82rem;
+            }
+
+            /* War-Room on Mobile */
+            .warroom-box {
+                padding: 16px 12px;
+                border-radius: var(--radius-md);
+            }
+            .warroom-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            #warroom input, #warroom select {
+                font-size: 0.82rem;
+                padding: 8px 12px;
+            }
+
+            /* Corridors on Mobile */
+            #corridors > div {
+                padding: 16px 12px !important;
+            }
+            .corridor-tab-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 6px;
+                margin-bottom: 14px;
+            }
+            .corridor-tab-nav::-webkit-scrollbar { display: none; }
+            .corridor-tab-btn {
+                flex-shrink: 0;
+                padding: 6px 12px;
+                font-size: 0.78rem;
+                white-space: nowrap;
+            }
+
+            /* PI Scanner on Mobile */
+            .scanner-container {
+                padding: 16px 12px;
+                border-radius: var(--radius-md);
+            }
+            .dropzone-box {
+                padding: 24px 12px;
+            }
+            #pi-result-card {
+                padding: 14px 10px !important;
+            }
+
+            /* Verification QCC on Mobile */
+            #verification > div {
+                padding: 16px 12px !important;
+            }
+            #verification [style*="grid-template-columns: repeat(3, 1fr)"] {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            /* Pricing & Currency Banner on Mobile */
+            .live-currency-banner {
+                padding: 12px 10px !important;
+                margin-bottom: 18px !important;
+            }
+            .live-currency-banner [style*="grid-template-columns"] {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 6px !important;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .pricing-card {
+                padding: 18px 14px;
+                border-radius: var(--radius-md);
+            }
+            .pricing-price {
+                font-size: 1.35rem;
+            }
+
+            /* 11-Step Pipeline on Mobile */
+            .pipeline-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .pipeline-card {
+                padding: 12px;
+            }
+
+            /* Modals on Mobile */
+            .modal-card, .payment-modal-box {
+                padding: 20px 14px;
+                max-width: 95vw;
+                border-radius: var(--radius-md);
+            }
+            .modal-close {
+                top: 12px;
+                left: 12px;
+                font-size: 1.3rem;
+            }
+            .payment-method-selector {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1105,10 +1445,6 @@
                 <li><a href="#pipeline" class="nav-tab-btn" data-tab="pipeline" onclick="switchAppTab('pipeline', event)"><i class="fa-solid fa-diagram-project"></i> <span data-i18n="nav_pipeline">فرآیند ۱۱ مرحله‌ای</span></a></li>
             </ul>
             <div class="header-controls">
-                <div class="status-badge">
-                    <span class="pulse-dot"></span>
-                    <span data-i18n="status_text">پلتفرم عملیاتی (FastAPI & DeepSeek Connected)</span>
-                </div>
                 <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="تغییر پوسته (شب / روز)">
                     <i class="fa-solid fa-sun" id="theme-icon"></i>
                 </button>
