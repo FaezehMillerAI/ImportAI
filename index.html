@@ -1524,6 +1524,89 @@
             </div>
 
             <div class="game-wrapper">
+
+                <!-- Game Mode Switcher -->
+                <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="btn-mode-ai" onclick="switchGameMode('ai')" style="box-shadow: 0 0 20px rgba(0,242,254,0.3);">
+                        <i class="fa-solid fa-brain"></i> مود هوش مصنوعی دیپ‌سیک (سناریوهای آزاد و نامحدود)
+                    </button>
+                    <button class="btn btn-secondary" id="btn-mode-classic" onclick="switchGameMode('classic')">
+                        <i class="fa-solid fa-list-check"></i> سناریوهای کلاسیک ۴ مرحله‌ای
+                    </button>
+                </div>
+
+                <!-- DeepSeek AI Dynamic RPG Arena (Free-Form Mode) -->
+                <div id="ai-rpg-arena" style="display: block;">
+                    
+                    <!-- AI Setup Box (Product & Goal) -->
+                    <div id="ai-setup-box" style="background: rgba(10, 14, 23, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 20px; margin-bottom: 20px;">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px;"><i class="fa-solid fa-sliders"></i> تنظیم مأموریت تجاری شما با هوش مصنوعی DeepSeek:</h4>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px;">
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">کالای هدف برای واردات:</label>
+                                <input type="text" id="ai-game-product" value="خط تولید و دستگاه برش لیزر فایبر ۵ کیلووات" placeholder="مثال: قطعات الکترونیک، باتری لیتیومی، ساعت هوشمند" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary); font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">مبدأ خرید و کارخانه:</label>
+                                <select id="ai-game-origin" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary); font-family: inherit;">
+                                    <option value="گوانگژو و شنزن (چین)">🇨🇳 گوانگژو و شنزن (قطب های‌تک و الکترونیک)</option>
+                                    <option value="نینگبو و شانگهای (چین)">🇨🇳 نینگبو و شانگهای (ماشین‌آلات و ابزار صنعتی)</option>
+                                    <option value="ایوو Yiwu (چین)">🇨🇳 ایوو Yiwu (لوازم خانگی و عمده‌فروشی)</option>
+                                    <option value="دبی (امارات)">🇦🇪 دبی (ترانزیت سریع و سورسینگ تجاری)</option>
+                                    <option value="استانبول (ترکیه)">🇹🇷 استانبول (منسوجات و قطعات یدکی)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">کالاهای پرطرفدار سریع:</span>
+                            <span class="preset-chip" onclick="setAIGameProduct('خط تولید تمام اتوماتیک تزریق پلاستیک')">🏭 دستگاه تزریق پلاستیک</span>
+                            <span class="preset-chip" onclick="setAIGameProduct('تجهیزات و پنل‌های خورشیدی ۵۵۰ وات و اینورتر')">☀️ پنل خورشیدی</span>
+                            <span class="preset-chip" onclick="setAIGameProduct('قطعات یدکی و سنسورهای خودروهای چینی')">🚗 قطعات خودرو</span>
+                            <span class="preset-chip" onclick="setAIGameProduct('گجت‌ها و ساعت‌های هوشمند AMOLED')">⌚ گجت و ساعت هوشمند</span>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 18px;">
+                            <button class="btn btn-primary" style="padding: 12px 30px; font-size: 0.95rem;" onclick="startDeepSeekAIGame()">
+                                <i class="fa-solid fa-play"></i> آغاز ماجراجویی با استاد بازی دیپ‌سیک (Start AI Game)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Live Story Arena (Active Gameplay) -->
+                    <div id="ai-story-arena" style="display: none;">
+                        
+                        <!-- Timeline / Message Feed -->
+                        <div id="ai-story-feed" style="max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; padding: 14px; background: rgba(10, 14, 23, 0.6); border: 1px solid var(--border-glass); border-radius: var(--radius-md);">
+                            <!-- Dynamic Story Cards appended here -->
+                        </div>
+
+                        <!-- Dilemma & Next Move Section -->
+                        <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--accent-cyan); border-radius: var(--radius-md); padding: 18px; box-shadow: 0 0 20px rgba(0,242,254,0.15);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                <i class="fa-solid fa-dice-d20" style="color: var(--accent-cyan); font-size: 1.4rem;"></i>
+                                <strong style="color: #fff; font-size: 0.95rem;" id="ai-dilemma-title">نوبت شما: اقدام، تاکتیک یا پاسخ خود را بنویسید یا انتخاب کنید:</strong>
+                            </div>
+
+                            <!-- Suggested Tactical Quick Buttons -->
+                            <div id="ai-suggested-moves" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px;">
+                                <!-- Dynamic suggested move buttons -->
+                            </div>
+
+                            <!-- Free-Form Custom Action Input -->
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" id="ai-custom-action-input" placeholder="هر استراتژی، چانه‌زنی، بلوف، بازرسی یا حرکت دلخواه خود را بنویسید..." style="flex: 1; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 12px 16px; border-radius: var(--radius-sm); color: var(--text-primary); font-family: inherit;" onkeypress="if(event.key==='Enter') executeAICustomMove()">
+                                <button class="btn btn-primary" id="btn-execute-ai-move" onclick="executeAICustomMove()" style="padding: 0 22px;">
+                                    <i class="fa-solid fa-paper-plane"></i> اجرای تاکتیک
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
                 
                 <!-- Game HUD (Heads-Up Display) -->
                 <div class="game-hud">
@@ -4015,6 +4098,213 @@ SWIFT Code: HSBCHKHHXXX
             } else {
                 alert('شماره کارت بانک ملت:\n6104 3373 0325 8709');
             }
+        }
+
+    
+        // --- DeepSeek Infinite AI RPG Game Engine ---
+        let aiGameState = {
+            active: false,
+            characterName: "مهندس کیان (صنعتگر)",
+            targetProduct: "خط تولید و دستگاه برش لیزر فایبر ۵ کیلووات",
+            origin: "گوانگژو و شنزن (چین)",
+            capitalGold: 100000,
+            dealHealth: 100,
+            reputation: 50,
+            turnCount: 1,
+            history: []
+        };
+
+        function switchGameMode(mode) {
+            const btnAI = document.getElementById('btn-mode-ai');
+            const btnClassic = document.getElementById('btn-mode-classic');
+            const aiArena = document.getElementById('ai-rpg-arena');
+            const classicStages = document.querySelectorAll('.game-stage');
+
+            if (mode === 'ai') {
+                if (btnAI) { btnAI.className = 'btn btn-primary'; btnAI.style.boxShadow = '0 0 20px rgba(0,242,254,0.3)'; }
+                if (btnClassic) { btnClassic.className = 'btn btn-secondary'; btnClassic.style.boxShadow = 'none'; }
+                if (aiArena) aiArena.style.display = 'block';
+                classicStages.forEach(st => st.style.display = 'none');
+            } else {
+                if (btnAI) { btnAI.className = 'btn btn-secondary'; btnAI.style.boxShadow = 'none'; }
+                if (btnClassic) { btnClassic.className = 'btn btn-primary'; btnClassic.style.boxShadow = '0 0 20px rgba(0,242,254,0.3)'; }
+                if (aiArena) aiArena.style.display = 'none';
+                if (document.getElementById('game-stage-1')) document.getElementById('game-stage-1').style.display = 'block';
+            }
+        }
+
+        function setAIGameProduct(prod) {
+            const el = document.getElementById('ai-game-product');
+            if (el) el.value = prod;
+        }
+
+        function startDeepSeekAIGame() {
+            const prodInput = document.getElementById('ai-game-product');
+            const originInput = document.getElementById('ai-game-origin');
+            
+            aiGameState.targetProduct = prodInput ? prodInput.value.trim() : "خط تولید صنعتی";
+            aiGameState.origin = originInput ? originInput.value : "چین";
+            aiGameState.capitalGold = gameStats.gold || 100000;
+            aiGameState.dealHealth = 100;
+            aiGameState.reputation = 50;
+            aiGameState.turnCount = 1;
+            aiGameState.history = [];
+            aiGameState.active = true;
+
+            // UI Transitions
+            document.getElementById('ai-setup-box').style.display = 'none';
+            document.getElementById('ai-story-arena').style.display = 'block';
+
+            // Initial Turn with Supplier Discovery
+            executeAIMoveAction(`من می‌خواهم واردات «${aiGameState.targetProduct}» را از مبدأ «${aiGameState.origin}» آغاز کنم. بهترین تولیدکنندگان را بررسی و اولین پیشنهاد را برای شروع مذاکره بده.`);
+        }
+
+        async function executeAICustomMove() {
+            const input = document.getElementById('ai-custom-action-input');
+            if (!input) return;
+            const actionText = input.value.trim();
+            if (!actionText) return;
+            input.value = '';
+            executeAIMoveAction(actionText);
+        }
+
+        async function executeAIMoveAction(userActionText) {
+            const feed = document.getElementById('ai-story-feed');
+            const btnExec = document.getElementById('btn-execute-ai-move');
+            if (btnExec) {
+                btnExec.disabled = true;
+                btnExec.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> در حال پردازش DeepSeek...';
+            }
+
+            // Append User Move Card
+            if (feed) {
+                const userCard = document.createElement('div');
+                userCard.style.cssText = 'background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; align-self: flex-start; max-width: 90%;';
+                userCard.innerHTML = `
+                    <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; margin-bottom: 4px;">
+                        <i class="fa-solid fa-user"></i> اقدام شما (راند ${aiGameState.turnCount}):
+                    </div>
+                    <div style="font-size: 0.88rem; color: #fff; line-height: 1.5;">${userActionText}</div>
+                `;
+                feed.appendChild(userCard);
+                feed.scrollTop = feed.scrollHeight;
+            }
+
+            try {
+                const resp = await fetch('/api/game/ai-turn', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_action: userActionText,
+                        character_name: aiGameState.characterName,
+                        target_product: aiGameState.targetProduct,
+                        capital_gold: aiGameState.capitalGold,
+                        deal_health: aiGameState.dealHealth,
+                        reputation: aiGameState.reputation,
+                        turn_count: aiGameState.turnCount,
+                        history: aiGameState.history
+                    })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    
+                    // Update Game State
+                    aiGameState.capitalGold = data.new_gold;
+                    aiGameState.dealHealth = data.new_hp;
+                    aiGameState.reputation = data.new_rep;
+                    aiGameState.turnCount = data.turn_count;
+
+                    // Update History
+                    aiGameState.history.push({ role: 'user', content: userActionText });
+                    aiGameState.history.push({ role: 'assistant', content: `${data.actor_name}: ${data.dialogue}` });
+
+                    // Update HUD Displays
+                    updateGameHUD(data.new_gold, data.new_hp, data.sound_effect);
+
+                    // Append AI Actor Card
+                    if (feed) {
+                        const aiCard = document.createElement('div');
+                        const deltaColor = data.gold_delta >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)';
+                        const deltaSign = data.gold_delta >= 0 ? '+' : '';
+                        
+                        aiCard.style.cssText = 'background: rgba(18, 24, 36, 0.95); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px 16px; align-self: flex-end; max-width: 92%; box-shadow: 0 4px 15px rgba(0,0,0,0.3);';
+                        aiCard.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; border-bottom: 1px solid var(--border-glass); padding-bottom: 6px;">
+                                <strong style="color: var(--accent-amber); font-size: 0.85rem;"><i class="fa-solid fa-comment-dots"></i> ${data.actor_name}</strong>
+                                <div style="display: flex; gap: 8px; font-size: 0.75rem;">
+                                    ${data.gold_delta !== 0 ? `<span style="color: ${deltaColor}; font-weight: 700;">سرمایه: ${deltaSign}$${Number(data.gold_delta).toLocaleString()}</span>` : ''}
+                                    ${data.hp_delta !== 0 ? `<span style="color: ${data.hp_delta > 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'}; font-weight: 700;">سلامت: ${data.hp_delta > 0 ? '+' : ''}${data.hp_delta}%</span>` : ''}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.9rem; color: #fff; line-height: 1.6; margin-bottom: 8px;">
+                                ${data.dialogue}
+                            </div>
+                            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-glass); padding: 4px 8px; border-radius: 6px;">
+                                💡 ${data.narrative}
+                            </div>
+                        `;
+                        feed.appendChild(aiCard);
+                        feed.scrollTop = feed.scrollHeight;
+                    }
+
+                    // Update Next Dilemma Title
+                    const dilemmaEl = document.getElementById('ai-dilemma-title');
+                    if (dilemmaEl && data.dilemma_prompt) {
+                        dilemmaEl.innerText = data.dilemma_prompt;
+                    }
+
+                    // Render Suggested Quick Action Buttons
+                    const suggestedContainer = document.getElementById('ai-suggested-moves');
+                    if (suggestedContainer) {
+                        suggestedContainer.innerHTML = '';
+                        if (data.suggested_actions && data.suggested_actions.length > 0) {
+                            data.suggested_actions.forEach((act, idx) => {
+                                const btn = document.createElement('button');
+                                btn.className = 'game-choice-btn';
+                                btn.style.padding = '10px 14px';
+                                btn.style.marginBottom = '6px';
+                                btn.style.fontSize = '0.84rem';
+                                btn.innerHTML = `
+                                    <span style="color: var(--accent-cyan);"><i class="fa-solid fa-angles-left"></i> گزینه ${idx+1}: ${act}</span>
+                                    <i class="fa-solid fa-chevron-left" style="font-size: 0.8rem; color: var(--text-muted);"></i>
+                                `;
+                                btn.onclick = () => executeAIMoveAction(act);
+                                suggestedContainer.appendChild(btn);
+                            });
+                        }
+                    }
+
+                    // Handle Victory or Game Over
+                    if (data.game_status === 'VICTORY') {
+                        playGameSound('victory');
+                        alert('🏆 تبریک! شما با مذاکره هوشمندانه، کالا را با موفقیت و سود عالی ترخیص کردید و برنده شدید!');
+                    } else if (data.game_status === 'BANKRUPT') {
+                        playGameSound('damage');
+                        alert('⚠️ متاسفانه به دلیل ریسک بالا یا عدم استعلام، معامله شکست خورد! می‌توانید مجدداً تلاش کنید.');
+                    }
+
+                }
+            } catch (err) {
+                console.error('AI Game move error:', err);
+            } finally {
+                if (btnExec) {
+                    btnExec.disabled = false;
+                    btnExec.innerHTML = '<i class="fa-solid fa-paper-plane"></i> اجرای تاکتیک';
+                }
+            }
+        }
+
+        function updateGameHUD(gold, hp, soundType) {
+            const goldDisplay = document.getElementById('hud-capital-display');
+            if (goldDisplay) goldDisplay.innerText = `$${Number(gold).toLocaleString()}`;
+            
+            const hpFill = document.getElementById('hud-hp-fill');
+            const hpText = document.getElementById('hud-hp-text');
+            if (hpFill) hpFill.style.width = `${hp}%`;
+            if (hpText) hpText.innerText = `${hp}%`;
+
+            if (soundType) playGameSound(soundType);
         }
 
     </script>

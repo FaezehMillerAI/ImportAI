@@ -24,6 +24,7 @@ from services.linkedin_content_generator import LinkedInContentGenerator
 from services.linkedin_messaging_agent import LinkedInMessagingAgent
 from services.telegram_bot import start_telegram_bot_async
 from services.currency_rate_service import CurrencyRateService
+from services.game_ai_master import GameAIMaster
 
 # Initialize DB tables
 init_db()
@@ -118,6 +119,16 @@ class VerifyPaymentRequest(BaseModel):
     invoice_number: str
     tracking_code: str
     method: Optional[str] = "shetab"
+
+class GameAITurnRequest(BaseModel):
+    user_action: str
+    character_name: Optional[str] = "تاجر کارکشته سنتی"
+    target_product: Optional[str] = "خط تولید صنعتی"
+    capital_gold: Optional[int] = 100000
+    deal_health: Optional[int] = 100
+    reputation: Optional[int] = 50
+    turn_count: Optional[int] = 1
+    history: Optional[List[Dict[str, str]]] = None
 
 # API Endpoints
 @app.get("/api/health")
@@ -307,6 +318,24 @@ async def convert_currency_rate(req: CurrencyConvertRequest):
     """
     res = await CurrencyRateService.convert_currency(req.amount, req.from_currency, req.to_currency)
     return res
+
+# DeepSeek Dynamic AI Gamification & RPG Dungeon Master
+@app.post("/api/game/ai-turn")
+async def game_ai_turn_endpoint(req: GameAITurnRequest):
+    """
+    Simulates real-time arbitrary trade decisions, negotiations, customs dilemmas and boss fights via DeepSeek.
+    """
+    result = await GameAIMaster.process_turn(
+        user_action=req.user_action,
+        character_name=req.character_name,
+        target_product=req.target_product,
+        capital_gold=req.capital_gold,
+        deal_health=req.deal_health,
+        reputation=req.reputation,
+        turn_count=req.turn_count,
+        history=req.history
+    )
+    return result
 
 # Serve Index Page with Anti-Cache Headers
 @app.get("/")
