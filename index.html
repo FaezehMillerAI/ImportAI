@@ -4101,6 +4101,7 @@ SWIFT Code: HSBCHKHHXXX
         }
 
     
+        
         // --- DeepSeek Infinite AI RPG Game Engine ---
         let aiGameState = {
             active: false,
@@ -4138,25 +4139,54 @@ SWIFT Code: HSBCHKHHXXX
             if (el) el.value = prod;
         }
 
+        function playGameSound(soundType) {
+            try {
+                if (typeof playSynthSound === 'function') {
+                    if (soundType === 'coin_gain' || soundType === 'coin') playSynthSound('coin');
+                    else if (soundType === 'damage' || soundType === 'alert') playSynthSound('danger');
+                    else if (soundType === 'victory') playSynthSound('victory');
+                    else playSynthSound('click');
+                }
+            } catch (e) {
+                console.warn('Audio sfx suppressed:', e);
+            }
+        }
+
         function startDeepSeekAIGame() {
-            const prodInput = document.getElementById('ai-game-product');
-            const originInput = document.getElementById('ai-game-origin');
-            
-            aiGameState.targetProduct = prodInput ? prodInput.value.trim() : "خط تولید صنعتی";
-            aiGameState.origin = originInput ? originInput.value : "چین";
-            aiGameState.capitalGold = gameStats.gold || 100000;
-            aiGameState.dealHealth = 100;
-            aiGameState.reputation = 50;
-            aiGameState.turnCount = 1;
-            aiGameState.history = [];
-            aiGameState.active = true;
+            try {
+                playGameSound('coin');
+                const prodInput = document.getElementById('ai-game-product');
+                const originInput = document.getElementById('ai-game-origin');
+                
+                aiGameState.targetProduct = (prodInput && prodInput.value.trim()) ? prodInput.value.trim() : "خط تولید و ماشین‌آلات صنعتی";
+                aiGameState.origin = originInput ? originInput.value : "گوانگژو و شنزن (چین)";
+                
+                // Read capital from selected character / state safely
+                aiGameState.capitalGold = (typeof gameCapital !== 'undefined') ? gameCapital : 100000;
+                if (typeof activeCharacter !== 'undefined' && typeof charactersData !== 'undefined' && charactersData[activeCharacter]) {
+                    aiGameState.characterName = charactersData[activeCharacter].name;
+                } else {
+                    aiGameState.characterName = "مهندس کیان (صنعتگر خطوط تولید)";
+                }
 
-            // UI Transitions
-            document.getElementById('ai-setup-box').style.display = 'none';
-            document.getElementById('ai-story-arena').style.display = 'block';
+                aiGameState.dealHealth = 100;
+                aiGameState.reputation = 50;
+                aiGameState.turnCount = 1;
+                aiGameState.history = [];
+                aiGameState.active = true;
 
-            // Initial Turn with Supplier Discovery
-            executeAIMoveAction(`من می‌خواهم واردات «${aiGameState.targetProduct}» را از مبدأ «${aiGameState.origin}» آغاز کنم. بهترین تولیدکنندگان را بررسی و اولین پیشنهاد را برای شروع مذاکره بده.`);
+                // UI Transitions
+                const setupBox = document.getElementById('ai-setup-box');
+                const storyArena = document.getElementById('ai-story-arena');
+                if (setupBox) setupBox.style.display = 'none';
+                if (storyArena) storyArena.style.display = 'block';
+
+                // Initial Action
+                executeAIMoveAction(`من با شخصیت «${aiGameState.characterName}» می‌خواهم واردات «${aiGameState.targetProduct}» را از مبدأ «${aiGameState.origin}» با سرمایه $${aiGameState.capitalGold.toLocaleString()} آغاز کنم. بهترین تولیدکنندگان را بررسی و اولین پیشنهاد را برای شروع مذاکره بده.`);
+            } catch (err) {
+                console.error("Error in startDeepSeekAIGame:", err);
+                alert("در حال راه‌اندازی بازی هوش مصنوعی... لطفاً مجدداً دکمه را بزنید.");
+            }
         }
 
         async function executeAICustomMove() {
@@ -4179,7 +4209,7 @@ SWIFT Code: HSBCHKHHXXX
             // Append User Move Card
             if (feed) {
                 const userCard = document.createElement('div');
-                userCard.style.cssText = 'background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; align-self: flex-start; max-width: 90%;';
+                userCard.style.cssText = 'background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; align-self: flex-start; max-width: 90%; margin-bottom: 8px;';
                 userCard.innerHTML = `
                     <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; margin-bottom: 4px;">
                         <i class="fa-solid fa-user"></i> اقدام شما (راند ${aiGameState.turnCount}):
@@ -4187,6 +4217,13 @@ SWIFT Code: HSBCHKHHXXX
                     <div style="font-size: 0.88rem; color: #fff; line-height: 1.5;">${userActionText}</div>
                 `;
                 feed.appendChild(userCard);
+                
+                // Add loading indicator card
+                const loadingCard = document.createElement('div');
+                loadingCard.id = 'ai-loading-card';
+                loadingCard.style.cssText = 'background: rgba(18, 24, 36, 0.8); border: 1px dashed var(--accent-cyan); border-radius: var(--radius-sm); padding: 12px 16px; align-self: flex-end; color: var(--accent-cyan); font-size: 0.84rem; display: flex; align-items: center; gap: 8px;';
+                loadingCard.innerHTML = `<i class="fa-solid fa-brain fa-spin"></i> استاد بازی DeepSeek در حال ارزیابی استراتژی شما و واکنش بازار...`;
+                feed.appendChild(loadingCard);
                 feed.scrollTop = feed.scrollHeight;
             }
 
@@ -4205,6 +4242,10 @@ SWIFT Code: HSBCHKHHXXX
                         history: aiGameState.history
                     })
                 });
+
+                // Remove loading card
+                const loadEl = document.getElementById('ai-loading-card');
+                if (loadEl) loadEl.remove();
 
                 if (resp.ok) {
                     const data = await resp.json();
@@ -4228,7 +4269,7 @@ SWIFT Code: HSBCHKHHXXX
                         const deltaColor = data.gold_delta >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)';
                         const deltaSign = data.gold_delta >= 0 ? '+' : '';
                         
-                        aiCard.style.cssText = 'background: rgba(18, 24, 36, 0.95); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px 16px; align-self: flex-end; max-width: 92%; box-shadow: 0 4px 15px rgba(0,0,0,0.3);';
+                        aiCard.style.cssText = 'background: rgba(18, 24, 36, 0.95); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px 16px; align-self: flex-end; max-width: 92%; box-shadow: 0 4px 15px rgba(0,0,0,0.3); margin-bottom: 8px;';
                         aiCard.innerHTML = `
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; border-bottom: 1px solid var(--border-glass); padding-bottom: 6px;">
                                 <strong style="color: var(--accent-amber); font-size: 0.85rem;"><i class="fa-solid fa-comment-dots"></i> ${data.actor_name}</strong>
@@ -4287,6 +4328,8 @@ SWIFT Code: HSBCHKHHXXX
                 }
             } catch (err) {
                 console.error('AI Game move error:', err);
+                const loadEl = document.getElementById('ai-loading-card');
+                if (loadEl) loadEl.remove();
             } finally {
                 if (btnExec) {
                     btnExec.disabled = false;
@@ -4303,6 +4346,11 @@ SWIFT Code: HSBCHKHHXXX
             const hpText = document.getElementById('hud-hp-text');
             if (hpFill) hpFill.style.width = `${hp}%`;
             if (hpText) hpText.innerText = `${hp}%`;
+
+            if (typeof updateHPBar === 'function') {
+                gameHP = hp;
+                updateHPBar();
+            }
 
             if (soundType) playGameSound(soundType);
         }
