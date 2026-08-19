@@ -853,15 +853,258 @@
             border: 3px solid;
         }
 
-        .score-green { border-color: var(--accent-emerald); color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); }
-        .score-yellow { border-color: var(--accent-amber); color: var(--accent-amber); background: rgba(245, 158, 11, 0.1); }
-        .score-red { border-color: var(--accent-rose); color: var(--accent-rose); background: rgba(244, 63, 94, 0.1); }
+        /* --- Trade War-Room Superpower Styles --- */
+        .warroom-box {
+            background: rgba(10, 14, 23, 0.9);
+            border: 1px solid var(--accent-purple);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .warroom-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-amber));
+        }
+
+        .warroom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .warroom-agent-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            transition: var(--transition);
+        }
+
+        .warroom-agent-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-3px);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .warroom-agent-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .warroom-agent-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .verdict-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+            border: 1px solid var(--accent-emerald);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        /* --- Corridor & Borders Intelligence Styles --- */
+        .corridor-tab-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .corridor-tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .corridor-tab-btn.active, .corridor-tab-btn:hover {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .corridor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .corridor-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .corridor-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
+        }
+
+        .fallback-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* --- Payment & Pricing Styles --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin: 30px 0;
+        }
+
+        .pricing-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent-cyan);
+            background: linear-gradient(180deg, rgba(0, 242, 254, 0.08), rgba(15, 23, 42, 0.9));
+        }
+
+        .pricing-card.featured::before {
+            content: 'پیشنهاد ویژه بازرگانان';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .pricing-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 16px 0;
+        }
+
+        .pricing-price small {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: right;
+            margin: 20px 0 24px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-features li i {
+            color: var(--accent-emerald);
+        }
+
+        /* Payment Modal */
+        .payment-modal-box {
+            background: #0f172a;
+            border: 1px solid var(--accent-cyan);
+            border-radius: var(--radius-lg);
+            max-width: 580px;
+            width: 90%;
+            margin: 40px auto;
+            padding: 30px;
+            color: var(--text-primary);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .payment-method-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .pay-method-btn {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            cursor: pointer;
+            text-align: center;
+            color: var(--text-secondary);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .pay-method-btn.active {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
 
         @media (max-width: 992px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .agent-playground { grid-template-columns: 1fr; height: auto; }
             .agent-sidebar { border-left: none; border-bottom: 1px solid var(--border-glass); }
             .report-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -876,10 +1119,12 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#simulator" class="active"><i class="fa-solid fa-gamepad"></i> <span data-i18n="nav_simulator">شبیه‌ساز واردات</span></a></li>
+                <li><a href="#warroom"><i class="fa-solid fa-chess-knight" style="color: var(--accent-purple);"></i> <span data-i18n="nav_warroom">اتاق جنگ ۵ ایجنته</span></a></li>
+                <li><a href="#corridors"><i class="fa-solid fa-route" style="color: var(--accent-amber);"></i> <span data-i18n="nav_corridors">امکان‌سنجی مرزها</span></a></li>
                 <li><a href="#agents"><i class="fa-solid fa-network-wired"></i> <span data-i18n="nav_agents">شبکه ایجنت‌ها</span></a></li>
                 <li><a href="#pi-scanner"><i class="fa-solid fa-file-invoice-dollar"></i> <span data-i18n="nav_scanner">اسکنر پروفرما</span></a></li>
                 <li><a href="#verification"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="nav_audit">اعتبارسنجی چین</span></a></li>
-                <li><a href="#pipeline"><i class="fa-solid fa-diagram-project"></i> <span data-i18n="nav_pipeline">فرآیند ۱۱ مرحله‌ای</span></a></li>
+                <li><a href="#pricing-payment"><i class="fa-solid fa-credit-card" style="color: var(--accent-emerald);"></i> <span data-i18n="nav_pricing">بسته‌ها و پرداخت</span></a></li>
             </ul>
             <div class="header-controls">
                 <div class="status-badge">
@@ -932,10 +1177,24 @@
         <section id="simulator">
             <div class="section-title">
                 <i class="fa-solid fa-gamepad"></i>
-                <h2 data-i18n="sim_heading">شبیه‌ساز گیمیفیکیشن «استراتژی ۵۰,۰۰۰ دلاری واردات»</h2>
+                <h2 data-i18n="sim_heading">شبیه‌ساز گیمیفیکیشن «استراتژی واردات و مدیریت سرمایه»</h2>
             </div>
 
             <div class="simulator-card">
+                <!-- Interactive Capital Selector -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 14px 18px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-sack-dollar" style="color: var(--accent-amber); font-size: 1.3rem;"></i>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">انتخاب سرمایه اولیه شبیه‌سازی:</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="sim-capital-selector">
+                        <button type="button" class="preset-chip" onclick="setSimCapital(20000, this)">۲۰,۰۰۰ دلار</button>
+                        <button type="button" class="preset-chip active" style="border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="setSimCapital(50000, this)">۵۰,۰۰۰ دلار (پیش‌فرض)</button>
+                        <button type="button" class="preset-chip" onclick="setSimCapital(100000, this)">۱۰۰,۰۰۰ دلار</button>
+                        <button type="button" class="preset-chip" onclick="setSimCapital(250000, this)">۲۵۰,۰۰۰ دلار</button>
+                    </div>
+                </div>
+
                 <div class="sim-steps-header">
                     <div class="step-item active" onclick="goToSimStep(1)" id="step-nav-1">
                         <div class="step-number">۱</div>
@@ -1167,6 +1426,174 @@
             </div>
         </section>
 
+        <!-- Section 2.5: Multi-Agent Trade War-Room & Strategic Consensus (Superpower vs Generic LLMs) -->
+        <section id="warroom" style="margin-bottom: 60px;">
+            <div class="section-title">
+                <i class="fa-solid fa-chess-knight" style="color: var(--accent-purple);"></i>
+                <h2 data-i18n="warroom_heading">اتاق جنگ تجاری ۵ ایجنته (Multi-Agent Trade War-Room)</h2>
+            </div>
+
+            <div class="warroom-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="color: var(--accent-purple); margin-bottom: 4px;" data-i18n="warroom_title">موتور اجماع و اعتبارسنجی هم‌زمان ۵ ایجنت ارشد</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;" data-i18n="warroom_desc">برخلاف چت‌بات‌های عمومی، در ImportAI پنج ایجنت تخصصی به صورت زنده استراتژی واردات، ریسک‌های تحریمی، تعرفه گمرک و کریدورها را به چالش می‌کشند:</p>
+                    </div>
+                    <span class="warroom-badge" style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem;">
+                        <i class="fa-solid fa-bolt"></i> متمایز از Gemini و ChatGPT
+                    </span>
+                </div>
+
+                <!-- Input Controls -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px;">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 12px; align-items: end;">
+                        <div>
+                            <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;" data-i18n="warroom_product_lbl">کالای هدف برای واردات:</label>
+                            <input type="text" id="warroom-product" value="دستگاه اکسترودر و تزریق پلاستیک خط تولید" placeholder="مثال: دستگاه لیزر فایبر / رزین اپوکسی / تجهیزات سونوگرافی" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;" data-i18n="warroom_country_lbl">کشور مبدأ:</label>
+                            <select id="warroom-country" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                                <option value="China">چین (China)</option>
+                                <option value="Turkey">ترکیه (Turkey)</option>
+                                <option value="Europe">اروپا / آلمان (Europe)</option>
+                                <option value="UAE">امارات / دبی (UAE)</option>
+                                <option value="India">هند (India)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;" data-i18n="warroom_capital_lbl">سرمایه (دلار):</label>
+                            <input type="number" id="warroom-capital" value="50000" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                        </div>
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); border: none; height: 42px;" onclick="runWarRoomSession()">
+                            <i class="fa-solid fa-play"></i> <span data-i18n="warroom_run_btn">اجرای اتاق جنگ</span>
+                        </button>
+                    </div>
+
+                    <!-- Preset Chips -->
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center;">پیش‌فرض‌ها:</span>
+                        <button class="preset-chip" onclick="setWarRoomPreset('دستگاه تزریق پلاستیک PE-800', 'China', 45000)">دستگاه تزریق پلاستیک</button>
+                        <button class="preset-chip" onclick="setWarRoomPreset('تجهیزات تصویربرداری پزشکی و سونوگرافی', 'Europe', 80000)">تجهیزات پزشکی و سونوگرافی</button>
+                        <button class="preset-chip" onclick="setWarRoomPreset('مواد اولیه پلیمری گرانول EVA', 'China', 30000)">پلیمر گرانول EVA</button>
+                        <button class="preset-chip" onclick="setWarRoomPreset('قطعات الکترونیک و بردهای SMD', 'China', 25000)">قطعات الکترونیک SMD</button>
+                    </div>
+                </div>
+
+                <!-- Live Loading Progress -->
+                <div id="warroom-loading" style="display: none; text-align: center; padding: 30px 0;">
+                    <div class="pulse-dot" style="width: 18px; height: 18px; margin: 0 auto 16px; background: var(--accent-purple); box-shadow: 0 0 15px var(--accent-purple);"></div>
+                    <h4 style="color: var(--accent-purple);" data-i18n="warroom_loading_text">اتاق جنگ فعال شد: در حال جستجوی زنده وب، استعلام تعرفه HS و مناظره هم‌زمان ۵ ایجنت...</h4>
+                </div>
+
+                <!-- War Room 5-Agent Debate Arena Result -->
+                <div id="warroom-result" style="display: none;">
+                    
+                    <!-- 5 Agent Cards Grid -->
+                    <div class="warroom-grid">
+                        
+                        <!-- Agent 1: EduLead -->
+                        <div class="warroom-agent-card">
+                            <div class="warroom-agent-header">
+                                <div class="warroom-agent-avatar" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6;"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <div>
+                                    <h4 style="font-size: 0.9rem; color: #3b82f6;">EduLead Advisor</h4>
+                                    <small style="color: var(--text-muted); font-size: 0.72rem;">تحلیل بازار و حاشیه سود</small>
+                                </div>
+                            </div>
+                            <p id="warroom-opinion-edulead" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto;"></p>
+                        </div>
+
+                        <!-- Agent 2: Sourcing -->
+                        <div class="warroom-agent-card">
+                            <div class="warroom-agent-header">
+                                <div class="warroom-agent-avatar" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald);"><i class="fa-solid fa-boxes-packing"></i></div>
+                                <div>
+                                    <h4 style="font-size: 0.9rem; color: var(--accent-emerald);">Sourcing Officer</h4>
+                                    <small style="color: var(--text-muted); font-size: 0.72rem;">کد HS و هاب‌های دست‌اول</small>
+                                </div>
+                            </div>
+                            <p id="warroom-opinion-sourcing" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto;"></p>
+                        </div>
+
+                        <!-- Agent 3: Risk & Audit -->
+                        <div class="warroom-agent-card">
+                            <div class="warroom-agent-header">
+                                <div class="warroom-agent-avatar" style="background: rgba(244, 63, 94, 0.2); color: var(--accent-rose);"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div>
+                                    <h4 style="font-size: 0.9rem; color: var(--accent-rose);">Risk Auditor</h4>
+                                    <small style="color: var(--text-muted); font-size: 0.72rem;">استعلام QCC و امنیت ارزی</small>
+                                </div>
+                            </div>
+                            <p id="warroom-opinion-risk" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto;"></p>
+                        </div>
+
+                        <!-- Agent 4: Logistics -->
+                        <div class="warroom-agent-card">
+                            <div class="warroom-agent-header">
+                                <div class="warroom-agent-avatar" style="background: rgba(168, 85, 247, 0.2); color: var(--accent-purple);"><i class="fa-solid fa-ship"></i></div>
+                                <div>
+                                    <h4 style="font-size: 0.9rem; color: var(--accent-purple);">Logistics Director</h4>
+                                    <small style="color: var(--text-muted); font-size: 0.72rem;">کریدورها و مسیر جایگزین</small>
+                                </div>
+                            </div>
+                            <p id="warroom-opinion-logistics" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto;"></p>
+                        </div>
+
+                        <!-- Agent 5: Sales & Legal Contract -->
+                        <div class="warroom-agent-card">
+                            <div class="warroom-agent-header">
+                                <div class="warroom-agent-avatar" style="background: rgba(245, 158, 11, 0.2); color: var(--accent-amber);"><i class="fa-solid fa-handshake"></i></div>
+                                <div>
+                                    <h4 style="font-size: 0.9rem; color: var(--accent-amber);">Contract Director</h4>
+                                    <small style="color: var(--text-muted); font-size: 0.72rem;">شروط حقوقی و کارگزاری</small>
+                                </div>
+                            </div>
+                            <p id="warroom-opinion-sales" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto;"></p>
+                        </div>
+
+                    </div>
+
+                    <!-- Executive Consensus Verdict Banner -->
+                    <div class="verdict-banner">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div class="score-circle score-green" style="width: 70px; height: 70px; font-size: 1.2rem;">
+                                    <span id="warroom-deal-score">92</span>
+                                    <small style="font-size: 0.55rem;">سلامت معامله</small>
+                                </div>
+                                <div>
+                                    <h3 style="color: var(--accent-emerald);" id="warroom-verdict-title"><i class="fa-solid fa-circle-check"></i> حکم نهایی اجماع: GO (تایید ورود مشروط)</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem;" id="warroom-product-title"></p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">سود خالص تخمینی پروژه (ROI):</span>
+                                <h3 style="color: var(--accent-emerald);" id="warroom-roi-display">+۲۸.۵٪</h3>
+                            </div>
+                        </div>
+
+                        <!-- Financial Landed Cost Matrix -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; font-size: 0.85rem; margin-bottom: 16px;">
+                            <div><span style="color: var(--text-muted);">ارزش خرید کالا (FOB):</span> <strong id="wf-fob">$41,000</strong></div>
+                            <div><span style="color: var(--text-muted);">حمل دریایی و بیمه:</span> <strong id="wf-freight">$2,950</strong></div>
+                            <div><span style="color: var(--text-muted);">حقوق گمرکی & مالیات:</span> <strong id="wf-customs">$4,800</strong></div>
+                            <div><span style="color: var(--text-muted);">قیمت تمام‌شده کل:</span> <strong style="color: var(--accent-cyan);" id="wf-landed-usd">$49,700</strong></div>
+                            <div><span style="color: var(--text-muted);">معادل ریالی در انبار:</span> <strong style="color: var(--accent-emerald);" id="wf-landed-toman">۳,۰۸۱,۴۰۰,۰۰۰ تومان</strong></div>
+                        </div>
+
+                        <!-- Critical Action Conditions -->
+                        <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 14px;">
+                            <h5 style="color: var(--accent-amber); margin-bottom: 6px;"><i class="fa-solid fa-list-check"></i> شروط ۳‌گانه الزامی ایجنت‌ها برای آغاز پروژه:</h5>
+                            <ul id="warroom-conditions-list" style="margin: 0; padding-right: 18px; font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6;">
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <!-- Section 3.5: AI Proforma & Document Intelligence Scanner -->
         <section id="pi-scanner" style="margin-bottom: 60px;">
             <div class="section-title">
@@ -1311,8 +1738,102 @@
             </div>
         </section>
 
+        <!-- Section 3.8: Borders & Corridors Feasibility Engine -->
+        <section id="corridors" style="margin-bottom: 60px;">
+            <div class="section-title">
+                <i class="fa-solid fa-route" style="color: var(--accent-amber);"></i>
+                <h2 data-i18n="corridors_heading">سامانه هوشمند امکان‌سنجی مرزها و کریدورهای ورود کالا (Sea, Rail, Road, Air)</h2>
+            </div>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 28px; backdrop-filter: blur(12px);">
+                <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="corridors_desc">
+                    امکان‌سنجی دقیق مسیرهای دریایی، ریلی، زمینی و هوایی، زمان ترانزیت، گمرکات تخصصی و پیشنهاد فوری <strong>مسیر جایگزین (Contingency Route)</strong> در شرایط بحران و تحریم:
+                </p>
+
+                <!-- Corridor Analyzer Form -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto; gap: 12px; align-items: end;">
+                        <div>
+                            <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;">کشور مبدأ حمل:</label>
+                            <select id="corr-origin" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                                <option value="چین (China)">چین (بنادر شنژن، نینگبو، شانگهای)</option>
+                                <option value="ترکیه و اروپا">ترکیه / اروپا (استانبول، آلمان، ایتالیا)</option>
+                                <option value="روسیه و اوراسیا">روسیه و قزاقستان (حوضه خزر)</option>
+                                <option value="امارات و هند">امارات (دبی) و هند (بمبئی)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;">نوع و ماهیت کالا:</label>
+                            <input type="text" id="corr-goods" value="ماشین‌آلات صنعتی و خط تولید" placeholder="مثال: قطعات الکترونیک / مواد اولیه / دارو" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;">فوریت زمانی و اولویت:</label>
+                            <select id="corr-urgency" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                                <option value="normal">اقتصادی و تجاری استاندارد (حداقل هزینه)</option>
+                                <option value="urgent">فوری و اضطراری (حداکثر سرعت تحویل)</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--accent-amber), #ea580c); border: none; height: 42px;" onclick="analyzeCorridorRoute()">
+                            <i class="fa-solid fa-compass"></i> امکان‌سنجی مسیر
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Analysis Result Card -->
+                <div id="corr-analysis-result" style="display: none; margin-bottom: 30px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                        
+                        <!-- Primary Route -->
+                        <div class="corridor-card" style="border-color: var(--accent-emerald);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <h4 style="color: var(--accent-emerald);" id="corr-prim-name"><i class="fa-solid fa-anchor"></i> بندر شهید رجایی (بندرعباس)</h4>
+                                <span class="risk-badge risk-low"><i class="fa-solid fa-star"></i> مسیر پیشنهادی اول</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">زمان ترانزیت:</strong> <span id="corr-prim-time">۲۲ الی ۳۰ روز</span></p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">شاخص هزینه:</strong> <span id="corr-prim-cost">اقتصادی‌ترین روش برای بارهای کانتینری سنگین</span></p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">گمرک ترخیص:</strong> <span id="corr-prim-customs">گمرک شهید رجایی</span></p>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);" id="corr-prim-status">وضعیت: فعال عملیاتی</p>
+                        </div>
+
+                        <!-- Contingency Fallback Route -->
+                        <div class="corridor-card" style="border-color: var(--accent-amber); background: rgba(245, 158, 11, 0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <h4 style="color: var(--accent-amber);" id="corr-alt-name"><i class="fa-solid fa-train"></i> قطار باری ابریشم (مرز ریلی سرخس)</h4>
+                                <span class="fallback-badge"><i class="fa-solid fa-triangle-exclamation"></i> مسیر جایگزین بحران</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">زمان ترانزیت:</strong> <span id="corr-alt-time">۱۴ الی ۱۸ روز (۲ برابر سریع‌تر از دریایی!)</span></p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">مزیت استراتژیک:</strong> <span id="corr-alt-cost">بدون معطلی طوفان دریایی و بدون ترافیک بنادر</span></p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">گمرک ترخیص:</strong> <span id="corr-alt-customs">گمرک غرب تهران / آپرین</span></p>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);" id="corr-alt-status">وضعیت: فعال ۲۴/۷</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Strategic Rationale -->
+                    <div style="background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: var(--radius-sm); padding: 14px; margin-top: 16px;">
+                        <h5 style="color: var(--accent-cyan); margin-bottom: 6px;"><i class="fa-solid fa-brain"></i> تحلیل استراتژیک ایجنت لجستیک:</h5>
+                        <p id="corr-rationale-text" style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;"></p>
+                    </div>
+                </div>
+
+                <!-- 4 Mode Catalog Grid -->
+                <h4 style="color: var(--text-primary); margin-bottom: 16px;"><i class="fa-solid fa-earth-americas"></i> شبکه کریدورهای ورودی به تفکیک شیوه حمل:</h4>
+                <div class="corridor-tab-nav">
+                    <button class="corridor-tab-btn active" onclick="filterCorridors('all', this)"><i class="fa-solid fa-layer-group"></i> تمام کریدورها</button>
+                    <button class="corridor-tab-btn" onclick="filterCorridors('sea', this)"><i class="fa-solid fa-ship"></i> بنادر دریایی (Sea)</button>
+                    <button class="corridor-tab-btn" onclick="filterCorridors('rail', this)"><i class="fa-solid fa-train"></i> خطوط ریلی (Rail)</button>
+                    <button class="corridor-tab-btn" onclick="filterCorridors('road', this)"><i class="fa-solid fa-truck"></i> مرزهای زمینی (Road)</button>
+                    <button class="corridor-tab-btn" onclick="filterCorridors('air', this)"><i class="fa-solid fa-plane-departure"></i> گمرکات هوایی (Air Cargo)</button>
+                </div>
+
+                <div class="corridor-grid" id="corridors-catalog-container">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
         <!-- Section 4: 11-Step Pipeline -->
-        <section id="pipeline">
+        <section id="pipeline" style="margin-bottom: 60px;">
             <div class="section-title">
                 <i class="fa-solid fa-diagram-project"></i>
                 <h2 data-i18n="pipeline_heading">فرآیند ۱۱ مرحله‌ای مدیریت کامل زنجیره تأمین</h2>
@@ -1332,6 +1853,202 @@
                 <div class="pipeline-card"><div class="pipeline-num">۱۱</div><div class="pipeline-info"><h4 data-i18n="pipe11_t">تحویل در انبار</h4><p data-i18n="pipe11_d">تحویل نهایی کالا همراه با فاکتور رسمی و گواهی بازرسی.</p></div></div>
             </div>
         </section>
+
+        <!-- Section 4.5: Service Packages & Online Payment Gateway -->
+        <section id="pricing-payment" style="margin-bottom: 60px;">
+            <div class="section-title">
+                <i class="fa-solid fa-credit-card" style="color: var(--accent-emerald);"></i>
+                <h2 data-i18n="pricing_heading">تعرفه خدمات و درگاه پرداخت آنلاین (شتاب / کریپتو USDT)</h2>
+            </div>
+
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 30px;">
+                <p style="color: var(--text-secondary);" data-i18n="pricing_desc">
+                    پرداخت آنلاین و آنی جهت دریافت گزارش‌های اعتبارسنجی ثبتی چین، گزارش سورسینگ قیمت تمام‌شده، رزرو بازرس حضوری در کارخانه چین و عقد قرارداد کارگزاری:
+                </p>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="pricing-grid">
+                
+                <!-- Plan 1 -->
+                <div class="pricing-card">
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 700;">تحویل ۲ ساعته</span>
+                        <h3 style="margin: 8px 0; color: #fff;">استعلام جامع ثبتی QCC چین</h3>
+                        <div class="pricing-price">۳,۰۰۰,۰۰۰ <small>تومان ($49)</small></div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> استعلام رسمی SAMR و روزنامه رسمی چین</li>
+                            <li><i class="fa-solid fa-check"></i> بررسی سوابق شکایت در دادگاه خلق چین</li>
+                            <li><i class="fa-solid fa-check"></i> تطابق شماره حساب بانکی با فاکتور</li>
+                            <li><i class="fa-solid fa-check"></i> صدور کارنامه رسمی PDF با مهر اعتبارسنجی</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary" onclick="openPaymentModal('qcc_audit', 'استعلام جامع ثبتی QCC چین', 3000000, 49)"><i class="fa-solid fa-cart-shopping"></i> پرداخت و استعلام فوری</button>
+                </div>
+
+                <!-- Plan 2 (Featured) -->
+                <div class="pricing-card featured">
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 700;">تحویل ۲۴ ساعته</span>
+                        <h3 style="margin: 8px 0; color: #fff;">پکیج کامل سورسینگ و قیمت تمام‌شده</h3>
+                        <div class="pricing-price">۶,۰۰۰,۰۰۰ <small>تومان ($99)</small></div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> معرفی ۲ تامین‌کننده دست‌اول تولیدکننده در چین</li>
+                            <li><i class="fa-solid fa-check"></i> تعیین دقیق کد تعرفه HS و حقوق گمرکی</li>
+                            <li><i class="fa-solid fa-check"></i> محاسبه قیمت تمام‌شده در انبار ایران (Landed Cost)</li>
+                            <li><i class="fa-solid fa-check"></i> متن آماده مذاکره و چانه‌زنی به زبان چینی/انگلیسی</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary" style="background: var(--accent-cyan); color: #000; font-weight: 700;" onclick="openPaymentModal('sourcing_report', 'پکیج کامل سورسینگ و قیمت تمام‌شده', 6000000, 99)"><i class="fa-solid fa-bolt"></i> پرداخت و ثبت سفارش سورسینگ</button>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="pricing-card">
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--accent-amber); font-weight: 700;">اعزام ظرف ۴۸ ساعت</span>
+                        <h3 style="margin: 8px 0; color: #fff;">اعزام بازرس حضوری در چین (PSI)</h3>
+                        <div class="pricing-price">۲۸,۰۰۰,۰۰۰ <small>تومان ($450)</small></div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> حضور فیزیکی بازرس فنی در خط تولید کارخانه</li>
+                            <li><i class="fa-solid fa-check"></i> تست روشن شدن دستگاه و بازرسی بسته‌بندی</li>
+                            <li><i class="fa-solid fa-check"></i> تهیه ویدیو و بیش از ۵۰ عکس باکیفیت از کانتینر</li>
+                            <li><i class="fa-solid fa-check"></i> صدور گواهی رسمی بازرسی کیفیت قبل از حمل</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary" onclick="openPaymentModal('psi_inspection', 'اعزام بازرس حضوری کنترل کیفیت در چین (PSI)', 28000000, 450)"><i class="fa-solid fa-shield-check"></i> رزرو و پرداخت بازرسی حضوری</button>
+                </div>
+
+                <!-- Plan 4 -->
+                <div class="pricing-card">
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--accent-purple); font-weight: 700;">قرارداد حقوقی رسمی</span>
+                        <h3 style="margin: 8px 0; color: #fff;">پیش‌پرداخت قرارداد کارگزاری واردات</h3>
+                        <div class="pricing-price">۵۸,۰۰۰,۰۰۰ <small>تومان ($950)</small></div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> تنظیم قرارداد ۲ زبانه حقوقی بین‌المللی</li>
+                            <li><i class="fa-solid fa-check"></i> ثبت سفارش در سامانه جامع و تخصیص ارز نیما</li>
+                            <li><i class="fa-solid fa-check"></i> ترخیص گمرکی در بنادر ایران تا تحویل انبار</li>
+                            <li><i class="fa-solid fa-check"></i> همراهی اختصاصی مدیر ارشد بازرگانی تا انتهای پروژه</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary" onclick="openPaymentModal('brokerage_deposit', 'پیش‌پرداخت قرارداد کارگزاری و واردات', 58000000, 950)"><i class="fa-solid fa-file-signature"></i> عقد قرارداد و پرداخت بیعانه</button>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Interactive Payment & Checkout Modal -->
+    <div class="modal-overlay" id="payment-modal" style="display: none;">
+        <div class="payment-modal-box">
+            <button class="modal-close" onclick="closePaymentModal()"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div id="pay-step-1">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 8px;"><i class="fa-solid fa-shield-halved"></i> صدور فاکتور و درگاه پرداخت امن</h3>
+                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 18px;" id="modal-package-title">بسته انتخابی: استعلام جامع ثبتی QCC چین</p>
+
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                        <span style="color: var(--text-muted);">مبلغ قابل پرداخت (تومان):</span>
+                        <strong style="color: var(--accent-emerald); font-size: 1.1rem;" id="modal-amount-toman">۳,۰۰۰,۰۰۰ تومان</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-muted);">معادل ارزی (دلار تتر):</span>
+                        <strong style="color: var(--accent-cyan);" id="modal-amount-usd">$49.00 USDT</strong>
+                    </div>
+                </div>
+
+                <!-- Client Details -->
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">نام و نام خانوادگی / شرکت:</label>
+                    <input type="text" id="pay-client-name" required placeholder="مثال: مهندس رادین کیانی" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">شماره تماس / واتساپ (جهت ارسال گزارش و فاکتور):</label>
+                    <input type="tel" id="pay-client-phone" required placeholder="09123456789" style="width: 100%; background: var(--bg-primary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                </div>
+
+                <!-- Payment Method Selector -->
+                <label style="display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;">روش پرداخت مورد نظر را انتخاب کنید:</label>
+                <div class="payment-method-selector">
+                    <div class="pay-method-btn active" id="btn-pay-shetab" onclick="selectPayMethod('shetab')">
+                        <i class="fa-solid fa-credit-card" style="font-size: 1.3rem; margin-bottom: 6px; display: block;"></i>
+                        <span>کارت شتاب آنلاین (زرین‌پال / ملت)</span>
+                    </div>
+                    <div class="pay-method-btn" id="btn-pay-crypto" onclick="selectPayMethod('crypto')">
+                        <i class="fa-brands fa-bitcoin" style="font-size: 1.3rem; margin-bottom: 6px; display: block; color: var(--accent-emerald);"></i>
+                        <span>ارزی کریپتو (تتر USDT TRC-20)</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; height: 44px; margin-top: 10px;" onclick="processCreateInvoice()">
+                    <i class="fa-solid fa-lock"></i> صدور فاکتور و ورود به درگاه
+                </button>
+            </div>
+
+            <!-- Step 2: Invoice & Payment Gateway Screen -->
+            <div id="pay-step-2" style="display: none;">
+                
+                <!-- Shetab Gateway Screen -->
+                <div id="shetab-gateway-screen">
+                    <h3 style="color: var(--accent-emerald); margin-bottom: 8px;"><i class="fa-solid fa-circle-check"></i> فاکتور رسمی صادر شد</h3>
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px; font-size: 0.85rem;">
+                        <p style="margin-bottom: 6px;">شماره فاکتور: <strong id="inv-num-display" style="color: var(--accent-cyan);">INV-2026-9482</strong></p>
+                        <p style="margin-bottom: 6px;">کد پیگیری: <strong id="inv-track-display">TRK-849201</strong></p>
+                        <p style="margin-bottom: 0;">مبلغ پرداختی: <strong id="inv-amount-display" style="color: var(--accent-emerald);">۳,۰۰۰,۰۰۰ تومان</strong></p>
+                    </div>
+
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-emerald); border-radius: var(--radius-sm); padding: 16px; text-align: center; margin-bottom: 20px;">
+                        <i class="fa-solid fa-building-columns" style="font-size: 2rem; color: var(--accent-emerald); margin-bottom: 8px;"></i>
+                        <h4 style="color: #fff;">درگاه پرداخت شاپرک / زرین‌پال آماده اتصال است</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">با کلیک روی دکمه زیر به صفحه پرداخت امن هدایت می‌شوید.</p>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center; height: 44px; margin-bottom: 10px;" onclick="simulateShetabPaymentSuccess()">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> تایید پرداخت و اتصال به درگاه شتاب
+                    </button>
+                </div>
+
+                <!-- Crypto TRC-20 USDT Screen -->
+                <div id="crypto-gateway-screen" style="display: none; text-align: center;">
+                    <h3 style="color: var(--accent-emerald); margin-bottom: 6px;"><i class="fa-brands fa-ethereum"></i> پرداخت ارزی با تتر (USDT TRC-20)</h3>
+                    <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px;">لطفاً دقیقاً مبلغ <strong id="crypto-exact-amount" style="color: var(--accent-cyan);">$49.00 USDT</strong> را به آدرس زیر در شبکه ترون (TRC-20) ارسال فرمایید:</p>
+
+                    <div style="background: #fff; padding: 12px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: 14px;">
+                        <img id="crypto-qr-img" src="" alt="USDT QR Code" style="width: 160px; height: 160px; display: block;">
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 10px; margin-bottom: 16px; font-family: monospace; font-size: 0.85rem; word-break: break-all;" id="crypto-wallet-text">
+                        TYDjh8m2K9uXpL6QvR4Z1sW8otSzgjLj6t
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" style="flex: 1;" onclick="copyCryptoAddress()"><i class="fa-solid fa-copy"></i> کپی آدرس ولت</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="simulateShetabPaymentSuccess()"><i class="fa-solid fa-check"></i> پرداخت کردم (استعلام تراکنش)</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Step 3: Success Digital Receipt -->
+            <div id="pay-step-3" style="display: none; text-align: center; padding: 10px 0;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 style="color: var(--accent-emerald); margin-bottom: 6px;">پرداخت با موفقیت تایید شد ✅</h3>
+                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 18px;">رسید دیجیتال و شماره پیگیری برای شما صادر شد:</p>
+
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px; text-align: right; font-size: 0.85rem; margin-bottom: 20px;">
+                    <p style="margin-bottom: 6px;">رسید شماره: <strong id="receipt-id-display" style="color: var(--accent-cyan);">REC-849201</strong></p>
+                    <p style="margin-bottom: 6px;">وضعیت: <strong style="color: var(--accent-emerald);">تکمیل شده و در حال پردازش در کارتابل بازرگانی</strong></p>
+                    <p style="margin-bottom: 0;">گزارش رسمی و فاکتور نهایی از طریق واتساپ و پیامک نیز برای شما ارسال می‌گردد.</p>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="closePaymentModal()"><i class="fa-solid fa-circle-check"></i> بستن و مشاهده وضعیت</button>
+            </div>
+
+        </div>
     </div>
 
     <!-- Consultation Modal -->
@@ -1369,12 +2086,29 @@
     <!-- Interactive Script -->
     <script>
         let currentStep = 1;
+        let selectedSimCapital = 50000;
         const simSelections = {
             industry: 'medical',
             supplier: 'verified',
             qc: 'yes',
             currency: 'nima'
         };
+
+        function setSimCapital(amt, btn) {
+            selectedSimCapital = amt;
+            document.querySelectorAll('#sim-capital-selector button').forEach(b => {
+                b.classList.remove('active');
+                b.style.borderColor = 'var(--border-glass)';
+                b.style.color = 'var(--text-secondary)';
+            });
+            btn.classList.add('active');
+            btn.style.borderColor = 'var(--accent-cyan)';
+            btn.style.color = 'var(--accent-cyan)';
+            
+            if (currentStep === 5) {
+                calculateSimResult();
+            }
+        }
 
         function goToSimStep(step) { currentStep = step; updateSimUI(); }
         function nextSimStep() { if (currentStep < 5) { currentStep++; updateSimUI(); } }
@@ -1419,7 +2153,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        capital_usd: 50000,
+                        capital_usd: selectedSimCapital,
                         industry: simSelections.industry,
                         supplier_type: simSelections.supplier,
                         qc_requested: simSelections.qc === 'yes',
@@ -1844,6 +2578,274 @@
             }
         };
 
+        // --- Trade War-Room Engine Functions ---
+        function setWarRoomPreset(prod, country, capital) {
+            document.getElementById('warroom-product').value = prod;
+            document.getElementById('warroom-country').value = country;
+            document.getElementById('warroom-capital').value = capital;
+            runWarRoomSession();
+        }
+
+        async function runWarRoomSession() {
+            const prod = document.getElementById('warroom-product').value.trim();
+            const country = document.getElementById('warroom-country').value;
+            const capital = parseFloat(document.getElementById('warroom-capital').value) || 50000;
+
+            if (!prod) return;
+
+            const loading = document.getElementById('warroom-loading');
+            const resultBox = document.getElementById('warroom-result');
+
+            if (loading) loading.style.display = 'block';
+            if (resultBox) resultBox.style.display = 'none';
+
+            try {
+                const resp = await fetch('/api/war-room', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target_product: prod, target_country: country, capital_usd: capital, lang: currentLang })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    
+                    document.getElementById('warroom-opinion-edulead').innerHTML = formatMarkdown(data.agents_debate.edulead.opinion);
+                    document.getElementById('warroom-opinion-sourcing').innerHTML = formatMarkdown(data.agents_debate.sourcing.opinion);
+                    document.getElementById('warroom-opinion-risk').innerHTML = formatMarkdown(data.agents_debate.risk_audit.opinion);
+                    document.getElementById('warroom-opinion-logistics').innerHTML = formatMarkdown(data.agents_debate.logistics.opinion);
+                    document.getElementById('warroom-opinion-sales').innerHTML = formatMarkdown(data.agents_debate.sales.opinion);
+
+                    document.getElementById('warroom-deal-score').textContent = data.executive_verdict.deal_health_score;
+                    document.getElementById('warroom-verdict-title').innerHTML = `<i class="fa-solid fa-circle-check"></i> حکم نهایی اجماع: ${data.executive_verdict.recommendation}`;
+                    document.getElementById('warroom-product-title').textContent = `کالای مورد بررسی: ${data.target_product} (${data.target_country}) با کد HS: ${data.hs_code}`;
+                    document.getElementById('warroom-roi-display').textContent = `+${data.financial_matrix.roi_percentage}٪ ($${Math.round(data.financial_matrix.est_net_profit_usd).toLocaleString()})`;
+
+                    document.getElementById('wf-fob').textContent = `$${Math.round(data.financial_matrix.fob_cost_usd).toLocaleString()}`;
+                    document.getElementById('wf-freight').textContent = `$${Math.round(data.financial_matrix.freight_insurance_usd).toLocaleString()}`;
+                    document.getElementById('wf-customs').textContent = `$${Math.round(data.financial_matrix.customs_duty_usd + data.financial_matrix.vat_usd).toLocaleString()}`;
+                    document.getElementById('wf-landed-usd').textContent = `$${Math.round(data.financial_matrix.total_landed_usd).toLocaleString()}`;
+                    document.getElementById('wf-landed-toman').textContent = `${Math.round(data.financial_matrix.total_landed_toman).toLocaleString()} تومان`;
+
+                    const condList = document.getElementById('warroom-conditions-list');
+                    condList.innerHTML = '';
+                    data.executive_verdict.critical_conditions.forEach(cond => {
+                        const li = document.createElement('li');
+                        li.textContent = cond;
+                        condList.appendChild(li);
+                    });
+
+                    resultBox.style.display = 'block';
+                    resultBox.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (err) {
+                console.error("War room error:", err);
+            } finally {
+                if (loading) loading.style.display = 'none';
+            }
+        }
+
+        // --- Borders & Corridors Intelligence Functions ---
+        let allBordersCatalog = {};
+
+        async function loadCorridorsCatalog() {
+            try {
+                const resp = await fetch('/api/corridors/catalog');
+                if (resp.ok) {
+                    allBordersCatalog = await resp.json();
+                    renderCorridorsCatalog('all');
+                }
+            } catch (e) {
+                console.error("Corridor catalog load error:", e);
+            }
+        }
+
+        function renderCorridorsCatalog(category) {
+            const container = document.getElementById('corridors-catalog-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            let items = [];
+            if (category === 'all') {
+                Object.keys(allBordersCatalog).forEach(k => {
+                    items = items.concat(allBordersCatalog[k]);
+                });
+            } else if (allBordersCatalog[category]) {
+                items = allBordersCatalog[category];
+            }
+
+            items.forEach(border => {
+                const card = document.createElement('div');
+                card.className = 'corridor-card';
+                const icon = border.type.includes('Sea') ? 'fa-ship' : (border.type.includes('Rail') ? 'fa-train' : (border.type.includes('Road') ? 'fa-truck' : 'fa-plane-departure'));
+                
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="color: var(--accent-cyan);"><i class="fa-solid ${icon}"></i> ${border.name_fa}</h4>
+                        <span class="risk-badge risk-low" style="font-size: 0.72rem;">${border.type}</span>
+                    </div>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 6px;"><strong>مبدأهای اصلی:</strong> ${border.origin_routes}</p>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 6px;"><strong>زمان ترانزیت:</strong> ${border.transit_time_days}</p>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 6px;"><strong>شاخص هزینه:</strong> ${border.cost_index}</p>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 10px;"><strong>گمرکات تخصصی:</strong> ${border.customs_type}</p>
+                    <div style="background: rgba(255,255,255,0.02); border: 1px dashed var(--border-glass); border-radius: var(--radius-sm); padding: 8px; font-size: 0.78rem; color: var(--text-muted);">
+                        <i class="fa-solid fa-arrows-split-up-and-left" style="color: var(--accent-amber);"></i> <strong>مسیرهای جایگزین بحران:</strong> ${border.fallback_routes.join(' | ')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterCorridors(cat, btn) {
+            document.querySelectorAll('.corridor-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderCorridorsCatalog(cat);
+        }
+
+        async function analyzeCorridorRoute() {
+            const origin = document.getElementById('corr-origin').value;
+            const goods = document.getElementById('corr-goods').value;
+            const urgency = document.getElementById('corr-urgency').value;
+
+            try {
+                const resp = await fetch('/api/corridors/feasibility', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ origin_country: origin, goods_type: goods, urgency: urgency })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const prim = data.best_primary_route;
+                    const alt = data.contingency_fallback_route;
+
+                    document.getElementById('corr-prim-name').innerHTML = `<i class="fa-solid fa-anchor"></i> ${prim.name_fa}`;
+                    document.getElementById('corr-prim-time').textContent = prim.transit_time_days;
+                    document.getElementById('corr-prim-cost').textContent = prim.cost_index;
+                    document.getElementById('corr-prim-customs').textContent = prim.customs_type;
+                    document.getElementById('corr-prim-status').textContent = `وضعیت: ${prim.current_status}`;
+
+                    document.getElementById('corr-alt-name').innerHTML = `<i class="fa-solid fa-train"></i> ${alt.name_fa}`;
+                    document.getElementById('corr-alt-time').textContent = alt.transit_time_days;
+                    document.getElementById('corr-alt-cost').textContent = alt.cost_index;
+                    document.getElementById('corr-alt-customs').textContent = alt.customs_type;
+                    document.getElementById('corr-alt-status').textContent = `وضعیت: ${alt.current_status}`;
+
+                    document.getElementById('corr-rationale-text').textContent = data.strategic_rationale_fa;
+
+                    const resBox = document.getElementById('corr-analysis-result');
+                    resBox.style.display = 'block';
+                    resBox.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (e) {
+                console.error("Corridor analysis error:", e);
+            }
+        }
+
+        // --- Online Payment & Crypto TRC-20 Modal Engine ---
+        let currentSelectedPackage = { id: 'qcc_audit', title: 'استعلام جامع ثبتی QCC چین', toman: 3000000, usd: 49 };
+        let currentPayMethod = 'shetab';
+        let currentActiveInvoice = null;
+
+        function openPaymentModal(pkgId, title, priceToman, priceUsd) {
+            currentSelectedPackage = { id: pkgId, title: title, toman: priceToman, usd: priceUsd };
+            document.getElementById('modal-package-title').textContent = `بسته انتخابی: ${title}`;
+            document.getElementById('modal-amount-toman').textContent = `${priceToman.toLocaleString()} تومان`;
+            document.getElementById('modal-amount-usd').textContent = `$${priceUsd.toFixed(2)} USDT`;
+
+            document.getElementById('pay-step-1').style.display = 'block';
+            document.getElementById('pay-step-2').style.display = 'none';
+            document.getElementById('pay-step-3').style.display = 'none';
+            document.getElementById('payment-modal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        function selectPayMethod(method) {
+            currentPayMethod = method;
+            document.getElementById('btn-pay-shetab').classList.toggle('active', method === 'shetab');
+            document.getElementById('btn-pay-crypto').classList.toggle('active', method === 'crypto');
+        }
+
+        async function processCreateInvoice() {
+            const clientName = document.getElementById('pay-client-name').value.trim();
+            const clientPhone = document.getElementById('pay-client-phone').value.trim();
+
+            if (!clientPhone) {
+                alert('لطفاً شماره تماس معتبر خود را وارد نمایید.');
+                return;
+            }
+
+            try {
+                const resp = await fetch('/api/payment/create-invoice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        service_id: currentSelectedPackage.id,
+                        client_name: clientName || 'مشتری گرامی',
+                        client_phone: clientPhone,
+                        payment_method: currentPayMethod
+                    })
+                });
+
+                if (resp.ok) {
+                    currentActiveInvoice = await resp.json();
+                    
+                    document.getElementById('pay-step-1').style.display = 'none';
+                    document.getElementById('pay-step-2').style.display = 'block';
+
+                    if (currentPayMethod === 'shetab') {
+                        document.getElementById('shetab-gateway-screen').style.display = 'block';
+                        document.getElementById('crypto-gateway-screen').style.display = 'none';
+                        document.getElementById('inv-num-display').textContent = currentActiveInvoice.invoice_number;
+                        document.getElementById('inv-track-display').textContent = currentActiveInvoice.tracking_code;
+                        document.getElementById('inv-amount-display').textContent = `${currentActiveInvoice.amount_toman.toLocaleString()} تومان`;
+                    } else {
+                        document.getElementById('shetab-gateway-screen').style.display = 'none';
+                        document.getElementById('crypto-gateway-screen').style.display = 'block';
+                        document.getElementById('crypto-exact-amount').textContent = `$${currentActiveInvoice.amount_usd.toFixed(2)} USDT`;
+                        document.getElementById('crypto-wallet-text').textContent = currentActiveInvoice.crypto_details.wallet_address;
+                        document.getElementById('crypto-qr-img').src = currentActiveInvoice.crypto_details.qr_code_url;
+                    }
+                }
+            } catch (e) {
+                console.error("Invoice creation error:", e);
+            }
+        }
+
+        function copyCryptoAddress() {
+            if (currentActiveInvoice && currentActiveInvoice.crypto_details) {
+                navigator.clipboard.writeText(currentActiveInvoice.crypto_details.wallet_address);
+                alert('✅ آدرس ولت تتر (TRC-20) در کلیپ‌بورد کپی شد!');
+            }
+        }
+
+        async function simulateShetabPaymentSuccess() {
+            if (!currentActiveInvoice) return;
+
+            try {
+                const resp = await fetch('/api/payment/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        invoice_number: currentActiveInvoice.invoice_number,
+                        tracking_code: currentActiveInvoice.tracking_code,
+                        method: currentPayMethod
+                    })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    document.getElementById('pay-step-2').style.display = 'none';
+                    document.getElementById('pay-step-3').style.display = 'block';
+                    document.getElementById('receipt-id-display').textContent = data.receipt_id;
+                }
+            } catch (e) {
+                console.error("Payment verify error:", e);
+            }
+        }
+
         // --- Proforma Scanner Functions ---
         let currentNegotiationScript = "";
 
@@ -2143,10 +3145,11 @@ SWIFT Code: HSBCHKHHXXX
             localStorage.setItem('lang', lang);
         }
 
-        // Initialize theme and drag & drop on load
+        // Initialize theme, drag & drop, and corridors on load
         document.addEventListener('DOMContentLoaded', () => {
             applyTheme(currentTheme);
             setLanguage(currentLang);
+            loadCorridorsCatalog();
 
             const dropzone = document.getElementById('pi-dropzone');
             if (dropzone) {

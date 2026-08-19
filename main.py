@@ -90,6 +90,29 @@ class PIScanTextRequest(BaseModel):
     raw_text: str
     filename: Optional[str] = "Proforma.txt"
 
+# Request Models for Advanced Superpower Modules
+class WarRoomRequest(BaseModel):
+    target_product: str
+    target_country: Optional[str] = "China"
+    capital_usd: Optional[float] = 50000.0
+    lang: Optional[str] = "fa"
+
+class CorridorFeasibilityRequest(BaseModel):
+    origin_country: str
+    goods_type: str
+    urgency: Optional[str] = "normal"
+
+class CreateInvoiceRequest(BaseModel):
+    service_id: str
+    client_name: str
+    client_phone: str
+    payment_method: Optional[str] = "shetab"
+
+class VerifyPaymentRequest(BaseModel):
+    invoice_number: str
+    tracking_code: str
+    method: Optional[str] = "shetab"
+
 # API Endpoints
 @app.get("/api/health")
 def health_check():
@@ -101,6 +124,46 @@ async def chat_endpoint(req: ChatRequest):
         raise HTTPException(status_code=400, detail="پیام نمی‌تواند خالی باشد")
 
     result = await MasterOrchestrator.route_request(req.message, req.agent_id, req.lang)
+    return result
+
+@app.post("/api/war-room")
+async def trade_war_room_endpoint(req: WarRoomRequest):
+    if not req.target_product.strip():
+        raise HTTPException(status_code=400, detail="نام کالا نمی‌تواند خالی باشد")
+    from services.warroom_orchestrator import TradeWarRoomEngine
+    result = await TradeWarRoomEngine.run_war_room_session(req.target_product, req.target_country, req.capital_usd, req.lang)
+    return result
+
+@app.get("/api/corridors/catalog")
+def get_corridors_catalog():
+    from services.corridor_intelligence_service import CorridorIntelligenceService
+    return CorridorIntelligenceService.get_all_borders_catalog()
+
+@app.post("/api/corridors/feasibility")
+async def analyze_corridor_feasibility(req: CorridorFeasibilityRequest):
+    if not req.goods_type.strip():
+        raise HTTPException(status_code=400, detail="نوع کالا الزامی است")
+    from services.corridor_intelligence_service import CorridorIntelligenceService
+    result = await CorridorIntelligenceService.analyze_corridor_feasibility(req.origin_country, req.goods_type, req.urgency)
+    return result
+
+@app.get("/api/payment/packages")
+def get_payment_packages():
+    from services.payment_service import PaymentService
+    return PaymentService.get_service_packages()
+
+@app.post("/api/payment/create-invoice")
+def create_payment_invoice(req: CreateInvoiceRequest):
+    if not req.client_phone.strip():
+        raise HTTPException(status_code=400, detail="شماره تماس الزامی است")
+    from services.payment_service import PaymentService
+    result = PaymentService.create_invoice(req.service_id, req.client_name, req.client_phone, req.payment_method)
+    return result
+
+@app.post("/api/payment/verify")
+def verify_payment_endpoint(req: VerifyPaymentRequest):
+    from services.payment_service import PaymentService
+    result = PaymentService.verify_payment(req.invoice_number, req.tracking_code, req.method)
     return result
 
 @app.post("/api/audit")
